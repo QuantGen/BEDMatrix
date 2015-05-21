@@ -1,0 +1,10 @@
+Package: BEDMatrix
+Title: A wrapper for binary PED files.
+Version: 0.0.0.9000
+Authors@R: person("Alexander", "Grüneberg", email = "alexander.grueneberg@googlemail.com", role = c("aut", "cre"))
+Description: BEDMatrix wraps binary PED files and allows subsetting without loading the entire file into memory.
+Depends: R (>= 3.0.0)
+LinkingTo: Rcpp
+Imports: Rcpp
+License: MIT + file LICENSE
+LazyData: true
