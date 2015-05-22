@@ -6,7 +6,7 @@
 using namespace Rcpp;
 
 // subsetBED
-int subsetBED(Rcpp::String path, int n, int p, int i, int j);
+Rcpp::IntegerMatrix subsetBED(Rcpp::String path, int n, int p, Rcpp::IntegerVector i, Rcpp::IntegerVector j);
 RcppExport SEXP BEDMatrix_subsetBED(SEXP pathSEXP, SEXP nSEXP, SEXP pSEXP, SEXP iSEXP, SEXP jSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
@@ -14,8 +14,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::String >::type path(pathSEXP);
     Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type i(iSEXP);
-    Rcpp::traits::input_parameter< int >::type j(jSEXP);
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type i(iSEXP);
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type j(jSEXP);
     __result = Rcpp::wrap(subsetBED(path, n, p, i, j));
     return __result;
 END_RCPP
