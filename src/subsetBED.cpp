@@ -64,7 +64,6 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::String path, int n, int p, Rcpp::IntegerVect
     } else {
       Rcpp::stop("File is not a binary PED file.");
     }
-    infile.close();
   } else {
     Rcpp::stop("File not found.");
   }
