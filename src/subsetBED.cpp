@@ -4,9 +4,6 @@
 #include <iostream>
 #include <fstream>
 
-//' Subsets a BED file.
-//'
-//' @export
 // [[Rcpp::export]]
 Rcpp::IntegerMatrix subsetBED(Rcpp::String path, int n, int p, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
   // Check if indexes are out of bounds
