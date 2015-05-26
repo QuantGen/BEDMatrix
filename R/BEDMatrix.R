@@ -24,3 +24,8 @@ setMethod('[', signature(x = 'BEDMatrix'), function (x, i, j, drop) {
   subset <- subsetBED(x@path, x@n, x@p, i, j)
   return(subset)
 })
+
+#' @export
+dim.BEDMatrix <- function (x) {
+  return(c(x@n, x@p))
+}
