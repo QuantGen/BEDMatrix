@@ -14,6 +14,13 @@ BEDMatrix <- function (path, n, p) {
 }
 
 #' @export
+print.BEDMatrix <- function (x, ...) {
+  n <- attr(x, 'n')
+  p <- attr(x, 'p')
+  cat(paste(n, 'x', p, 'BEDMatrix'))
+}
+
+#' @export
 `[.BEDMatrix` <- function (x, i, j, drop) {
   path <- attr(x, 'path')
   n <- attr(x, 'n')
