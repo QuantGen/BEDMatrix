@@ -3,37 +3,42 @@
 NULL
 
 #' @export
-setClass('BEDMatrix', slots = list(path = 'character', n = 'integer', p = 'integer', dimnames = 'list'))
+BEDMatrix <- function (path, n, p) {
+  obj <- list()
+  class(obj) <- 'BEDMatrix'
+  attr(obj, 'path') <- path
+  attr(obj, 'n') <- as.integer(n)
+  attr(obj, 'p') <- as.integer(p)
+  attr(obj, 'dnames') <- list(NULL, NULL)
+  return(obj)
+}
 
 #' @export
-setMethod('initialize', signature(.Object = 'BEDMatrix'), function (.Object, path, n, p) {
-  .Object@path <- path
-  .Object@n <- as.integer(n)
-  .Object@p <- as.integer(p)
-  .Object@dimnames <- list(NULL, NULL)
-  return(.Object)
-})
-
-#' @export
-setMethod('[', signature(x = 'BEDMatrix'), function (x, i, j, drop) {
+`[.BEDMatrix` <- function (x, i, j, drop) {
+  path <- attr(x, 'path')
+  n <- attr(x, 'n')
+  p <- attr(x, 'p')
   if (missing(i)) {
-    i <- 1:x@n
+    i <- 1:n
   }
   if (missing(j)) {
-    j <- 1:x@p
+    j <- 1:p
   }
-  subset <- subsetBED(x@path, x@n, x@p, i, j)
+  subset <- subsetBED(path, n, p, i, j)
   return(subset)
-})
+}
 
 #' @export
 dim.BEDMatrix <- function (x) {
-  return(c(x@n, x@p))
+  n <- attr(x, 'n')
+  p <- attr(x, 'p')
+  return(c(n, p))
 }
 
 #' @export
 dimnames.BEDMatrix <- function (x) {
-  return(x@dimnames)
+  dnames <- attr(x, 'dnames')
+  return(dnames)
 }
 
 #' @export
@@ -46,7 +51,7 @@ dimnames.BEDMatrix <- function (x) {
       !(is.null(v2) || length(v2) == d[2])) {
     stop('invalid dimnames')
   }
-  x@dimnames <- lapply(value, function (v) {
+  attr(x, 'dnames') <- lapply(value, function (v) {
     if (!is.null(v)) {
       as.character(v)
     }
