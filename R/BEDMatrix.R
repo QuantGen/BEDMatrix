@@ -4,12 +4,17 @@ NULL
 
 #' @export
 BEDMatrix <- function (path, n, p) {
+  n <- as.integer(n)
+  p <- as.integer(p)
   obj <- list()
   class(obj) <- 'BEDMatrix'
   attr(obj, 'path') <- path
-  attr(obj, 'n') <- as.integer(n)
-  attr(obj, 'p') <- as.integer(p)
-  attr(obj, 'dnames') <- list(NULL, NULL)
+  attr(obj, 'n') <- n
+  attr(obj, 'p') <- p
+  attr(obj, 'dnames') <- list(
+    paste0('id_', 1:n),
+    paste0('mrk_', 1:p)
+  )
   return(obj)
 }
 
