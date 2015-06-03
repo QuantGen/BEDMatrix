@@ -17,6 +17,9 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
   if (Rcpp::is_true(Rcpp::any(i > n)) || Rcpp::is_true(Rcpp::any(j > p))) {
     Rcpp::stop("Invalid dimensions.");
   }
+  // Convert from 1-index to 0-index.
+  i = i - 1;
+  j = j - 1;
   // Keep sizes of i and j
   int size_i = i.size();
   int size_j = j.size();
@@ -33,12 +36,10 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
       if (header[2] == '\x01') {
         // Iterate over rows
         for (int idx_i = 0; idx_i < size_i; idx_i++) {
-          int cur_i = i[idx_i];
           // Iterate over columns
           for (int idx_j = 0; idx_j < size_j; idx_j++) {
-            int cur_j = j[idx_j];
             // Reduce two-dimensional index to one-dimensional index
-            int whichPos = ((cur_i - 1) * p) + (cur_j - 1);
+            int whichPos = (i[idx_i] * p) + j[idx_j];
             // Every byte encodes 4 genotypes, find the one of interest
             int whichByte = std::floor(whichPos / 4);
             // Find genotype in byte
