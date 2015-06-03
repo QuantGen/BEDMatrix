@@ -25,6 +25,21 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
   int size_j = j.size();
   // Reserve output matrix
   Rcpp::IntegerMatrix out (size_i, size_j);
+  // Preserve dimnames.
+  Rcpp::List out_dimnames = Rcpp::List::create(
+    R_NilValue,
+    R_NilValue
+  );
+  Rcpp::List in_dimnames = x.attr("dnames");
+  Rcpp::RObject in_rownames = in_dimnames[0];
+  Rcpp::RObject in_colnames = in_dimnames[1];
+  if (!in_rownames.isNULL()) {
+    out_dimnames[0] = Rcpp::CharacterVector(in_rownames)[i];
+  }
+  if (!in_colnames.isNULL()) {
+    out_dimnames[1] = Rcpp::CharacterVector(in_colnames)[j];
+  }
+  out.attr("dimnames") = out_dimnames;
   // Open BED file
   std::ifstream infile (path.c_str(), std::ios::binary);
   if (infile) {
