@@ -4,6 +4,9 @@ NULL
 
 #' @export
 BEDMatrix <- function (path, n, p) {
+  if (!file.exists(path)) {
+    stop('File not found.');
+  }
   n <- as.integer(n)
   p <- as.integer(p)
   obj <- list()
