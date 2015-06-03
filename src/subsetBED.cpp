@@ -5,7 +5,14 @@
 #include <fstream>
 
 // [[Rcpp::export]]
-Rcpp::IntegerMatrix subsetBED(Rcpp::String path, int n, int p, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
+Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
+  // Check if x is a BEDMatrix.
+  if (!x.inherits("BEDMatrix")) {
+    Rcpp::stop("x must be a BEDMatrix.");
+  }
+  std::string path = x.attr("path");
+  int n = x.attr("n");
+  int p = x.attr("p");
   // Check if indexes are out of bounds
   if (Rcpp::is_true(Rcpp::any(i > n)) || Rcpp::is_true(Rcpp::any(j > p))) {
     Rcpp::stop("Invalid dimensions.");
@@ -16,7 +23,7 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::String path, int n, int p, Rcpp::IntegerVect
   // Reserve output matrix
   Rcpp::IntegerMatrix out (size_i, size_j);
   // Open BED file
-  std::ifstream infile (path.get_cstring(), std::ios::binary);
+  std::ifstream infile (path.c_str(), std::ios::binary);
   if (infile) {
     char *header = new char[3];
     infile.read(header, 3);

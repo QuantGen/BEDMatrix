@@ -31,7 +31,7 @@ print.BEDMatrix <- function (x, ...) {
   if (missing(j)) {
     j <- 1:p
   }
-  subset <- subsetBED(path, n, p, i, j)
+  subset <- subsetBED(x, i, j)
   return(subset)
 }
 
