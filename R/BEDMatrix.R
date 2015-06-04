@@ -35,9 +35,13 @@ print.BEDMatrix <- function (x, ...) {
   p <- attr(x, 'p')
   if (missing(i)) {
     i <- 1:n
+  } else if (class(i) == 'logical') {
+    i <- which(i)
   }
   if (missing(j)) {
     j <- 1:p
+  } else if (class(j) == 'logical') {
+    i <- which(i)
   }
   subset <- subsetBED(x, i, j)
   return(subset)
