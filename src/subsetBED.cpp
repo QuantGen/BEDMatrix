@@ -47,7 +47,11 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
     infile.read(header, 3);
     // Check magic number.
     if (header[0] == '\x6C' && header[1] == '\x1B') {
-      // Check individual-major mode.
+      // Check mode: 00000001 indicates the default SNP-major mode (i.e.
+      // list all individuals for first SNP, all individuals for second
+      // SNP, etc), 00000000 indicates the unsupported individual-major
+      // mode (i.e. list all SNPs for the first individual, list all SNPs
+      // for the second individual, etc).
       if (header[2] == '\x01') {
         // Get number of bytes.
         infile.seekg(0, infile.end);
@@ -59,7 +63,7 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
             // Iterate over columns indexes.
             for (int idx_j = 0; idx_j < size_j; idx_j++) {
               // Reduce two-dimensional index to one-dimensional index with the mode.
-              int whichPos = (i[idx_i] * p) + j[idx_j];
+              int whichPos = (j[idx_j] * n) + i[idx_i];
               // Every byte encodes 4 genotypes, find the one of interest.
               int whichByte = std::floor(whichPos / 4);
               // Find genotype in byte.
@@ -91,7 +95,7 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
           Rcpp::stop("n or p does not match the dimensions of the file.");
         }
       } else {
-        Rcpp::stop("Individual major mode is not supported.");
+        Rcpp::stop("Individual-major mode is not supported.");
       }
     } else {
       Rcpp::stop("File is not a binary PED file.");
