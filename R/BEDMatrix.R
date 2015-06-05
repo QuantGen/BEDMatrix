@@ -37,11 +37,19 @@ print.BEDMatrix <- function (x, ...) {
     i <- 1:n
   } else if (class(i) == 'logical') {
     i <- which(i)
+  } else if (class(i) == 'character') {
+    i <- sapply(i, function (name) {
+      which(rownames(x) == name)
+    }, USE.NAMES=FALSE)
   }
   if (missing(j)) {
     j <- 1:p
   } else if (class(j) == 'logical') {
     j <- which(j)
+  } else if (class(j) == 'character') {
+    j <- sapply(j, function (name) {
+      which(colnames(x) == name)
+    }, USE.NAMES=FALSE)
   }
   subset <- subsetBED(x, i, j)
   return(subset)
