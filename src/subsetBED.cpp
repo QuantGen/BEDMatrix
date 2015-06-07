@@ -63,18 +63,18 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
             // Iterate over columns indexes.
             for (int idx_j = 0; idx_j < size_j; idx_j++) {
               // Reduce two-dimensional index to one-dimensional index with the mode.
-              int whichPos = (j[idx_j] * n) + i[idx_i];
+              int which_pos = (j[idx_j] * n) + i[idx_i];
               // Every byte encodes 4 genotypes, find the one of interest.
-              int whichByte = std::floor(whichPos / 4);
+              int which_byte = std::floor(which_pos / 4);
               // Find genotype in byte.
-              int whichGenotype = (whichPos % 4) * 2;
+              int which_genotype = (which_pos % 4) * 2;
               // Read in the whole byte.
-              infile.seekg(whichByte + 3);
+              infile.seekg(which_byte + 3);
               char *genotypes = new char[1];
               infile.read(genotypes, 1);
               // Remove the other genotypes by shifting the genotype of interest
               // to the end of the byte and masking with 00000011.
-              int genotype = genotypes[0] >> whichGenotype & 3;
+              int genotype = genotypes[0] >> which_genotype & 3;
               // Remap genotype value.
               int mapping;
               if (genotype == 0) {
