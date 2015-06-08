@@ -78,9 +78,9 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
               // Remap genotype value.
               int mapping;
               if (genotype == 0) {
-                mapping = 0; // homozygous AA
+                mapping = 2; // homozygous AA
               } else if (genotype == 3) {
-                mapping = 2; // homozygous BB
+                mapping = 0; // homozygous BB
               } else if (genotype == 2) {
                 mapping = 1; // heterozygous AB
               } else if (genotype == 1) {
