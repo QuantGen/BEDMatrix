@@ -29,7 +29,7 @@ print.BEDMatrix <- function (x, ...) {
 }
 
 #' @export
-`[.BEDMatrix` <- function (x, i, j, drop) {
+`[.BEDMatrix` <- function (x, i, j, drop = TRUE) {
   path <- attr(x, 'path')
   n <- attr(x, 'n')
   p <- attr(x, 'p')
@@ -52,7 +52,12 @@ print.BEDMatrix <- function (x, ...) {
     }, USE.NAMES=FALSE)
   }
   subset <- subsetBED(x, i, j)
-  return(subset)
+  # Let R handle drop behavior.
+  if(drop == TRUE && (nrow(subset) == 1 || ncol(subset) == 1)) {
+    return(subset[,])
+  } else {
+    return(subset)
+  }
 }
 
 #' @export
