@@ -81,9 +81,9 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
                 mapping = 0; // homozygous AA
               } else if (genotype == 3) {
                 mapping = 2; // homozygous BB
-              } else if (genotype == 1) {
-                mapping = 1; // heterozygous AB
               } else if (genotype == 2) {
+                mapping = 1; // heterozygous AB
+              } else if (genotype == 1) {
                 mapping = NA_INTEGER; // missing
               } else {
                 Rcpp::stop("Invalid genotype.");
