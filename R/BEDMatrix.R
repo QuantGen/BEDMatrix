@@ -36,7 +36,7 @@ print.BEDMatrix <- function (x, ...) {
   if (missing(i)) {
     i <- 1:n
   } else if (class(i) == 'logical') {
-    i <- which(i)
+    i <- which(rep_len(i, n))
   } else if (class(i) == 'character') {
     i <- sapply(i, function (name) {
       which(rownames(x) == name)
@@ -45,7 +45,7 @@ print.BEDMatrix <- function (x, ...) {
   if (missing(j)) {
     j <- 1:p
   } else if (class(j) == 'logical') {
-    j <- which(j)
+    j <- which(rep_len(j, p))
   } else if (class(j) == 'character') {
     j <- sapply(j, function (name) {
       which(colnames(x) == name)
