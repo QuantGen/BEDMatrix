@@ -3,9 +3,40 @@
 NULL
 
 #' @export
-BEDMatrix <- function (path, n, p) {
+BEDMatrix <- function (path, n = NULL, p = NULL) {
   if (!file.exists(path)) {
     stop('File not found.');
+  }
+  dir <- substr(path, 1, nchar(path) - 4)
+  # Check if FAM file exists.
+  if (file.exists(paste0(dir, '.fam'))) {
+    fam <- readLines(paste0(dir, '.fam'))
+    # Determine n.
+    n <- length(fam)
+    # Determine rownames.
+    rownames <- sapply(strsplit(fam, ' '), function (line) {
+      return(paste0(line[1], '_', line[2]))
+    })
+  } else {
+    if (is.null(n)) {
+      stop('FAM file of same name not found. Provide number of individuals (n).')
+    }
+    rownames <- paste0('id_', 1:n)
+  }
+  # Check if MAP file exists.
+  if (file.exists(paste0(dir, '.map'))) {
+    map <- readLines(paste0(dir, '.map'))
+    # Determine p.
+    p <- length(map)
+    # Determine colnames.
+    colnames <- sapply(strsplit(map, ' '), function (line) {
+      return(line[2])
+    })
+  } else {
+    if (is.null(p)) {
+      stop('MAP file of same name not found. Provide number of markers (p).')
+    }
+    colnames <- paste0('mrk_', 1:p)
   }
   n <- as.integer(n)
   p <- as.integer(p)
@@ -15,8 +46,8 @@ BEDMatrix <- function (path, n, p) {
   attr(obj, 'n') <- n
   attr(obj, 'p') <- p
   attr(obj, 'dnames') <- list(
-    paste0('id_', 1:n),
-    paste0('mrk_', 1:p)
+    rownames,
+    colnames
   )
   return(obj)
 }
