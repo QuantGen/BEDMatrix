@@ -56,14 +56,17 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
         // Get number of bytes.
         infile.seekg(0, infile.end);
         int num_bytes = infile.tellg();
+        // Calculate padding: each new "row" starts a new byte.
+        int byte_padding = 4 - (n % 4);
+        if (byte_padding == 4) byte_padding = 0;
         // Check if given dimensions match the file.
-        if (n * p <= (num_bytes - 3) * 4) {
+        if ((n * p) + (byte_padding * p) <= (num_bytes - 3) * 4) {
           // Iterate over rows indexes.
           for (int idx_i = 0; idx_i < size_i; idx_i++) {
             // Iterate over columns indexes.
             for (int idx_j = 0; idx_j < size_j; idx_j++) {
               // Reduce two-dimensional index to one-dimensional index with the mode.
-              int which_pos = (j[idx_j] * n) + i[idx_i];
+              int which_pos = (j[idx_j] * n) + i[idx_i] + (byte_padding * j[idx_j]);
               // Every byte encodes 4 genotypes, find the one of interest.
               int which_byte = std::floor(which_pos / 4);
               // Find genotype in byte.
