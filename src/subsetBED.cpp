@@ -60,7 +60,7 @@ Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Integer
         int byte_padding = 4 - (n % 4);
         if (byte_padding == 4) byte_padding = 0;
         // Check if given dimensions match the file.
-        if ((n * p) + (byte_padding * p) <= (num_bytes - 3) * 4) {
+        if ((n * p) + (byte_padding * p) == (num_bytes - 3) * 4) {
           // Iterate over rows indexes.
           for (int idx_i = 0; idx_i < size_i; idx_i++) {
             // Iterate over columns indexes.
