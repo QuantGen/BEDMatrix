@@ -19,6 +19,8 @@ parseRaw <- function (path) {
 # Prepare dummy data
 raw <- parseRaw(system.file('extdata', 'example.raw', package = 'BEDMatrix'))
 bed <- BEDMatrix(path = system.file('extdata', 'example.bed', package = 'BEDMatrix'), n = 6, p = 3)
+rownames(bed) <- paste0('id_', 1:nrow(bed))
+colnames(bed) <- paste0('mrk_', 1:ncol(bed))
 
 test_that('subsetting', {
 
