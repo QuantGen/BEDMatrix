@@ -5,7 +5,7 @@
 #include <fstream>
 
 // [[Rcpp::export]]
-Rcpp::IntegerMatrix subsetBED(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
+Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
   // Check if x is a BEDMatrix.
   if (!x.inherits("BEDMatrix")) {
     Rcpp::stop("x must be a BEDMatrix.");

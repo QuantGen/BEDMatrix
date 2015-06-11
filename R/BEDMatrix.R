@@ -82,7 +82,7 @@ print.BEDMatrix <- function (x, ...) {
       which(colnames(x) == name)
     }, USE.NAMES=FALSE)
   }
-  subset <- subsetBED(x, i, j)
+  subset <- matrixSubset(x, i, j)
   # Let R handle drop behavior.
   if(drop == TRUE && (nrow(subset) == 1 || ncol(subset) == 1)) {
     return(subset[,])
