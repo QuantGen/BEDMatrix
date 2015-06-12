@@ -5,6 +5,18 @@
 
 using namespace Rcpp;
 
+// vectorSubset
+Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i);
+RcppExport SEXP BEDMatrix_vectorSubset(SEXP xSEXP, SEXP iSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::List >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type i(iSEXP);
+    __result = Rcpp::wrap(vectorSubset(x, i));
+    return __result;
+END_RCPP
+}
 // matrixSubset
 Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j);
 RcppExport SEXP BEDMatrix_matrixSubset(SEXP xSEXP, SEXP iSEXP, SEXP jSEXP) {
