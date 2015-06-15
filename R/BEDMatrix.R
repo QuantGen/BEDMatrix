@@ -97,8 +97,17 @@ print.BEDMatrix <- function (x, ...) {
       subset <- matrixSubset(x, i, j)
     } else {
       # Case [i]
-      if (class(i) == 'logical') {
-        i <- which(rep_len(i, n * p))
+      if (class(i) == 'matrix') {
+        i <- as.vector(i)
+        if (class(i) == 'logical') {
+          i <- which(rep_len(i, n * p))
+          # matrix treats NAs as TRUE
+          i <- sort(c(i, which(is.na(x[]))))
+        }
+      } else {
+        if (class(i) == 'logical') {
+          i <- which(rep_len(i, n * p))
+        }
       }
       subset <- vectorSubset(x, i)
     }

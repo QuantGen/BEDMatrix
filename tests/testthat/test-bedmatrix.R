@@ -66,7 +66,7 @@ test_that('subsetting', {
   expect_true(all.equal(bed[2:1], raw[2:1]))
   expect_true(all.equal(bed[c(3, 1)], raw[c(3, 1)]))
   expect_true(all.equal(bed[c(TRUE, FALSE, TRUE)], raw[c(TRUE, FALSE, TRUE)]))
-  # expect_true(all.equal(bed[raw > 1], raw[raw > 1])) Not implemented yet.
+  expect_true(all.equal(bed[raw > 1], raw[raw > 1]))
 
   expect_true(all.equal(bed['id_1', ], raw['id_1', ]))
   expect_true(all.equal(bed[, 'mrk_1'], raw[, 'mrk_1']))
