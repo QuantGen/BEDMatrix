@@ -2,6 +2,20 @@
 #' @importFrom Rcpp sourceCpp
 NULL
 
+#' Creates a matrix wrapper around a binary PED file.
+#'
+#' The binary PED file will not be loaded into memory. Rather, subsets are
+#' extracted "on the fly".
+#'
+#' If a FAM or MAP file with the same name as the binary PED file (minus the
+#' extension) exists within the same folder, \code{n} and \code{p} will be
+#' automatically determined from those files.
+#'
+#' @param path Path to the binary PED file.
+#' @param n The number of individuals. Optional if FAM file of same name as BED
+#'   file exists.
+#' @param p The number of markers. Optional if MAP file of same name as BED file
+#'   exists.
 #' @export
 BEDMatrix <- function (path, n = NULL, p = NULL) {
   if (!file.exists(path)) {
