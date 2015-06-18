@@ -6,5 +6,6 @@ Description: BEDMatrix wraps binary PED files and allows subsetting without load
 Depends: R (>= 3.0.0)
 LinkingTo: Rcpp
 Imports: Rcpp
+Suggests: testthat
 License: MIT + file LICENSE
 LazyData: true
