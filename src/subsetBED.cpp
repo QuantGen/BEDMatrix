@@ -26,8 +26,9 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
   // Open BED file.
   std::ifstream infile (path.c_str(), std::ios::binary);
   if (infile) {
-    char *header = new char[3];
-    infile.read(header, 3);
+    int length_header = 3;
+    char *header = new char[length_header];
+    infile.read(header, length_header);
     // Check magic number.
     if (header[0] == '\x6C' && header[1] == '\x1B') {
       // Check mode: 00000001 indicates the default SNP-major mode (i.e.
@@ -43,7 +44,7 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
         int byte_padding = 4 - (n % 4);
         if (byte_padding == 4) byte_padding = 0;
         // Check if given dimensions match the file.
-        if ((n * p) + (byte_padding * p) == (num_bytes - 3) * 4) {
+        if ((n * p) + (byte_padding * p) == (num_bytes - length_header) * 4) {
           // Iterate over rows indexes.
           for (int idx_i = 0; idx_i < size_i; idx_i++) {
             int x = i[idx_i] % n;
@@ -55,7 +56,7 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
             // Find genotype in byte.
             int which_genotype = (which_pos % 4) * 2;
             // Read in the whole byte.
-            infile.seekg(which_byte + 3);
+            infile.seekg(which_byte + length_header);
             char *genotypes = new char[1];
             infile.read(genotypes, 1);
             // Remove the other genotypes by shifting the genotype of interest
@@ -130,8 +131,9 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
   // Open BED file.
   std::ifstream infile (path.c_str(), std::ios::binary);
   if (infile) {
-    char *header = new char[3];
-    infile.read(header, 3);
+    int length_header = 3;
+    char *header = new char[length_header];
+    infile.read(header, length_header);
     // Check magic number.
     if (header[0] == '\x6C' && header[1] == '\x1B') {
       // Check mode: 00000001 indicates the default SNP-major mode (i.e.
@@ -147,7 +149,7 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
         int byte_padding = 4 - (n % 4);
         if (byte_padding == 4) byte_padding = 0;
         // Check if given dimensions match the file.
-        if ((n * p) + (byte_padding * p) == (num_bytes - 3) * 4) {
+        if ((n * p) + (byte_padding * p) == (num_bytes - length_header) * 4) {
           // Iterate over rows indexes.
           for (int idx_i = 0; idx_i < size_i; idx_i++) {
             // Iterate over columns indexes.
@@ -159,7 +161,7 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
               // Find genotype in byte.
               int which_genotype = (which_pos % 4) * 2;
               // Read in the whole byte.
-              infile.seekg(which_byte + 3);
+              infile.seekg(which_byte + length_header);
               char *genotypes = new char[1];
               infile.read(genotypes, 1);
               // Remove the other genotypes by shifting the genotype of interest
