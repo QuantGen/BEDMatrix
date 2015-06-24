@@ -68,16 +68,18 @@ BEDMatrix <- function (path, n = NULL, p = NULL) {
 
 #' @export
 print.BEDMatrix <- function (x, ...) {
-  n <- attr(x, 'n')
-  p <- attr(x, 'p')
+  dims <- dim(x)
+  n <- dims[1]
+  p <- dims[2]
   cat(paste(n, 'x', p, 'BEDMatrix'))
 }
 
 #' @export
 `[.BEDMatrix` <- function (x, i, j, drop = TRUE) {
   path <- attr(x, 'path')
-  n <- attr(x, 'n')
-  p <- attr(x, 'p')
+  dims <- dim(x)
+  n <- dims[1]
+  p <- dims[2]
   if (nargs() > 2) {
     # Case [i, j]
     if (missing(i)) {
