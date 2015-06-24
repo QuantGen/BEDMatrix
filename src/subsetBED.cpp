@@ -13,15 +13,15 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
   std::string path = x.attr("path");
   int n = x.attr("n");
   int p = x.attr("p");
-  // Check if indexes are out of bounds.
+  // Check if index is out of bounds.
   if (Rcpp::is_true(Rcpp::any(i > n * p))) {
     Rcpp::stop("Invalid dimensions.");
   }
   // Convert from 1-index to 0-index.
   i = i - 1;
-  // Keep sizes of i and j.
+  // Keep size of i.
   int size_i = i.size();
-  // Reserve output matrix.
+  // Reserve output vector.
   Rcpp::IntegerVector out (size_i);
   // Open BED file.
   std::ifstream infile (path.c_str(), std::ios::binary);
@@ -45,7 +45,7 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
         if (byte_padding == 4) byte_padding = 0;
         // Check if given dimensions match the file.
         if ((n * p) + (byte_padding * p) == (num_bytes - length_header) * 4) {
-          // Iterate over rows indexes.
+          // Iterate over row indexes.
           for (int idx_i = 0; idx_i < size_i; idx_i++) {
             int x = i[idx_i] % n;
             int y = i[idx_i] / n;
@@ -150,9 +150,9 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
         if (byte_padding == 4) byte_padding = 0;
         // Check if given dimensions match the file.
         if ((n * p) + (byte_padding * p) == (num_bytes - length_header) * 4) {
-          // Iterate over rows indexes.
+          // Iterate over row indexes.
           for (int idx_i = 0; idx_i < size_i; idx_i++) {
-            // Iterate over columns indexes.
+            // Iterate over column indexes.
             for (int idx_j = 0; idx_j < size_j; idx_j++) {
               // Reduce two-dimensional index to one-dimensional index with the mode.
               int which_pos = (j[idx_j] * n) + i[idx_i] + (byte_padding * j[idx_j]);
