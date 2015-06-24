@@ -27,7 +27,7 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
   std::ifstream infile (path.c_str(), std::ios::binary);
   if (infile) {
     int length_header = 3;
-    char *header = new char[length_header];
+    char header[length_header];
     infile.read(header, length_header);
     // Check magic number.
     if (header[0] == '\x6C' && header[1] == '\x1B') {
@@ -57,7 +57,7 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
             int which_genotype = (which_pos % 4) * 2;
             // Read in the whole byte.
             infile.seekg(which_byte + length_header);
-            char *genotypes = new char[1];
+            char genotypes[1];
             infile.read(genotypes, 1);
             // Remove the other genotypes by shifting the genotype of interest
             // to the end of the byte and masking with 00000011.
@@ -132,7 +132,7 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
   std::ifstream infile (path.c_str(), std::ios::binary);
   if (infile) {
     int length_header = 3;
-    char *header = new char[length_header];
+    char header[length_header];
     infile.read(header, length_header);
     // Check magic number.
     if (header[0] == '\x6C' && header[1] == '\x1B') {
@@ -162,7 +162,7 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
               int which_genotype = (which_pos % 4) * 2;
               // Read in the whole byte.
               infile.seekg(which_byte + length_header);
-              char *genotypes = new char[1];
+              char genotypes[1];
               infile.read(genotypes, 1);
               // Remove the other genotypes by shifting the genotype of interest
               // to the end of the byte and masking with 00000011.
