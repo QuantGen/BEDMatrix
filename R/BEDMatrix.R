@@ -76,7 +76,6 @@ print.BEDMatrix <- function (x, ...) {
 
 #' @export
 `[.BEDMatrix` <- function (x, i, j, drop = TRUE) {
-  path <- attr(x, 'path')
   dims <- dim(x)
   n <- dims[1]
   p <- dims[2]
