@@ -37,18 +37,18 @@ BEDMatrix <- function (path, n = NULL, p = NULL) {
     }
     rownames <- paste0('id_', 1:n)
   }
-  # Check if MAP file exists.
-  if (file.exists(paste0(dir, '.map'))) {
-    map <- readLines(paste0(dir, '.map'))
+  # Check if BIM file exists.
+  if (file.exists(paste0(dir, '.bim'))) {
+    bim <- readLines(paste0(dir, '.bim'))
     # Determine p.
-    p <- length(map)
+    p <- length(bim)
     # Determine colnames.
-    colnames <- sapply(strsplit(map, ' '), function (line) {
+    colnames <- sapply(strsplit(bim, ' '), function (line) {
       return(line[2])
     })
   } else {
     if (is.null(p)) {
-      stop('MAP file of same name not found. Provide number of markers (p).')
+      stop('BIM file of same name not found. Provide number of markers (p).')
     }
     colnames <- paste0('mrk_', 1:p)
   }
