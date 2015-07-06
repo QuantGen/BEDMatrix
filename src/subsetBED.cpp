@@ -68,7 +68,7 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
     infile.read(&genotypes, 1);
     // Remove the other genotypes by shifting the genotype of interest
     // to the end of the byte and masking with 00000011.
-    int genotype = genotypes >> which_genotype & 3;
+    char genotype = genotypes >> which_genotype & 3;
     // Remap genotype value.
     int mapping;
     if (genotype == 0) {
@@ -169,7 +169,7 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
       infile.read(&genotypes, 1);
       // Remove the other genotypes by shifting the genotype of interest
       // to the end of the byte and masking with 00000011.
-      int genotype = genotypes >> which_genotype & 3;
+      char genotype = genotypes >> which_genotype & 3;
       // Remap genotype value.
       int mapping;
       if (genotype == 0) {
