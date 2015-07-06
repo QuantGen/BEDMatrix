@@ -9,3 +9,4 @@ Imports: Rcpp
 Suggests: testthat
 License: MIT + file LICENSE
 LazyData: true
+Encoding: UTF-8
