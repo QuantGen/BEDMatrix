@@ -64,11 +64,11 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
     int which_genotype = (which_pos % 4) * 2;
     // Read in the whole byte.
     infile.seekg(which_byte + length_header);
-    char genotypes[1];
-    infile.read(genotypes, 1);
+    char genotypes;
+    infile.read(&genotypes, 1);
     // Remove the other genotypes by shifting the genotype of interest
     // to the end of the byte and masking with 00000011.
-    int genotype = genotypes[0] >> which_genotype & 3;
+    int genotype = genotypes >> which_genotype & 3;
     // Remap genotype value.
     int mapping;
     if (genotype == 0) {
@@ -165,11 +165,11 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
       int which_genotype = (which_pos % 4) * 2;
       // Read in the whole byte.
       infile.seekg(which_byte + length_header);
-      char genotypes[1];
-      infile.read(genotypes, 1);
+      char genotypes;
+      infile.read(&genotypes, 1);
       // Remove the other genotypes by shifting the genotype of interest
       // to the end of the byte and masking with 00000011.
-      int genotype = genotypes[0] >> which_genotype & 3;
+      int genotype = genotypes >> which_genotype & 3;
       // Remap genotype value.
       int mapping;
       if (genotype == 0) {
