@@ -70,17 +70,13 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
     // to the end of the byte and masking with 00000011.
     char genotype = genotypes >> which_genotype & 3;
     // Remap genotype value.
-    int mapping;
+    int mapping = NA_INTEGER; // missing
     if (genotype == 0) {
       mapping = 2; // homozygous AA
     } else if (genotype == 3) {
       mapping = 0; // homozygous BB
     } else if (genotype == 2) {
       mapping = 1; // heterozygous AB
-    } else if (genotype == 1) {
-      mapping = NA_INTEGER; // missing
-    } else {
-      Rcpp::stop("Invalid genotype.");
     }
     out(idx_i) = mapping;
   }
@@ -171,17 +167,13 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
       // to the end of the byte and masking with 00000011.
       char genotype = genotypes >> which_genotype & 3;
       // Remap genotype value.
-      int mapping;
+      int mapping = NA_INTEGER; // missing
       if (genotype == 0) {
         mapping = 2; // homozygous AA
       } else if (genotype == 3) {
         mapping = 0; // homozygous BB
       } else if (genotype == 2) {
         mapping = 1; // heterozygous AB
-      } else if (genotype == 1) {
-        mapping = NA_INTEGER; // missing
-      } else {
-        Rcpp::stop("Invalid genotype.");
       }
       out(idx_i, idx_j) = mapping;
     }
