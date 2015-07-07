@@ -5,10 +5,6 @@
 
 // [[Rcpp::export]]
 Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
-  // Check if x is a BEDMatrix.
-  if (!x.inherits("BEDMatrix")) {
-    Rcpp::stop("x must be a BEDMatrix.");
-  }
   std::string path = x.attr("path");
   int n = x.attr("n");
   int p = x.attr("p");
@@ -85,10 +81,6 @@ Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
 
 // [[Rcpp::export]]
 Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
-  // Check if x is a BEDMatrix.
-  if (!x.inherits("BEDMatrix")) {
-    Rcpp::stop("x must be a BEDMatrix.");
-  }
   std::string path = x.attr("path");
   int n = x.attr("n");
   int p = x.attr("p");
