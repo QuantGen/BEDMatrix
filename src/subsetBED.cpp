@@ -13,7 +13,7 @@ class BEDMatrix {
     int nrow;
     int ncol;
     int byte_padding;
-    static const int length_header = 3;
+    static const int length_header;
 };
 
 BEDMatrix::BEDMatrix(std::string path, int n, int p) : infile(path.c_str(), std::ios::binary), nrow(n), ncol(p) {
@@ -75,6 +75,8 @@ int BEDMatrix::getGenotype(int i, int j) {
   }
   return mapping;
 }
+
+const int BEDMatrix::length_header = 3;
 
 // [[Rcpp::export]]
 Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
