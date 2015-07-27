@@ -9,6 +9,8 @@ class BEDMatrix {
     ~BEDMatrix();
     int getGenotype(int i, int j);
   private:
+    BEDMatrix(const BEDMatrix&);
+    BEDMatrix& operator=(const BEDMatrix&);
     std::ifstream infile;
     int nrow;
     int ncol;
