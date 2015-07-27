@@ -6,7 +6,7 @@
 class BEDMatrix {
   public:
     BEDMatrix(std::string path, int n, int p);
-    ~BEDMatrix(void);
+    ~BEDMatrix();
     int getGenotype(int i, int j);
   private:
     std::ifstream infile;
@@ -46,7 +46,7 @@ BEDMatrix::BEDMatrix(std::string path, int n, int p) : infile(path.c_str(), std:
   }
 }
 
-BEDMatrix::~BEDMatrix(void) {
+BEDMatrix::~BEDMatrix() {
   this->infile.close();
 }
 
