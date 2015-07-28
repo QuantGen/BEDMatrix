@@ -14,11 +14,11 @@ class BEDMatrix {
     std::ifstream infile;
     int nrow;
     int ncol;
-    int byte_padding;
+    int byte_padding; // Each new "row" starts a new byte.
     static const int length_header;
 };
 
-BEDMatrix::BEDMatrix(std::string path, int n, int p) : infile(path.c_str(), std::ios::binary), nrow(n), ncol(p) {
+BEDMatrix::BEDMatrix(std::string path, int n, int p) : infile(path.c_str(), std::ios::binary), nrow(n), ncol(p), byte_padding((n % 4 == 0) ? 0 : 4 - (n % 4)) {
   if (!this->infile) {
     Rcpp::stop("File not found.");
   }
@@ -39,9 +39,6 @@ BEDMatrix::BEDMatrix(std::string path, int n, int p) : infile(path.c_str(), std:
   // Get number of bytes.
   this->infile.seekg(0, infile.end);
   int num_bytes = infile.tellg();
-  // Calculate padding: each new "row" starts a new byte.
-  this->byte_padding = 4 - (this->nrow % 4);
-  if (this->byte_padding == 4) this->byte_padding = 0;
   // Check if given dimensions match the file.
   if ((this->nrow * this->ncol) + (this->byte_padding * this->ncol) != (num_bytes - this->length_header) * 4) {
     Rcpp::stop("n or p does not match the dimensions of the file.");
