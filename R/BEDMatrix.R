@@ -2,6 +2,9 @@
 #' @importFrom Rcpp sourceCpp
 NULL
 
+# Delimiters used in PED files.
+delims <- '[ \t]'
+
 #' Creates a matrix wrapper around a binary PED file.
 #'
 #' The binary PED file will not be loaded into memory. Rather, subsets are
@@ -28,7 +31,7 @@ BEDMatrix <- function (path, n = NULL, p = NULL) {
     # Determine n.
     n <- length(fam)
     # Determine rownames.
-    rownames <- sapply(strsplit(fam, ' '), function (line) {
+    rownames <- sapply(strsplit(fam, delims), function (line) {
       return(paste0(line[1], '_', line[2]))
     })
   } else {
@@ -43,7 +46,7 @@ BEDMatrix <- function (path, n = NULL, p = NULL) {
     # Determine p.
     p <- length(bim)
     # Determine colnames.
-    colnames <- sapply(strsplit(bim, ' '), function (line) {
+    colnames <- sapply(strsplit(bim, delims), function (line) {
       return(line[2])
     })
   } else {
