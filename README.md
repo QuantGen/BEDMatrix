@@ -15,7 +15,13 @@ A wrapper for [binary PED files](http://pngu.mgh.harvard.edu/~purcell/plink/data
 ## Example
 This example uses a very simple BED file that is bundled with the R package. It was generated from the PLINK files in the [`inst/extdata` folder](https://github.com/QuantGen/BEDMatrix/tree/master/inst/extdata).
 ```r
-m <- BEDMatrix(system.file('extdata', 'example.bed', package = 'BEDMatrix'))
+# Get path to example BED file
+path <- system.file('extdata', 'example.bed', package = 'BEDMatrix')
+
+# Wrap example BED file in matrix
+m <- BEDMatrix(path)
+
+# Print matrix
 m[]
 ```
 
