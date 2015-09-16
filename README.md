@@ -17,3 +17,9 @@ A wrapper for [binary PED files](http://pngu.mgh.harvard.edu/~purcell/plink/data
 m <- BEDMatrix(system.file('extdata', 'example.bed', package = 'BEDMatrix'))
 m[]
 ```
+
+## How to create a BED file from a PED file using PLINK
+
+```
+plink --file myfile --make-bed
+```
