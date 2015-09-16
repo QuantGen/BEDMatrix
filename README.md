@@ -1,5 +1,5 @@
 # BEDMatrix
-A wrapper for binary PED files.
+A wrapper for [binary PED files](http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#bed).
 
 ## Installation
 1. Install devtools: `install.packages('devtools')`
