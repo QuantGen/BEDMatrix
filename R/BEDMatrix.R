@@ -1,5 +1,5 @@
 #' @useDynLib BEDMatrix
-#' @importFrom Rcpp sourceCpp
+#' @import Rcpp
 NULL
 
 # Delimiters used in PED files.
