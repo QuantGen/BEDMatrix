@@ -3,14 +3,36 @@
 #include <string>
 #include <Rcpp.h>
 
+Rcpp::IntegerMatrix& preserveDimnames(const Rcpp::List& x, Rcpp::IntegerMatrix& out, const Rcpp::IntegerVector& i, const Rcpp::IntegerVector& j) {
+  Rcpp::List out_dimnames = Rcpp::List::create(
+    R_NilValue,
+    R_NilValue
+  );
+  Rcpp::List in_dimnames = x.attr("dnames");
+  Rcpp::RObject in_rownames = in_dimnames[0];
+  Rcpp::RObject in_colnames = in_dimnames[1];
+  if (!in_rownames.isNULL()) {
+    out_dimnames[0] = Rcpp::CharacterVector(in_rownames)[i];
+  }
+  if (!in_colnames.isNULL()) {
+    out_dimnames[1] = Rcpp::CharacterVector(in_colnames)[j];
+  }
+  out.attr("dimnames") = out_dimnames;
+  return out;
+}
+
 class BEDMatrix {
   public:
     BEDMatrix(std::string path, unsigned int n, unsigned int p);
     ~BEDMatrix();
-    int getGenotype(unsigned int i, unsigned int j);
+    Rcpp::IntegerVector vector_subset(Rcpp::List x, Rcpp::IntegerVector i);
+    Rcpp::IntegerMatrix matrix_subset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j);
+    unsigned int get_nrow();
+    unsigned int get_ncol();
   private:
     BEDMatrix(const BEDMatrix&);
     BEDMatrix& operator=(const BEDMatrix&);
+    int get_genotype(unsigned int i, unsigned int j);
     std::ifstream infile;
     unsigned int nrow;
     unsigned int ncol;
@@ -49,7 +71,7 @@ BEDMatrix::~BEDMatrix() {
   this->infile.close();
 }
 
-int BEDMatrix::getGenotype(unsigned int i, unsigned int j) {
+int BEDMatrix::get_genotype(unsigned int i, unsigned int j) {
   // Reduce two-dimensional index to one-dimensional index with the mode.
   unsigned int which_pos = (j * this->nrow) + i + (this->byte_padding * j);
   // Every byte encodes 4 genotypes, find the one of interest.
@@ -75,57 +97,27 @@ int BEDMatrix::getGenotype(unsigned int i, unsigned int j) {
   return mapping;
 }
 
-const unsigned int BEDMatrix::length_header = 3;
-
-Rcpp::IntegerMatrix& preserveDimnames(const Rcpp::List& x, Rcpp::IntegerMatrix& out, const Rcpp::IntegerVector& i, const Rcpp::IntegerVector& j) {
-  Rcpp::List out_dimnames = Rcpp::List::create(
-    R_NilValue,
-    R_NilValue
-  );
-  Rcpp::List in_dimnames = x.attr("dnames");
-  Rcpp::RObject in_rownames = in_dimnames[0];
-  Rcpp::RObject in_colnames = in_dimnames[1];
-  if (!in_rownames.isNULL()) {
-    out_dimnames[0] = Rcpp::CharacterVector(in_rownames)[i];
-  }
-  if (!in_colnames.isNULL()) {
-    out_dimnames[1] = Rcpp::CharacterVector(in_colnames)[j];
-  }
-  out.attr("dimnames") = out_dimnames;
-  return out;
-}
-
-// [[Rcpp::export]]
-Rcpp::IntegerVector vectorSubset(Rcpp::List x, Rcpp::IntegerVector i) {
-  std::string path = x.attr("path");
-  unsigned int n = x.attr("n");
-  unsigned int p = x.attr("p");
+Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::List x, Rcpp::IntegerVector i) {
   // Check if index is out of bounds.
-  if (Rcpp::is_true(Rcpp::any(i > n * p))) {
+  if (Rcpp::is_true(Rcpp::any(i > this->nrow * this->ncol))) {
     Rcpp::stop("Invalid dimensions.");
   }
   // Convert from 1-index to 0-index.
   i = i - 1;
   // Keep size of i.
   unsigned int size_i = i.size();
-  // Create BEDMatrix instance.
-  BEDMatrix bed (path, n, p);
   // Reserve output vector.
   Rcpp::IntegerVector out (size_i);
   // Iterate over indexes.
   for (unsigned int idx_i = 0; idx_i < size_i; idx_i++) {
-    out(idx_i) = bed.getGenotype(i[idx_i] % n, i[idx_i] / n);
+    out(idx_i) = this->get_genotype(i[idx_i] % this->nrow, i[idx_i] / this->nrow);
   }
   return out;
 }
 
-// [[Rcpp::export]]
-Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
-  std::string path = x.attr("path");
-  unsigned int n = x.attr("n");
-  unsigned int p = x.attr("p");
+Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
   // Check if indexes are out of bounds.
-  if (Rcpp::is_true(Rcpp::any(i > n)) || Rcpp::is_true(Rcpp::any(j > p))) {
+  if (Rcpp::is_true(Rcpp::any(i > this->nrow)) || Rcpp::is_true(Rcpp::any(j > this->ncol))) {
     Rcpp::stop("Invalid dimensions.");
   }
   // Convert from 1-index to 0-index.
@@ -134,8 +126,6 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
   // Keep sizes of i and j.
   unsigned int size_i = i.size();
   unsigned int size_j = j.size();
-  // Create BEDMatrix instance.
-  BEDMatrix bed (path, n, p);
   // Reserve output matrix.
   Rcpp::IntegerMatrix out (size_i, size_j);
   preserveDimnames(x, out, i, j);
@@ -143,8 +133,33 @@ Rcpp::IntegerMatrix matrixSubset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::Inte
   for (unsigned int idx_i = 0; idx_i < size_i; idx_i++) {
     // Iterate over column indexes.
     for (unsigned int idx_j = 0; idx_j < size_j; idx_j++) {
-      out(idx_i, idx_j) = bed.getGenotype(i[idx_i], j[idx_j]);
+      out(idx_i, idx_j) = this->get_genotype(i[idx_i], j[idx_j]);
     }
   }
   return out;
+}
+
+
+unsigned int BEDMatrix::get_nrow() {
+  return this->nrow;
+};
+
+unsigned int BEDMatrix::get_ncol() {
+  return this->ncol;
+};
+
+const unsigned int BEDMatrix::length_header = 3;
+
+RCPP_MODULE(mod_BEDMatrix) {
+
+  using namespace Rcpp;
+
+  class_<BEDMatrix>("BEDMatrix_")
+  .constructor<std::string, unsigned int, unsigned int>()
+  .method("vectorSubset", &BEDMatrix::vector_subset)
+  .method("matrixSubset", &BEDMatrix::matrix_subset)
+  .property("n", &BEDMatrix::get_nrow)
+  .property("p", &BEDMatrix::get_ncol)
+  ;
+
 }

@@ -1,6 +1,6 @@
 #' @useDynLib BEDMatrix
 #' @import Rcpp
-NULL
+loadModule('mod_BEDMatrix', TRUE)
 
 # Delimiters used in PED files.
 delims <- '[ \t]'
@@ -57,16 +57,17 @@ BEDMatrix <- function (path, n = NULL, p = NULL) {
   }
   n <- as.integer(n)
   p <- as.integer(p)
-  obj <- list()
-  class(obj) <- 'BEDMatrix'
-  attr(obj, 'path') <- path
-  attr(obj, 'n') <- n
-  attr(obj, 'p') <- p
-  attr(obj, 'dnames') <- list(
+  # Create Rcpp object
+  rcpp_obj <- new(BEDMatrix_, path, n, p)
+  # Wrap object in S3 class
+  s3_obj <- list()
+  class(s3_obj) <- 'BEDMatrix'
+  attr(s3_obj, '_instance') <- rcpp_obj
+  attr(s3_obj, 'dnames') <- list(
     rownames,
     colnames
   )
-  return(obj)
+  return(s3_obj)
 }
 
 #' @export
@@ -79,6 +80,7 @@ print.BEDMatrix <- function (x, ...) {
 
 #' @export
 `[.BEDMatrix` <- function (x, i, j, drop = TRUE) {
+  rcpp_obj <- attr(x, '_instance')
   dims <- dim(x)
   n <- dims[1]
   p <- dims[2]
@@ -102,7 +104,7 @@ print.BEDMatrix <- function (x, ...) {
         which(colnames(x) == name)
       }, USE.NAMES=FALSE)
     }
-    subset <- matrixSubset(x, i, j)
+    subset <- rcpp_obj$matrixSubset(x, i, j)
     # Let R handle drop behavior.
     if(drop == TRUE && (nrow(subset) == 1 || ncol(subset) == 1)) {
       subset <- subset[,]
@@ -112,7 +114,7 @@ print.BEDMatrix <- function (x, ...) {
       # Case []
       i <- 1:n
       j <- 1:p
-      subset <- matrixSubset(x, i, j)
+      subset <- rcpp_obj$matrixSubset(x, i, j)
     } else {
       # Case [i]
       if (class(i) == 'matrix') {
@@ -127,7 +129,7 @@ print.BEDMatrix <- function (x, ...) {
           i <- which(rep_len(i, n * p))
         }
       }
-      subset <- vectorSubset(x, i)
+      subset <- rcpp_obj$vectorSubset(x, i)
     }
   }
   return(subset)
@@ -135,8 +137,9 @@ print.BEDMatrix <- function (x, ...) {
 
 #' @export
 dim.BEDMatrix <- function (x) {
-  n <- attr(x, 'n')
-  p <- attr(x, 'p')
+  rcpp_obj <- attr(x, '_instance')
+  n <- rcpp_obj$n
+  p <- rcpp_obj$p
   return(c(n, p))
 }
 
