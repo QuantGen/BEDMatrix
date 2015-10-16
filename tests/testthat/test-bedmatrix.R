@@ -1,5 +1,3 @@
-library(BEDMatrix)
-
 context('BEDMatrix')
 
 parseRaw <- function (path) {
