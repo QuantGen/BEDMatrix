@@ -1,6 +1,8 @@
 # BEDMatrix
 The BEDMatrix package provides a wrapper around [binary PED files](http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#bed) (so-called BED files) that behaves just like a regular R matrix, but retrieves genotypes on demand without loading the entire BED file into memory. The goal is to support huge PED files, and to save time on initially reading in PED files into the R environment.
 
+[![Travis-CI Build Status](https://travis-ci.org/QuantGen/BEDMatrix.svg?branch=master)](https://travis-ci.org/QuantGen/BEDMatrix)
+
 ## Installation
 The package is not available on CRAN yet. In the meantime, it can be installed using the [devtools](https://github.com/hadley/devtools) package directly from GitHub.
 
