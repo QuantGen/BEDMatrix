@@ -16,47 +16,49 @@ parseRaw <- function(path) {
 
 # Prepare dummy data
 raw <- parseRaw(system.file("extdata", "example.raw", package = "BEDMatrix"))
+examplePath <- system.file("extdata", "example.bed", package = "BEDMatrix")
+standalonePath <- system.file("extdata", "standalone.bed", package = "BEDMatrix")
 
 test_that("it throws an error if file does not exist", {
     expect_error(bed("NOT_FOUND"))
 })
 
 test_that("it determines n from FAM file", {
-    bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"))
+    bed <- BEDMatrix(path = examplePath)
     expect_equal(nrow(bed), 6)
 })
 
 test_that("it throws an error if FAM file is not found and n is not given", {
-    expect_error(BEDMatrix(path = system.file("extdata", "standalone.bed", package = "BEDMatrix")))
+    expect_error(BEDMatrix(path = standalonePath))
 })
 
 test_that("it determines rownames from FAM file", {
-    bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"))
+    bed <- BEDMatrix(path = examplePath)
     expect_equal(rownames(bed), c("1_1", "1_2", "1_3", "2_1", "2_2", "2_3"))
 })
 
 test_that("it determines p from BIM file", {
-    bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"))
+    bed <- BEDMatrix(path = examplePath)
     expect_equal(ncol(bed), 3)
 })
 
 test_that("it throws an error if BIM file is not found and p is not given", {
-    expect_error(BEDMatrix(path = system.file("extdata", "standalone.bed", package = "BEDMatrix")))
+    expect_error(BEDMatrix(path = standalonePath))
 })
 
 test_that("it determines colnames from BIM file", {
-    bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"))
+    bed <- BEDMatrix(path = examplePath)
     expect_equal(colnames(bed), c("snp1", "snp2", "snp3"))
 })
 
 test_that("it accepts n and p if FAM or BIM file is not found", {
-    bed <- BEDMatrix(path = system.file("extdata", "standalone.bed", package = "BEDMatrix"), n = 6, p = 3)
+    bed <- BEDMatrix(path = standalonePath, n = 6, p = 3)
     expect_equal(dim(bed), c(6, 3))
 })
 
 test_that("subsetting", {
 
-    bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"), n = 6, p = 3)
+    bed <- BEDMatrix(path = examplePath, n = 6, p = 3)
     rownames(bed) <- paste0("id_", 1:nrow(bed))
     colnames(bed) <- paste0("mrk_", 1:ncol(bed))
 
