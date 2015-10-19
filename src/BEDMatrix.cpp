@@ -129,10 +129,10 @@ Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i
   // Reserve output matrix.
   Rcpp::IntegerMatrix out (size_i, size_j);
   preserveDimnames(x, out, i, j);
-  // Iterate over row indexes.
-  for (unsigned int idx_i = 0; idx_i < size_i; idx_i++) {
-    // Iterate over column indexes.
-    for (unsigned int idx_j = 0; idx_j < size_j; idx_j++) {
+  // Iterate over column indexes.
+  for (unsigned int idx_j = 0; idx_j < size_j; idx_j++) {
+    // Iterate over row indexes.
+    for (unsigned int idx_i = 0; idx_i < size_i; idx_i++) {
       out(idx_i, idx_j) = this->get_genotype(i[idx_i], j[idx_j]);
     }
   }
