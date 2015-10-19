@@ -21,6 +21,11 @@ test_that("it throws an error if file does not exist", {
     expect_error(bed("NOT_FOUND"))
 })
 
+test_that("it determines n from FAM file", {
+    bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"))
+    expect_equal(nrow(bed), 6)
+})
+
 test_that("subsetting", {
 
     bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"), n = 6, p = 3)
