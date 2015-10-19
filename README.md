@@ -41,8 +41,11 @@ m[]
 ```
 
 
-How to create a BED file from a PED file using PLINK
-----------------------------------------------------
+FAQ
+---
+
+### How do I create a BED file from a PED file using PLINK?
+
 
 ```
 plink --file myfile --make-bed
