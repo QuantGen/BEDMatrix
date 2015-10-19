@@ -40,6 +40,10 @@ test_that("it determines p from BIM file", {
     expect_equal(ncol(bed), 3)
 })
 
+test_that("it throws an error if BIM file is not found and p is not given", {
+    expect_error(BEDMatrix(path = system.file("extdata", "standalone.bed", package = "BEDMatrix")))
+})
+
 test_that("it determines colnames from BIM file", {
     bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"))
     expect_equal(colnames(bed), c("snp1", "snp2", "snp3"))
