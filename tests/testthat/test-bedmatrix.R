@@ -61,6 +61,10 @@ test_that("it accepts n and p if FAM or BIM file is not found", {
     expect_equal(dimnames(bed), list(paste0("id_", 1:6), paste0("mrk_", 1:3)))
 })
 
+test_that("it throws an error if dimensions are wrong", {
+    expect_error(BEDMatrix(path = examplePath, n = 10, p = 5))
+})
+
 test_that("subsetting", {
 
     bed <- BEDMatrix(path = examplePath, n = 6, p = 3)
