@@ -20,7 +20,11 @@ examplePath <- system.file("extdata", "example.bed", package = "BEDMatrix")
 standalonePath <- system.file("extdata", "standalone.bed", package = "BEDMatrix")
 
 test_that("it throws an error if file does not exist", {
-    expect_error(bed("NOT_FOUND"))
+    expect_error(BEDMatrix("NOT_FOUND"))
+})
+
+test_that("it throws an error if file is not a BED file", {
+    expect_error(BEDMatrix(system.file("extdata", "example.raw", package = "BEDMatrix")))
 })
 
 test_that("it determines n from FAM file", {
