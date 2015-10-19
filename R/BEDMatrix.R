@@ -1,5 +1,5 @@
 #' @useDynLib BEDMatrix
-#' @import Rcpp
+#' @import methods Rcpp
 loadModule("mod_BEDMatrix", TRUE)
 
 # Delimiters used in PED files.
