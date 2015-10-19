@@ -26,6 +26,10 @@ test_that("it determines n from FAM file", {
     expect_equal(nrow(bed), 6)
 })
 
+test_that("it throws an error if FAM file is not found and n is not given", {
+    expect_error(BEDMatrix(path = system.file("extdata", "standalone.bed", package = "BEDMatrix")))
+})
+
 test_that("it determines rownames from FAM file", {
     bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"))
     expect_equal(rownames(bed), c("1_1", "1_2", "1_3", "2_1", "2_2", "2_3"))
