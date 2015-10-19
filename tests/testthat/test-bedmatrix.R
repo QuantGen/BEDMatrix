@@ -17,6 +17,10 @@ parseRaw <- function(path) {
 # Prepare dummy data
 raw <- parseRaw(system.file("extdata", "example.raw", package = "BEDMatrix"))
 
+test_that("it throws an error if file does not exist", {
+    expect_error(bed("NOT_FOUND"))
+})
+
 test_that("subsetting", {
 
     bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"), n = 6, p = 3)
