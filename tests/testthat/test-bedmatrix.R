@@ -36,6 +36,11 @@ test_that("it determines p from BIM file", {
     expect_equal(ncol(bed), 3)
 })
 
+test_that("it determines colnames from BIM file", {
+    bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"))
+    expect_equal(colnames(bed), c("snp1", "snp2", "snp3"))
+})
+
 test_that("subsetting", {
 
     bed <- BEDMatrix(path = system.file("extdata", "example.bed", package = "BEDMatrix"), n = 6, p = 3)
