@@ -24,7 +24,6 @@ Rcpp::IntegerMatrix& preserveDimnames(const Rcpp::List& x, Rcpp::IntegerMatrix& 
 class BEDMatrix {
     public:
         BEDMatrix(std::string path, unsigned int n, unsigned int p);
-        ~BEDMatrix();
         Rcpp::IntegerVector vector_subset(Rcpp::List x, Rcpp::IntegerVector i);
         Rcpp::IntegerMatrix matrix_subset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j);
         unsigned int get_nrow();
@@ -65,10 +64,6 @@ BEDMatrix::BEDMatrix(std::string path, unsigned int n, unsigned int p) : infile(
     if ((this->nrow * this->ncol) + (this->byte_padding * this->ncol) != (num_bytes - this->length_header) * 4) {
         Rcpp::stop("n or p does not match the dimensions of the file.");
     }
-}
-
-BEDMatrix::~BEDMatrix() {
-    this->infile.close();
 }
 
 int BEDMatrix::get_genotype(unsigned int i, unsigned int j) {
