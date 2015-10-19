@@ -17,11 +17,11 @@ exists.}
 }
 \description{
 The binary PED file will not be loaded into memory. Rather, subsets are
-extracted "on the fly".
+extracted 'on the fly'.
 }
 \details{
 If a FAM or MAP file with the same name as the binary PED file (minus the
-extension) exists within the same folder, \code{n} and \code{p} will be
-automatically determined from those files.
+extension) exists within the same folder, \code{n} and \code{p} as well as
+rownames and colnames will be automatically determined from those files.
 }
 

@@ -11,8 +11,8 @@ delims <- "[ \t]"
 #' extracted 'on the fly'.
 #'
 #' If a FAM or MAP file with the same name as the binary PED file (minus the
-#' extension) exists within the same folder, \code{n} and \code{p} will be
-#' automatically determined from those files.
+#' extension) exists within the same folder, \code{n} and \code{p} as well as
+#' rownames and colnames will be automatically determined from those files.
 #'
 #' @param path Path to the binary PED file.
 #' @param n The number of individuals. Optional if FAM file of same name as BED
