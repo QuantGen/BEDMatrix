@@ -51,9 +51,14 @@ test_that("it determines colnames from BIM file", {
     expect_equal(colnames(bed), c("snp1", "snp2", "snp3"))
 })
 
+test_that("it accepts n and p if FAM or BIM file are present", {
+    bed <- BEDMatrix(path = examplePath, n = 6, p = 3)
+    expect_equal(dimnames(bed), list(paste0("id_", 1:6), paste0("mrk_", 1:3)))
+})
+
 test_that("it accepts n and p if FAM or BIM file is not found", {
     bed <- BEDMatrix(path = standalonePath, n = 6, p = 3)
-    expect_equal(dim(bed), c(6, 3))
+    expect_equal(dimnames(bed), list(paste0("id_", 1:6), paste0("mrk_", 1:3)))
 })
 
 test_that("subsetting", {

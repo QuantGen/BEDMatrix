@@ -13,6 +13,7 @@ delims <- "[ \t]"
 #' If a FAM or MAP file with the same name as the binary PED file (minus the
 #' extension) exists within the same folder, \code{n} and \code{p} as well as
 #' rownames and colnames will be automatically determined from those files.
+#' To skip this, provide \code{n} and \code{p} manually.
 #'
 #' @param path Path to the binary PED file.
 #' @param n The number of individuals. Optional if FAM file of same name as BED
@@ -25,38 +26,40 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
         stop("File not found.")
     }
     dir <- substr(path, 1, nchar(path) - 4)
-    # Check if FAM file exists.
-    if (file.exists(paste0(dir, ".fam"))) {
-        fam <- readLines(paste0(dir, ".fam"))
-        # Determine n.
-        n <- length(fam)
-        # Determine rownames.
-        rownames <- sapply(strsplit(fam, delims), function(line) {
-            return(paste0(line[1], "_", line[2]))
-        })
-    } else {
-        if (is.null(n)) {
+    if (is.null(n)) {
+        # Check if FAM file exists.
+        if (!file.exists(paste0(dir, ".fam"))) {
             stop("FAM file of same name not found. Provide number of individuals (n).")
+        } else {
+            fam <- readLines(paste0(dir, ".fam"))
+            # Determine n.
+            n <- length(fam)
+            # Determine rownames.
+            rownames <- sapply(strsplit(fam, delims), function(line) {
+                return(paste0(line[1], "_", line[2]))
+            })
         }
+    } else {
+        n <- as.integer(n)
         rownames <- paste0("id_", 1:n)
     }
     # Check if BIM file exists.
-    if (file.exists(paste0(dir, ".bim"))) {
-        bim <- readLines(paste0(dir, ".bim"))
-        # Determine p.
-        p <- length(bim)
-        # Determine colnames.
-        colnames <- sapply(strsplit(bim, delims), function(line) {
-            return(line[2])
-        })
-    } else {
-        if (is.null(p)) {
+    if (is.null(p)) {
+        if (!file.exists(paste0(dir, ".bim"))) {
             stop("BIM file of same name not found. Provide number of markers (p).")
+        } else {
+            bim <- readLines(paste0(dir, ".bim"))
+            # Determine p.
+            p <- length(bim)
+            # Determine colnames.
+            colnames <- sapply(strsplit(bim, delims), function(line) {
+                return(line[2])
+            })
         }
+    } else {
+        p <- as.integer(p)
         colnames <- paste0("mrk_", 1:p)
     }
-    n <- as.integer(n)
-    p <- as.integer(p)
     # Create Rcpp object
     rcpp_obj <- new(BEDMatrix_, path, n, p)
     # Wrap object in S3 class
