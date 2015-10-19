@@ -43,8 +43,8 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
         n <- as.integer(n)
         rownames <- paste0("id_", 1:n)
     }
-    # Check if BIM file exists.
     if (is.null(p)) {
+        # Check if BIM file exists.
         if (!file.exists(paste0(dir, ".bim"))) {
             stop("BIM file of same name not found. Provide number of markers (p).")
         } else {
