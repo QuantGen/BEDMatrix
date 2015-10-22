@@ -41,7 +41,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
         }
     } else {
         n <- as.integer(n)
-        rownames <- paste0("id_", 1:n)
+        rownames <- NULL
     }
     if (is.null(p)) {
         # Check if BIM file exists.
@@ -58,7 +58,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
         }
     } else {
         p <- as.integer(p)
-        colnames <- paste0("mrk_", 1:p)
+        colnames <- NULL
     }
     # Create Rcpp object
     rcpp_obj <- new(BEDMatrix_, path, n, p)
