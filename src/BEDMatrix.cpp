@@ -46,9 +46,9 @@ BEDMatrix::BEDMatrix(std::string path, unsigned int n, unsigned int p) : file(pa
     if (!this->file.is_open()) {
         Rcpp::stop("File not found.");
     }
-    file_data = file.data();
+    this->file_data = this->file.data();
     // Check magic number.
-    if (!(file_data[0] == '\x6C' && file_data[1] == '\x1B')) {
+    if (!(this->file_data[0] == '\x6C' && this->file_data[1] == '\x1B')) {
         Rcpp::stop("File is not a binary PED file.");
     }
     // Check mode: 00000001 indicates the default SNP-major mode (i.e.
@@ -56,11 +56,11 @@ BEDMatrix::BEDMatrix(std::string path, unsigned int n, unsigned int p) : file(pa
     // SNP, etc), 00000000 indicates the unsupported individual-major
     // mode (i.e. list all SNPs for the first individual, list all SNPs
     // for the second individual, etc).
-    if (file_data[2] != '\x01') {
+    if (this->file_data[2] != '\x01') {
         Rcpp::stop("Individual-major mode is not supported.");
     }
     // Get number of bytes.
-    const unsigned int num_bytes = file.size();
+    const unsigned int num_bytes = this->file.size();
     // Check if given dimensions match the file.
     if ((this->nrow * this->ncol) + (this->byte_padding * this->ncol) != (num_bytes - this->length_header) * 4) {
         Rcpp::stop("n or p does not match the dimensions of the file.");
@@ -75,7 +75,7 @@ int BEDMatrix::get_genotype(unsigned int i, unsigned int j) {
     // Find genotype in byte.
     unsigned int which_genotype = (which_pos % 4) * 2;
     // Read in the whole byte.
-    char genotypes = file_data[which_byte + this->length_header];
+    char genotypes = this->file_data[which_byte + this->length_header];
     // Remove the other genotypes by shifting the genotype of interest
     // to the end of the byte and masking with 00000011.
     char genotype = genotypes >> which_genotype & 3;
