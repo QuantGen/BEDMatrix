@@ -9,6 +9,8 @@ The BEDMatrix package provides a wrapper around [binary PED files](http://pngu.m
 Installation
 ------------
 
+BEDMatrix relies on [Boost.Iostreams](http://www.boost.org/doc/libs/1_59_0/libs/iostreams/doc/index.html) for memory-mapped files. This is not a header-only library and is therefore not part of the [BH](https://cran.r-project.org/web/packages/BH/) package for R. You will need to install Boost on your system, for example by running `sudo apt install libboost-all-dev` on Ubuntu or `brew install boost` on OS X. Windows is currently unsupported.
+
 The package is not available on CRAN yet. In the meantime, it can be installed using the [devtools](https://github.com/hadley/devtools) package directly from GitHub.
 
 1. Install devtools: `install.packages('devtools')`
