@@ -12,3 +12,4 @@ Imports:
     Rcpp (>= 0.12.1)
 Suggests: testthat
 LinkingTo: Rcpp
+OS_type: unix
