@@ -11,5 +11,6 @@ Imports:
     methods,
     Rcpp (>= 0.12.1)
 Suggests: testthat
+SystemRequirements: Boost.Iostreams. See README.
 LinkingTo: Rcpp
 OS_type: unix
