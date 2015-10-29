@@ -2,18 +2,22 @@ Package: BEDMatrix
 Version: 0.0.0.9000
 License: MIT + file LICENSE
 Title: A Wrapper for Binary PED Files
-Description: This package wraps binary PED files and allows subsetting without loading the entire file into memory.
+Description: This package wraps binary PED files and allows subsetting without
+    loading the entire file into memory.
 Authors@R: c(
     person("Alexander", "Grueneberg", email = "alexander.grueneberg@googlemail.com", role = c("aut", "cre")),
     person("Lian", "Lian", email = "lianl0501@gmail.com", role = c("ctb")),
     person("Gustavo", "de los Campos", email = "gustavoc@msu.edu", role = c("ctb")))
 URL: https://github.com/QuantGen/BEDMatrix
 BugReports: https://github.com/QuantGen/BEDMatrix/issues
-Depends: R (>= 3.0.0)
+Depends:
+    R (>= 3.0.0)
 Imports:
     methods,
     Rcpp (>= 0.12.1)
-Suggests: testthat
+Suggests:
+    testthat
 SystemRequirements: Boost.IOStreams
 LinkingTo: Rcpp
 OS_type: unix
+RoxygenNote: 5.0.0
