@@ -56,6 +56,10 @@ plink --file myfile --make-bed
 
 Pass `n` and `p` manually. That way, the BIM and FAM files are not parsed.
 
+### There are errors when installing the package. What do I do now?
+
+Did you install Boost? See [Installation](#installation) section above. If you are on Windows, see [the question below](#how-do-i-install-this-package-on-windows). If Boost is installed and it still doesn't work, please [create an issue](https://github.com/QuantGen/BEDMatrix/issues/new) and let me know.
+
 ### How do I install this package on Windows?
 
 I don't know, but please get in touch if you find out!
