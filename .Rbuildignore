@@ -3,3 +3,4 @@
 ^revdep$
 .pversion
 ^\.travis\.yml$
+cran-comments.md
