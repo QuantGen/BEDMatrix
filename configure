@@ -3365,7 +3365,7 @@ $as_echo "$as_me: We could not detect the boost libraries (version $boost_lib_ve
 $as_echo "$as_me: Your boost libraries seems to old (version $_version)." >&6;}
         fi
         # execute ACTION-IF-NOT-FOUND (if present):
-        as_fn_error $? "Please install Boost on your system. See README." "$LINENO" 5
+        as_fn_error $? "Please install Boost." "$LINENO" 5
     else
 
 
@@ -3651,7 +3651,7 @@ fi
     fi
 
 if test "x$BOOST_IOSTREAMS_LIB" = "x"; then
-    as_fn_error $? "Please install the Boost.Iostreams library." "$LINENO" 5
+    as_fn_error $? "Please install the Boost.IOStreams library." "$LINENO" 5
 fi
 
 ac_config_files="$ac_config_files src/Makevars"
