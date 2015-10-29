@@ -48,7 +48,6 @@ FAQ
 
 ### How do I create a BED file from a PED file using PLINK?
 
-
 ```
 plink --file myfile --make-bed
 ```
@@ -56,3 +55,7 @@ plink --file myfile --make-bed
 ### Creating BEDMatrix objects is slow. How can I speed up the process?
 
 Pass `n` and `p` manually. That way, the BIM and FAM files are not parsed.
+
+### How do I install this package on Windows?
+
+I don't know, but please get in touch if you find out!
