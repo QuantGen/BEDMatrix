@@ -59,7 +59,7 @@ Pass `n` and `p` manually. That way, the BIM and FAM files are not parsed.
 
 ### There are errors when installing the package. What do I do now?
 
-Did you install Boost? See [Installation](#installation) section above. If you are on Windows, see [the question below](#how-do-i-install-this-package-on-windows). If Boost is installed and it still doesn't work, please [create an issue](https://github.com/QuantGen/BEDMatrix/issues/new) and let me know.
+Did you install Boost? If not, see the [Installation](#installation) section above. If you are on Windows, see [the question below](#how-do-i-install-this-package-on-windows). If Boost is installed and it still doesn't work, you might have to manually specify the Boost path, e.g. `install_github("QuantGen/BEDMatrix", args = "--configure-args='--with-boost=BOOST_PATH'")`. If that doesn't work either, please [create an issue](https://github.com/QuantGen/BEDMatrix/issues/new) so that we can find a solution together.
 
 ### How do I install this package on Windows?
 
