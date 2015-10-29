@@ -5,7 +5,7 @@ AC_INIT(BEDMatrix, m4_esyscmd_s([awk -e '/^Version:/ {print $2}' DESCRIPTION]))
 AC_REQUIRE_CPP
 
 m4_include([tools/m4/ax_boost_base.m4])
-AX_BOOST_BASE([1.51.0],,AC_MSG_ERROR(Please install Boost on your system. See README.))
+AX_BOOST_BASE([1.46.0],,AC_MSG_ERROR(Please install Boost on your system. See README.))
 
 m4_include([tools/m4/ax_boost_iostreams.m4])
 AX_BOOST_IOSTREAMS
