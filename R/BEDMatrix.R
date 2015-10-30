@@ -31,6 +31,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
         if (!file.exists(paste0(dir, ".fam"))) {
             stop("FAM file of same name not found. Provide number of individuals (n).")
         } else {
+            message("Extracting number of individuals and rownames from FAM file...")
             fam <- readLines(paste0(dir, ".fam"))
             # Determine n.
             n <- length(fam)
@@ -48,6 +49,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
         if (!file.exists(paste0(dir, ".bim"))) {
             stop("BIM file of same name not found. Provide number of markers (p).")
         } else {
+            message("Extracting number of markers and colnames from BIM file...")
             bim <- readLines(paste0(dir, ".bim"))
             # Determine p.
             p <- length(bim)

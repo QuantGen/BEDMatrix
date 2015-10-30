@@ -30,6 +30,7 @@ test_that("it throws an error if file is not a BED file", {
 test_that("it determines n from FAM file", {
     bed <- BEDMatrix(path = examplePath)
     expect_equal(nrow(bed), 6)
+    expect_message(BEDMatrix(path = examplePath))
 })
 
 test_that("it throws an error if FAM file is not found and n is not given", {
@@ -39,11 +40,13 @@ test_that("it throws an error if FAM file is not found and n is not given", {
 test_that("it determines rownames from FAM file", {
     bed <- BEDMatrix(path = examplePath)
     expect_equal(rownames(bed), c("1_1", "1_2", "1_3", "2_1", "2_2", "2_3"))
+    expect_message(BEDMatrix(path = examplePath))
 })
 
 test_that("it determines p from BIM file", {
     bed <- BEDMatrix(path = examplePath)
     expect_equal(ncol(bed), 3)
+    expect_message(BEDMatrix(path = examplePath))
 })
 
 test_that("it throws an error if BIM file is not found and p is not given", {
@@ -53,6 +56,7 @@ test_that("it throws an error if BIM file is not found and p is not given", {
 test_that("it determines colnames from BIM file", {
     bed <- BEDMatrix(path = examplePath)
     expect_equal(colnames(bed), c("snp1", "snp2", "snp3"))
+    expect_message(BEDMatrix(path = examplePath))
 })
 
 test_that("it accepts n and p if FAM or BIM file are present", {
