@@ -2,6 +2,8 @@ AC_PREREQ([2.69])
 
 AC_INIT(BEDMatrix, m4_esyscmd_s([awk -e '/^Version:/ {print $2}' DESCRIPTION]))
 
+AC_CONFIG_AUX_DIR([tools])
+
 AC_REQUIRE_CPP
 
 m4_include([tools/m4/ax_boost_base.m4])
