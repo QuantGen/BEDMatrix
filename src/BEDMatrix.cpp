@@ -1,5 +1,6 @@
 #include <boost/iostreams/device/mapped_file.hpp>
 #include <boost/iostreams/stream.hpp>
+#include <cstddef>
 #include <fstream>
 #include <iostream>
 #include <Rcpp.h>
@@ -25,24 +26,24 @@ Rcpp::IntegerMatrix& preserveDimnames(const Rcpp::List& x, Rcpp::IntegerMatrix& 
 
 class BEDMatrix {
     public:
-        BEDMatrix(std::string path, unsigned int n, unsigned int p);
+        BEDMatrix(std::string path, std::size_t n, std::size_t p);
         Rcpp::IntegerVector vector_subset(Rcpp::List x, Rcpp::IntegerVector i);
         Rcpp::IntegerMatrix matrix_subset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j);
-        unsigned int get_nrow();
-        unsigned int get_ncol();
+        std::size_t get_nrow();
+        std::size_t get_ncol();
     private:
         BEDMatrix(const BEDMatrix&);
         BEDMatrix& operator=(const BEDMatrix&);
-        int get_genotype(unsigned int i, unsigned int j);
+        int get_genotype(std::size_t i, std::size_t j);
         boost::iostreams::mapped_file_source file;
         const char* file_data;
-        unsigned int nrow;
-        unsigned int ncol;
+        std::size_t nrow;
+        std::size_t ncol;
         unsigned int byte_padding; // Each new "row" starts a new byte.
         static const unsigned int length_header;
 };
 
-BEDMatrix::BEDMatrix(std::string path, unsigned int n, unsigned int p) : file(path), nrow(n), ncol(p), byte_padding((n % 4 == 0) ? 0 : 4 - (n % 4)) {
+BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : file(path), nrow(n), ncol(p), byte_padding((n % 4 == 0) ? 0 : 4 - (n % 4)) {
     if (!this->file.is_open()) {
         Rcpp::stop("File not found.");
     }
@@ -60,18 +61,18 @@ BEDMatrix::BEDMatrix(std::string path, unsigned int n, unsigned int p) : file(pa
         Rcpp::stop("Individual-major mode is not supported.");
     }
     // Get number of bytes.
-    const unsigned int num_bytes = this->file.size();
+    const std::size_t num_bytes = this->file.size();
     // Check if given dimensions match the file.
     if ((this->nrow * this->ncol) + (this->byte_padding * this->ncol) != (num_bytes - this->length_header) * 4) {
         Rcpp::stop("n or p does not match the dimensions of the file.");
     }
 }
 
-int BEDMatrix::get_genotype(unsigned int i, unsigned int j) {
+int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     // Reduce two-dimensional index to one-dimensional index with the mode.
-    unsigned int which_pos = (j * this->nrow) + i + (this->byte_padding * j);
+    std::size_t which_pos = (j * this->nrow) + i + (this->byte_padding * j);
     // Every byte encodes 4 genotypes, find the one of interest.
-    unsigned int which_byte = std::floor(which_pos / 4);
+    std::size_t which_byte = std::floor(which_pos / 4);
     // Find genotype in byte.
     unsigned int which_genotype = (which_pos % 4) * 2;
     // Read in the whole byte.
@@ -99,11 +100,11 @@ Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::List x, Rcpp::IntegerVector i
     // Convert from 1-index to 0-index.
     i = i - 1;
     // Keep size of i.
-    unsigned int size_i = i.size();
+    std::size_t size_i = i.size();
     // Reserve output vector.
     Rcpp::IntegerVector out(size_i);
     // Iterate over indexes.
-    for (unsigned int idx_i = 0; idx_i < size_i; idx_i++) {
+    for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
         out(idx_i) = this->get_genotype(i[idx_i] % this->nrow, i[idx_i] / this->nrow);
     }
     return out;
@@ -118,15 +119,15 @@ Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i
     i = i - 1;
     j = j - 1;
     // Keep sizes of i and j.
-    unsigned int size_i = i.size();
-    unsigned int size_j = j.size();
+    std::size_t size_i = i.size();
+    std::size_t size_j = j.size();
     // Reserve output matrix.
     Rcpp::IntegerMatrix out(size_i, size_j);
     preserveDimnames(x, out, i, j);
     // Iterate over column indexes.
-    for (unsigned int idx_j = 0; idx_j < size_j; idx_j++) {
+    for (std::size_t idx_j = 0; idx_j < size_j; idx_j++) {
         // Iterate over row indexes.
-        for (unsigned int idx_i = 0; idx_i < size_i; idx_i++) {
+        for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
             out(idx_i, idx_j) = this->get_genotype(i[idx_i], j[idx_j]);
         }
     }
@@ -134,11 +135,11 @@ Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i
 }
 
 
-unsigned int BEDMatrix::get_nrow() {
+std::size_t BEDMatrix::get_nrow() {
     return this->nrow;
 };
 
-unsigned int BEDMatrix::get_ncol() {
+std::size_t BEDMatrix::get_ncol() {
     return this->ncol;
 };
 
@@ -149,7 +150,7 @@ RCPP_MODULE(mod_BEDMatrix) {
     using namespace Rcpp;
 
     class_<BEDMatrix>("BEDMatrix_")
-    .constructor<std::string, unsigned int, unsigned int>()
+    .constructor<std::string, std::size_t, std::size_t>()
     .method("vectorSubset", &BEDMatrix::vector_subset)
     .method("matrixSubset", &BEDMatrix::matrix_subset)
     .property("n", &BEDMatrix::get_nrow)
