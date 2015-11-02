@@ -3,7 +3,8 @@ Version: 0.0.0.9000
 License: MIT + file LICENSE
 Title: A Wrapper for Binary PED Files
 Description: This package wraps binary PED files and allows subsetting without
-    loading the entire file into memory.
+    loading the entire file into memory. The goal is to support huge PED files, and
+    to save time on initially reading in PED files into the R environment.
 Authors@R: c(
     person("Alexander", "Grueneberg", email = "alexander.grueneberg@googlemail.com", role = c("aut", "cre")),
     person("Lian", "Lian", email = "lianl0501@gmail.com", role = c("ctb")),
