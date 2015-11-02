@@ -6,7 +6,7 @@
 #include <Rcpp.h>
 #include <string>
 
-Rcpp::IntegerMatrix& preserveDimnames(const Rcpp::List& x, Rcpp::IntegerMatrix& out, const Rcpp::IntegerVector& i, const Rcpp::IntegerVector& j) {
+Rcpp::IntegerMatrix& preserve_dimnames(const Rcpp::List& x, Rcpp::IntegerMatrix& out, const Rcpp::IntegerVector& i, const Rcpp::IntegerVector& j) {
     Rcpp::List out_dimnames = Rcpp::List::create(
         R_NilValue,
         R_NilValue
@@ -123,7 +123,7 @@ Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i
     std::size_t size_j = j.size();
     // Reserve output matrix.
     Rcpp::IntegerMatrix out(size_i, size_j);
-    preserveDimnames(x, out, i, j);
+    preserve_dimnames(x, out, i, j);
     // Iterate over column indexes.
     for (std::size_t idx_j = 0; idx_j < size_j; idx_j++) {
         // Iterate over row indexes.
