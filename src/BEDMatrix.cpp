@@ -39,8 +39,8 @@ class BEDMatrix {
         const char* file_data;
         std::size_t nrow;
         std::size_t ncol;
-        unsigned int byte_padding; // Each new "row" starts a new byte.
-        static const unsigned int length_header;
+        unsigned short int byte_padding; // Each new "row" starts a new byte.
+        static const unsigned short int length_header;
 };
 
 BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : file(path), nrow(n), ncol(p), byte_padding((n % 4 == 0) ? 0 : 4 - (n % 4)) {
@@ -74,7 +74,7 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     // Every byte encodes 4 genotypes, find the one of interest.
     std::size_t which_byte = std::floor(which_pos / 4);
     // Find genotype in byte.
-    unsigned int which_genotype = (which_pos % 4) * 2;
+    unsigned short int which_genotype = (which_pos % 4) * 2;
     // Read in the whole byte.
     char genotypes = this->file_data[which_byte + this->length_header];
     // Remove the other genotypes by shifting the genotype of interest
@@ -143,7 +143,7 @@ std::size_t BEDMatrix::get_ncol() {
     return this->ncol;
 };
 
-const unsigned int BEDMatrix::length_header = 3;
+const unsigned short int BEDMatrix::length_header = 3;
 
 RCPP_MODULE(mod_BEDMatrix) {
 
