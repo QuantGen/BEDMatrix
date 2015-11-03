@@ -18,6 +18,7 @@ delims <- "[ \t]"
 #'   exists.
 #' @export
 BEDMatrix <- function(path, n = NULL, p = NULL) {
+    path <- path.expand(path)
     if (!file.exists(path)) {
         stop("File not found.")
     }
