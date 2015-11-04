@@ -52,7 +52,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
             p <- length(bim)
             # Determine colnames.
             colnames <- sapply(strsplit(bim, delims), function(line) {
-                return(line[2])
+                return(paste0(line[2], "_", line[5]))
             })
         }
     } else {

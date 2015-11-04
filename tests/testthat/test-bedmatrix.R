@@ -55,7 +55,7 @@ test_that("it throws an error if BIM file is not found and p is not given", {
 
 test_that("it determines colnames from BIM file", {
     bed <- BEDMatrix(path = examplePath)
-    expect_equal(colnames(bed), c("snp1", "snp2", "snp3"))
+    expect_equal(colnames(bed), c("snp1_G", "snp2_1", "snp3_A"))
     expect_message(BEDMatrix(path = examplePath), "Extracting number of markers and colnames from BIM file\\.\\.\\.")
 })
 
