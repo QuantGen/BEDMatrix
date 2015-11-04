@@ -34,6 +34,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
             n <- length(fam)
             # Determine rownames.
             rownames <- sapply(strsplit(fam, delims), function(line) {
+                # Concatenate family ID and subject ID
                 return(paste0(line[1], "_", line[2]))
             })
         }
@@ -52,6 +53,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
             p <- length(bim)
             # Determine colnames.
             colnames <- sapply(strsplit(bim, delims), function(line) {
+                # Concatenate SNP name and minor allele (like --recodeA)
                 return(paste0(line[2], "_", line[5]))
             })
         }
