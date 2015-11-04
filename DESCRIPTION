@@ -1,5 +1,5 @@
 Package: BEDMatrix
-Version: 0.0.0.9000
+Version: 1.0.0
 License: MIT + file LICENSE
 Title: A Wrapper for Binary PED Files
 Description: This package wraps binary PED files and allows subsetting without
