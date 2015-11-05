@@ -1,3 +1,17 @@
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+- Fixed the mis-use of the LICENSE file by removing the MIT license text and
+  replacing it with `YEAR` and `COPYRIGHT` fields.
+- Changed the Description field to not start with "This package".
+- Changed the Description field to explain that a PED file is one of the file
+  formats of PLINK, a popular toolset for whole genome association analysis.
+
+Thanks for the feedback.
+
+---
+
 This package is currently only supported on UNIX, as indicated by `OS_type:
 unix` in the DESCRIPTION file.  The reason for this is that the package depends
 on Boost.IOStreams, which is not header-only and therefore not available as
