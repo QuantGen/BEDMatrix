@@ -9,7 +9,7 @@ The BEDMatrix package provides a wrapper around [binary PED files](http://pngu.m
 Example
 -------
 
-This example uses a very simple BED file that is bundled with the R package. It was generated from the PLINK files in the [`inst/extdata` folder](https://github.com/QuantGen/BEDMatrix/tree/master/inst/extdata).
+This example uses a very simple BED file that is bundled with the R package. It was generated from the PLINK files in the [`inst/extdata` folder](https://github.com/QuantGen/BEDMatrix/tree/master/inst/extdata) ([see below on how to convert a PED file to a BED file](#how-do-i-create-a-bed-file-from-a-ped-file-using-plink)).
 
 ```r
 # Get path to example BED file
@@ -20,6 +20,9 @@ m <- BEDMatrix(path)
 
 # Print matrix
 m[]
+
+# Print dimensions
+dim(m)
 ```
 
 
