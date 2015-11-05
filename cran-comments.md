@@ -1,7 +1,16 @@
 ## Resubmission
 
-This is a resubmission. In this version I have:
+This is the second resubmission.
 
+I received feedback asking whether PED is an acronym. It is not, but a well
+established file format in the genetics community, especially in human
+genetics.
+
+In this version I have:
+- Added "(PLINK)" in the title to give better context.
+- Added a link to the PLINK website in the Description.
+
+In the previous resubmission I have:
 - Fixed the mis-use of the LICENSE file by removing the MIT license text and
   replacing it with `YEAR` and `COPYRIGHT` fields.
 - Changed the Description field to not start with "This package".
