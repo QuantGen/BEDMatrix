@@ -13,6 +13,7 @@ fi
 CC=`"${R_HOME}/bin/R" CMD config CC`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
+LDFLAGS=`"${R_HOME}/bin/R" CMD config LDFLAGS`
 
 m4_include([tools/m4/ax_boost_base.m4])
 AX_BOOST_BASE([1.46.0],,AC_MSG_ERROR(Please install Boost.))

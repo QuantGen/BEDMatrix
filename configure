@@ -1882,6 +1882,7 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
 
 
 
+# Ensure same compiler and compiler flags as R
 : ${R_HOME=`R RHOME`}
 if test -z "${R_HOME}"; then
     echo "could not determine R_HOME"
@@ -1890,6 +1891,7 @@ fi
 CC=`"${R_HOME}/bin/R" CMD config CC`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
+LDFLAGS=`"${R_HOME}/bin/R" CMD config LDFLAGS`
 
 # ===========================================================================
 #       http://www.gnu.org/software/autoconf-archive/ax_boost_base.html
