@@ -31,11 +31,18 @@ Installation
 
 BEDMatrix depends on [Boost.IOStreams](http://www.boost.org/doc/libs/1_59_0/libs/iostreams/doc/index.html) for memory-mapped files. This is not a header-only library and is therefore not part of the [BH](https://cran.r-project.org/web/packages/BH/) package for R. You will need to install Boost on your system, for example by running `sudo apt install libboost-all-dev` on Ubuntu or `brew install boost` on OS X. Windows is currently unsupported.
 
-The package is not available on CRAN yet. In the meantime, it can be installed using the [devtools](https://github.com/hadley/devtools) package directly from GitHub.
+To get the current released version from CRAN:
 
-1. Install devtools: `install.packages('devtools')`
-2. Load devtools: `library(devtools)`
-3. Download BEDMatrix: `install_github('QuantGen/BEDMatrix')`
+```r
+install.packages("BEDMatrix")
+```
+
+To get the current development version from GitHub:
+
+```r
+# install.packages("devtools")
+devtools::install_github("QuantGen/BEDMatrix")
+```
 
 
 Usage
@@ -62,7 +69,7 @@ Pass `n` and `p` manually. That way, the BIM and FAM files are not parsed.
 
 ### There are errors when installing the package. What do I do now?
 
-Did you install Boost? If not, see the [Installation](#installation) section above. If you are on Windows, see [the question below](#how-do-i-install-this-package-on-windows). If Boost is installed and it still doesn't work, you might have to manually specify the Boost path, e.g. `install_github("QuantGen/BEDMatrix", args = "--configure-args='--with-boost=BOOST_PATH'")`. If that doesn't work either, please [create an issue](https://github.com/QuantGen/BEDMatrix/issues/new) so that we can find a solution together.
+Did you install Boost? If not, see the [Installation](#installation) section above. If you are on Windows, see [the question below](#how-do-i-install-this-package-on-windows). If Boost is installed and it still doesn't work, you might have to manually specify the Boost path, e.g. `install.packages("BEDMatrix", configure.args = "--with-boost=BOOST_PATH")`. If that doesn't work either, please [create an issue](https://github.com/QuantGen/BEDMatrix/issues/new) so that we can find a solution together.
 
 ### How do I install this package on Windows?
 
