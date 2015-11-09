@@ -29,7 +29,9 @@
 #   and this notice are preserved. This file is offered as-is, without any
 #   warranty.
 
-#serial 20
+#serial 20 with the following modifications:
+# - replace "whether the Boost::IOStreams library is available" with "whether the Boost::IOStreams headers are available"
+# - replace "Could not find a version of the library!" with "Could not find a version of the Boost::IOStreams library for linking!"
 
 AC_DEFUN([AX_BOOST_IOSTREAMS],
 [
@@ -61,7 +63,7 @@ AC_DEFUN([AX_BOOST_IOSTREAMS],
         LDFLAGS="$LDFLAGS $BOOST_LDFLAGS"
         export LDFLAGS
 
-        AC_CACHE_CHECK(whether the Boost::IOStreams library is available,
+        AC_CACHE_CHECK(whether the Boost::IOStreams headers are available,
                        ax_cv_boost_iostreams,
         [AC_LANG_PUSH([C++])
          AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[@%:@include <boost/iostreams/filtering_stream.hpp>
@@ -103,7 +105,7 @@ AC_DEFUN([AX_BOOST_IOSTREAMS],
 
             fi
             if test "x$ax_lib" = "x"; then
-                AC_MSG_ERROR(Could not find a version of the library!)
+                AC_MSG_ERROR(Could not find a version of the Boost::IOStreams library for linking!)
             fi
             if test "x$link_iostreams" != "xyes"; then
                 AC_MSG_ERROR(Could not link against $ax_lib !)

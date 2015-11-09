@@ -2838,7 +2838,9 @@ fi
 #   and this notice are preserved. This file is offered as-is, without any
 #   warranty.
 
-#serial 20
+#serial 20 with the following modifications:
+# - replace "whether the Boost::IOStreams library is available" with "whether the Boost::IOStreams headers are available"
+# - replace "Could not find a version of the library!" with "Could not find a version of the Boost::IOStreams library for linking!"
 
 
 
@@ -3412,8 +3414,8 @@ fi
         LDFLAGS="$LDFLAGS $BOOST_LDFLAGS"
         export LDFLAGS
 
-        { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the Boost::IOStreams library is available" >&5
-$as_echo_n "checking whether the Boost::IOStreams library is available... " >&6; }
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether the Boost::IOStreams headers are available" >&5
+$as_echo_n "checking whether the Boost::IOStreams headers are available... " >&6; }
 if ${ax_cv_boost_iostreams+:} false; then :
   $as_echo_n "(cached) " >&6
 else
@@ -3603,7 +3605,7 @@ fi
 
             fi
             if test "x$ax_lib" = "x"; then
-                as_fn_error $? "Could not find a version of the library!" "$LINENO" 5
+                as_fn_error $? "Could not find a version of the Boost::IOStreams library for linking!" "$LINENO" 5
             fi
             if test "x$link_iostreams" != "xyes"; then
                 as_fn_error $? "Could not link against $ax_lib !" "$LINENO" 5
