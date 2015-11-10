@@ -28,6 +28,7 @@ for the presence of Boost and Boost.IOStreams.
 ## Test environments
 
 * Local Arch Linux install, R 3.2.2
+* rocker/r-devel, R 2015-10-27 r69580
 * Ubuntu 12.04 on Travis CI, R. 3.2.2
 * win-builder, R-release and R-devel
 
