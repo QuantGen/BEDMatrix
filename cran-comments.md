@@ -8,6 +8,13 @@ As requested by Prof Ripley, I
 
 Thanks for the feedback.
 
+There are still two ERRORs on the package check page: the one on the
+`r-release-osx-x86_64-mavericks` flavor is related to [Boost not being
+installed](https://www.r-project.org/nosvn/R.check/r-release-osx-x86_64-mavericks/BEDMatrix-00install.html),
+and the other one on the `r-devel-linux-x86_64-fedora-clang` flavor is maybe
+related to using the wrong compiler, an issue that has been addressed in this
+release.
+
 ---
 
 This package is currently only supported on UNIX, as indicated by `OS_type:
