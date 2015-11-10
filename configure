@@ -3616,9 +3616,6 @@ fi
     LDFLAGS="$LDFLAGS_SAVED"
     fi
 
-if test "x$BOOST_IOSTREAMS_LIB" = "x"; then
-    as_fn_error $? "Please install the Boost.IOStreams library." "$LINENO" 5
-fi
 
 ac_config_files="$ac_config_files src/Makevars"
 
