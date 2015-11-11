@@ -3,6 +3,10 @@
 This is a resubmission. In this version I have
 * added CXX and CXXFLAGS in the configure script.
 
+I am currently unaware of a robust technique to check whether Boost has been
+compiled with the same compiler as R. Therefore I am not certain how to handle
+the segfault on the `r-devel-linux-x86_64-fedora-clang` flavor.
+
 ## Release summary
 
 As requested by Prof Ripley, I
