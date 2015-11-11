@@ -1,5 +1,8 @@
-#include <boost/iostreams/device/mapped_file.hpp>
-#include <boost/iostreams/stream.hpp>
+// [[Rcpp::depends(BH)]]
+
+#include <boost/interprocess/file_mapping.hpp>
+#include <boost/interprocess/exceptions.hpp>
+#include <boost/interprocess/mapped_region.hpp>
 #include <cstddef>
 #include <fstream>
 #include <iostream>
@@ -35,7 +38,8 @@ class BEDMatrix {
         BEDMatrix(const BEDMatrix&);
         BEDMatrix& operator=(const BEDMatrix&);
         int get_genotype(std::size_t i, std::size_t j);
-        boost::iostreams::mapped_file_source file;
+        boost::interprocess::file_mapping file;
+        boost::interprocess::mapped_region file_region;
         const char* file_data;
         std::size_t nrow;
         std::size_t ncol;
@@ -43,11 +47,14 @@ class BEDMatrix {
         static const unsigned short int length_header;
 };
 
-BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : file(path), nrow(n), ncol(p), byte_padding((n % 4 == 0) ? 0 : 4 - (n % 4)) {
-    if (!this->file.is_open()) {
+BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), ncol(p), byte_padding((n % 4 == 0) ? 0 : 4 - (n % 4)) {
+    try {
+        this->file = boost::interprocess::file_mapping(path.c_str(), boost::interprocess::read_only);
+    } catch(const boost::interprocess::interprocess_exception& e) {
         Rcpp::stop("File not found.");
     }
-    this->file_data = this->file.data();
+    this->file_region = boost::interprocess::mapped_region(this->file, boost::interprocess::read_only);
+    this->file_data = static_cast<const char*>(this->file_region.get_address());
     // Check magic number.
     if (!(this->file_data[0] == '\x6C' && this->file_data[1] == '\x1B')) {
         Rcpp::stop("File is not a binary PED file.");
@@ -61,7 +68,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : file(path
         Rcpp::stop("Individual-major mode is not supported.");
     }
     // Get number of bytes.
-    const std::size_t num_bytes = this->file.size();
+    const std::size_t num_bytes = this->file_region.get_size();
     // Check if given dimensions match the file.
     if ((this->nrow * this->ncol) + (this->byte_padding * this->ncol) != (num_bytes - this->length_header) * 4) {
         Rcpp::stop("n or p does not match the dimensions of the file.");

@@ -2,6 +2,3 @@
 .Rhistory
 .RData
 .pversion
-/config.*
-autom4te.cache
-src/Makevars

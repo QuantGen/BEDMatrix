@@ -18,9 +18,9 @@ Depends:
 Imports:
     methods,
     Rcpp (>= 0.12.1)
+LinkingTo:
+    Rcpp,
+    BH
 Suggests:
     testthat
-SystemRequirements: Boost.IOStreams
-LinkingTo: Rcpp
-OS_type: unix
 RoxygenNote: 5.0.0

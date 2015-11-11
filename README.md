@@ -30,8 +30,6 @@ dim(m)
 Installation
 ------------
 
-BEDMatrix depends on [Boost.IOStreams](http://www.boost.org/doc/libs/1_59_0/libs/iostreams/doc/index.html) for memory-mapped files. This is not a header-only library and is therefore not part of the [BH](https://cran.r-project.org/web/packages/BH/) package for R. You will need to install Boost on your system, for example by running `sudo apt install libboost-all-dev` on Ubuntu or `brew install boost` on OS X. Note that depending on your system you will also need the \*-dev or \*-devel packages to compile the package. Windows is currently unsupported.
-
 To get the current released version from CRAN:
 
 ```r
@@ -67,11 +65,3 @@ plink --file myfile --make-bed
 ### Creating BEDMatrix objects is slow. How can I speed up the process?
 
 Pass `n` and `p` manually. That way, the BIM and FAM files are not parsed.
-
-### There are errors when installing the package. What do I do now?
-
-Did you install Boost? If not, see the [Installation](#installation) section above. If you are on Windows, see [the question below](#how-do-i-install-this-package-on-windows). If Boost is installed (including the \*-dev or \*-devel packages if available) and it still doesn't work, you might have to manually specify the Boost path, e.g. `install.packages("BEDMatrix", configure.args = "--with-boost=BOOST_PATH")`. If that doesn't work either, please [create an issue](https://github.com/QuantGen/BEDMatrix/issues/new) so that we can find a solution together.
-
-### How do I install this package on Windows?
-
-I don't know, but please get in touch if you find out!
