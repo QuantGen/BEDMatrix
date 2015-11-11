@@ -12,9 +12,13 @@ if test -z "${R_HOME}"; then
 fi
 CC=`"${R_HOME}/bin/R" CMD config CC`
 CFLAGS=`"${R_HOME}/bin/R" CMD config CFLAGS`
+CXX=`"${R_HOME}/bin/R" CMD config CXX`
+CXXFLAGS=`"${R_HOME}/bin/R" CMD config CXXFLAGS`
 CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 LDFLAGS=`"${R_HOME}/bin/R" CMD config LDFLAGS`
 
+AC_PROG_CC
+AC_PROG_CXX
 AC_LANG(C++)
 
 m4_include([tools/m4/ax_boost_base.m4])

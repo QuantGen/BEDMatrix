@@ -1,3 +1,8 @@
+## Resubmission
+
+This is a resubmission. In this version I have
+* added CXX and CXXFLAGS in the configure script.
+
 ## Release summary
 
 As requested by Prof Ripley, I
