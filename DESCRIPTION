@@ -13,14 +13,15 @@ Authors@R: c(
     person("Gustavo", "de los Campos", email = "gustavoc@msu.edu", role = c("ctb")))
 URL: https://github.com/QuantGen/BEDMatrix
 BugReports: https://github.com/QuantGen/BEDMatrix/issues
+SystemRequirements: C++11
 Depends:
     R (>= 3.0.0)
 Imports:
     methods,
     Rcpp (>= 0.12.1)
+LinkingTo:
+    Rcpp,
+    BH
 Suggests:
     testthat
-SystemRequirements: Boost.IOStreams
-LinkingTo: Rcpp
-OS_type: unix
 RoxygenNote: 5.0.0
