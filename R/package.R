@@ -19,3 +19,8 @@ NULL
 
 
 loadModule("mod_BEDMatrix", TRUE)
+
+
+release_questions <- function() {
+    c("Have you updated the NEWS file?")
+}
