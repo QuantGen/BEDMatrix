@@ -165,3 +165,8 @@ dimnames.BEDMatrix <- function(x) {
     })
     return(x)
 }
+
+#' @export
+length.BEDMatrix <- function(x) {
+    prod(dim(x))
+}

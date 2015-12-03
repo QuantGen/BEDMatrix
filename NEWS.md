@@ -1,3 +1,7 @@
+# BEDMatrix 1.1.0.9000
+
+* Add `length` method.
+
 # BEDMatrix 1.1.0
 
 * Restore cross-platform compatibility by dropping the system dependency on

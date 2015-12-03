@@ -73,11 +73,12 @@ test_that("it throws an error if dimensions are wrong", {
     expect_error(BEDMatrix(path = examplePath, n = 10, p = 5), "n or p does not match the dimensions of the file\\.")
 })
 
-test_that("subsetting", {
+# Prepare dummy BED matrix
+bed <- BEDMatrix(path = examplePath, n = 6, p = 3)
+rownames(bed) <- paste0("id_", 1:nrow(bed))
+colnames(bed) <- paste0("mrk_", 1:ncol(bed))
 
-    bed <- BEDMatrix(path = examplePath, n = 6, p = 3)
-    rownames(bed) <- paste0("id_", 1:nrow(bed))
-    colnames(bed) <- paste0("mrk_", 1:ncol(bed))
+test_that("subsetting", {
 
     expect_equal(bed[], raw[])
 
@@ -151,4 +152,8 @@ test_that("subsetting", {
     expect_equal(bed[, c("mrk_3", "mrk_1"), drop = FALSE], raw[, c("mrk_3", "mrk_1"), drop = FALSE])
     expect_equal(bed[c("id_3", "id_1"), c("mrk_3", "mrk_1"), drop = FALSE], raw[c("id_3", "id_1"), c("mrk_3", "mrk_1"), drop = FALSE])
 
+})
+
+test_that("length", {
+    expect_equal(length(bed), length(raw))
 })
