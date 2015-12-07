@@ -2,6 +2,7 @@
 
 * Add `length` method.
 * Add `as.matrix` method.
+* Add `is.matrix` method.
 
 # BEDMatrix 1.1.0
 

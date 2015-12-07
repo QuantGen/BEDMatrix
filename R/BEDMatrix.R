@@ -172,6 +172,11 @@ length.BEDMatrix <- function(x) {
 }
 
 #' @export
+is.matrix.BEDMatrix <- function(x) {
+    TRUE
+}
+
+#' @export
 as.matrix.BEDMatrix <- function(x, ...) {
     x[, , drop = FALSE]
 }
