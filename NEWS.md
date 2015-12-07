@@ -1,6 +1,7 @@
 # BEDMatrix 1.1.0.9000
 
 * Add `length` method.
+* Add `as.matrix` method.
 
 # BEDMatrix 1.1.0
 

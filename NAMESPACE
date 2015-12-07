@@ -2,6 +2,7 @@
 
 S3method("[",BEDMatrix)
 S3method("dimnames<-",BEDMatrix)
+S3method(as.matrix,BEDMatrix)
 S3method(dim,BEDMatrix)
 S3method(dimnames,BEDMatrix)
 S3method(length,BEDMatrix)

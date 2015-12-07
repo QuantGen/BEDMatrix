@@ -170,3 +170,8 @@ dimnames.BEDMatrix <- function(x) {
 length.BEDMatrix <- function(x) {
     prod(dim(x))
 }
+
+#' @export
+as.matrix.BEDMatrix <- function(x, ...) {
+    x[, , drop = FALSE]
+}
