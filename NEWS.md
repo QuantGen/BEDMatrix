@@ -1,5 +1,6 @@
 # BEDMatrix 1.1.0.9000
 
+* Add `path` attribute.
 * Add `length` method.
 * Add `as.matrix` method.
 * Add `is.matrix` method.
