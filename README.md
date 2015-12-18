@@ -18,7 +18,7 @@ To load the BEDMatrix package:
 library(BEDMatrix)
 ```
 
-To get the path to the example BED file:
+To get the path to the example BED file (`system.file` finds the full file names of files in packages and is only used to find the example data):
 
 ```r
 > path <- system.file("extdata", "example.bed", package = "BEDMatrix")
