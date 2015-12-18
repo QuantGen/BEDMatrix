@@ -12,12 +12,6 @@ Example
 
 This example uses a very simple BED file that is bundled with the R package. It was generated from the PLINK files in the [`inst/extdata` folder](https://github.com/QuantGen/BEDMatrix/tree/master/inst/extdata) ([see below on how to convert a PED file to a BED file](#how-do-i-create-a-bed-file-from-a-ped-file-using-plink)).
 
-To load the BEDMatrix package:
-
-```r
-library(BEDMatrix)
-```
-
 To get the path to the example BED file (`system.file` finds the full file names of files in packages and is only used to find the example data):
 
 ```r
