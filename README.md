@@ -12,18 +12,38 @@ Example
 
 This example uses a very simple BED file that is bundled with the R package. It was generated from the PLINK files in the [`inst/extdata` folder](https://github.com/QuantGen/BEDMatrix/tree/master/inst/extdata) ([see below on how to convert a PED file to a BED file](#how-do-i-create-a-bed-file-from-a-ped-file-using-plink)).
 
+TO get the path to the example BED file:
+
 ```r
-# Get path to example BED file
-path <- system.file("extdata", "example.bed", package = "BEDMatrix")
+> path <- system.file("extdata", "example.bed", package = "BEDMatrix")
+```
 
-# Wrap example BED file in matrix
-m <- BEDMatrix(path)
+To wrap the example BED file in a BEDMatrix object:
 
-# Print matrix
-m[]
+```r
+> m <- BEDMatrix(path)
+Extracting number of individuals and rownames from FAM file...
+Extracting number of markers and colnames from BIM file...
+```
 
-# Print dimensions
-dim(m)
+To print the dimensions of the BEDMatrix object:
+
+```r
+> dim(m)
+[1] 6 3
+```
+
+To print the entire BEDMatrix object:
+
+```r
+> m[]
+    snp1_G snp2_1 snp3_A
+1_1      2      0      0
+1_2      0     NA      1
+1_3     NA      1      1
+2_1      0      0     NA
+2_2      0      0     NA
+2_3      0      0      2
 ```
 
 
