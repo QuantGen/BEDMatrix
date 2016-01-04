@@ -68,6 +68,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
     class(s3_obj) <- "BEDMatrix"
     attr(s3_obj, "_instance") <- rcpp_obj
     attr(s3_obj, "dnames") <- list(rownames, colnames)
+    attr(s3_obj, "dims") <- c(rcpp_obj$n, rcpp_obj$p)
     attr(s3_obj, "path") <- path
     return(s3_obj)
 }
@@ -139,16 +140,12 @@ print.BEDMatrix <- function(x, ...) {
 
 #' @export
 dim.BEDMatrix <- function(x) {
-    rcpp_obj <- attr(x, "_instance")
-    n <- rcpp_obj$n
-    p <- rcpp_obj$p
-    return(c(n, p))
+    attr(x, "dims")
 }
 
 #' @export
 dimnames.BEDMatrix <- function(x) {
-    dnames <- attr(x, "dnames")
-    return(dnames)
+    attr(x, "dnames")
 }
 
 #' @export
