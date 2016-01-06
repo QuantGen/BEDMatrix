@@ -6,7 +6,13 @@ before_install:
   - ./travis-tool.sh bootstrap
 install: ./travis-tool.sh install_deps
 script: ./travis-tool.sh run_tests
+after_success:
+  - curl -OL https://gist.githubusercontent.com/agrueneberg/5c59faee22855ea3f78f/raw/b70e9df428e58152f797e836528b0acc0aa3aad8/push-docs.sh
+  - chmod 755 ./push-docs.sh
+  - ./travis-tool.sh install_github hadley/staticdocs
+  - ./push-docs.sh
 after_failure: ./travis-tool.sh dump_logs
 env:
-  - global:
+  global:
+    - secure: "E/7czQY19pNeRc/JhK/Vt4k56Ph9gkyVxtwraOBwsweWJzY8SWlFk9CJXqwY26El4pbEHczdtl+S33TT3X/E+5eVfj5y5Iu5A5BFUzxnY59qYoa2GiLgk6ysFdAkHvwW2IEe0r1HsVIbTMPEZU7XiMxrCg7v2AV7mdP+UNi7QxZ2BSLK1bhIvX+vPxDUSL/jlbpErMLUxfxiqe4P0Sns/+BvOOufMC7M/q7t3r1cv6erlnR0Mhdw3GmWIPryh/8lJsidgHpzBtxJIkoskhyANZOQw2DhZ6k2URMh3Mw25HLpSkvw5gmY9JQAh6Oe/jv86WUopsrzzkVbJa+VvxDjnPUDzqD8+fLhecIYvZhbtR2rzSEvPystf2QOO/7cmDudkitCSArHVfdPFetzKxzCKk8itGeE9SFi2YSDEoJZqVOAnJfeU0kkWIp8G/KJxoR06oPNtqVgNbK2VVSZXyEElEltfQlEUk+9LuM6WrgCZShZsdcXpds1+Wgq4cXvnisCgG74Sy56aT//df9KKpJ/mKBWNvAROXGOQY6UWAv7fNKx4g2KoIB74+GIj/y49eR53xlnWsam+/RYpg17/Yso3y7NUWqDz3hWaWilsAbonYvMdkwyinrJiVyuV27DYdwiG55PXwwuaO5ENBTEUrVZrF62c3+xBoSxepHCQbaw69g="
     - WARNINGS_ARE_ERRORS=1
