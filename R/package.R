@@ -7,9 +7,10 @@
 #' PED files into the R environment.
 #' 
 #' @docType package
-#' @name BEDMatrix
+#' @name BEDMatrix-package
 #' @useDynLib BEDMatrix
 #' @import methods Rcpp
+#' @aliases NULL
 NULL
 
 
