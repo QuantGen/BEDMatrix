@@ -2,7 +2,7 @@
 % Please edit documentation in R/BEDMatrix.R
 \name{BEDMatrix}
 \alias{BEDMatrix}
-\title{Creates a matrix wrapper around a binary PED file.}
+\title{Creates a matrix wrapper around binary PED files.}
 \usage{
 BEDMatrix(path, n = NULL, p = NULL)
 }
@@ -16,13 +16,38 @@ file exists.}
 exists.}
 }
 \description{
-The binary PED file will not be loaded into memory. Rather, subsets are
-extracted 'on the fly'.
+\code{BEDMatrix} is an S3 class that behaves similarly to a regular
+\code{matrix} by implementing key methods such as \code{[}, \code{dim}, and
+\code{dimnames}. Subsets are extracted directly and on-demand from the binary
+PED file without loading the entire file into memory through memory mapping.
 }
 \details{
-If a FAM or MAP file with the same name as the binary PED file (minus the
-extension) exists within the same folder, \code{n} and \code{p} as well as
-rownames and colnames will be automatically determined from those files.
-To skip this, provide \code{n} and \code{p} manually.
+A \code{BEDMatrix} instance can be created by providing the path to the BED
+file as \code{path}, the number of individuals as \code{n}, and the number of
+markers as \code{p}. If a FAM file (which corresponds to the first six
+columns of a PED file) of the same name and in the same directory as the BED
+file exists, it is optional to provide \code{n} and the number of individuals
+as well as the rownames of the \code{BEDMatrix} will be detected
+automatically. If a BIM file (which corresponds to the MAP file that
+accompanies a PED file) of the same name and in the same directory as the BED
+file exists, it is optional to provide \code{p} and the number of markers as
+well as the colnames of the \code{BEDMatrix} will be detected automatically.
+For very large BED file it is advised to provide \code{n} and \code{p}
+manually to speed up object creation.
+
+A BED file can be created from a PED file with
+\href{http://pngu.mgh.harvard.edu/~purcell/plink/}{PLINK} using \code{plink
+--file myfile --make-bed}. BED files are storage and query efficient, and can
+be transformed back into the original PED file with PLINK using \code{plink
+--bfile myfile --recode}.
+
+Internally, \code{BEDMatrix} inherits from \code{list} and
+exposes a few attributes that should not be relied upon in actual code:
+\code{path}, \code{dims}, \code{dnames}, and \code{_instance}. \code{path}
+stores the path to the BED file. \code{dims} and \code{dnames} contain the
+dimensions and dimnames of the BEDMatrix object. \code{_instance} points to
+the underlying \code{Rcpp} module. The \code{Rcpp} module exposes an S4 class
+called \code{BEDMatrix_} that memory maps the BED file via
+\code{Boost.Interprocess} of the \code{BH} package.
 }
 

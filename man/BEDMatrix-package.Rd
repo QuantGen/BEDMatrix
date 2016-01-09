@@ -2,12 +2,16 @@
 % Please edit documentation in R/package.R
 \docType{package}
 \name{BEDMatrix-package}
-\title{BEDMatrix: A Wrapper for Binary PED Files}
+\title{\code{BEDMatrix}: A Wrapper for Binary PED Files}
 \description{
-The BEDMatrix package provides a wrapper around binary PED files (so-called
-BED files) that behaves just like a regular R matrix, but retrieves
-genotypes on demand without loading the entire BED file into memory. The
-goal is to support huge PED files, and to save time on initially reading in
-PED files into the R environment.
+The BEDMatrix package provides a wrapper around binary PED (also known as
+BED) files, one of the genotype/phenotype file formats of
+\href{http://pngu.mgh.harvard.edu/~purcell/plink/}{PLINK}, the whole genome
+association analysis toolset. \code{BEDMatrix} objects are created by simply
+providing the path to a BED file and once created, they behave similarly to
+regular matrices with the advantage that genotypes are retrieved on demand
+without loading the entire file into memory. This allows handling of very
+large files with limited use of memory. Technically, a \code{BEDMatrix} is a
+memory-mapped matrix backed by a binary PED file.
 }
 
