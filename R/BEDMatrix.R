@@ -19,7 +19,9 @@ delims <- "[ \t]"
 #' file exists, it is optional to provide \code{p} and the number of markers as
 #' well as the colnames of the \code{BEDMatrix} will be detected automatically.
 #' For very large BED file it is advised to provide \code{n} and \code{p}
-#' manually to speed up object creation.
+#' manually to speed up object creation. In that case \code{rownames} and
+#' \code{colnames} will be set to \code{NULL} and have to be specified
+#' manually.
 #'
 #' A BED file can be created from a PED file with
 #' \href{http://pngu.mgh.harvard.edu/~purcell/plink/}{PLINK} using \code{plink
@@ -38,9 +40,11 @@ delims <- "[ \t]"
 #'
 #' @param path Path to the binary PED file.
 #' @param n The number of individuals. Optional if FAM file of same name as BED
-#'   file exists.
+#'   file exists. If provided, \code{rownames} will be set to \code{NULL} and
+#'   have to be provided manually.
 #' @param p The number of markers. Optional if MAP file of same name as BED file
-#'   exists.
+#'   exists. If provided, \code{colnames} will be set to \code{NULL} and have
+#'   to be provided manually.
 #' @export
 BEDMatrix <- function(path, n = NULL, p = NULL) {
     path <- path.expand(path)

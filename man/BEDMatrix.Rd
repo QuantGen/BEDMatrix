@@ -10,10 +10,12 @@ BEDMatrix(path, n = NULL, p = NULL)
 \item{path}{Path to the binary PED file.}
 
 \item{n}{The number of individuals. Optional if FAM file of same name as BED
-file exists.}
+file exists. If provided, \code{rownames} will be set to \code{NULL} and
+have to be provided manually.}
 
 \item{p}{The number of markers. Optional if MAP file of same name as BED file
-exists.}
+exists. If provided, \code{colnames} will be set to \code{NULL} and have
+to be provided manually.}
 }
 \description{
 \code{BEDMatrix} is an S3 class that behaves similarly to a regular
@@ -33,7 +35,9 @@ accompanies a PED file) of the same name and in the same directory as the BED
 file exists, it is optional to provide \code{p} and the number of markers as
 well as the colnames of the \code{BEDMatrix} will be detected automatically.
 For very large BED file it is advised to provide \code{n} and \code{p}
-manually to speed up object creation.
+manually to speed up object creation. In that case \code{rownames} and
+\code{colnames} will be set to \code{NULL} and have to be specified
+manually.
 
 A BED file can be created from a PED file with
 \href{http://pngu.mgh.harvard.edu/~purcell/plink/}{PLINK} using \code{plink
