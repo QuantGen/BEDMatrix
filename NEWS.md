@@ -1,5 +1,6 @@
 # BEDMatrix 1.1.0.9000
 
+* Support `path` without extension (like PLINK).
 * Add `path` attribute.
 * Add `length` method.
 * Add `as.matrix` method.

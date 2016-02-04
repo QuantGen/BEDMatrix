@@ -9,19 +9,19 @@ delims <- "[ \t]"
 #' PED file without loading the entire file into memory through memory mapping.
 #'
 #' A \code{BEDMatrix} instance can be created by providing the path to the BED
-#' file as \code{path}, the number of individuals as \code{n}, and the number of
-#' markers as \code{p}. If a FAM file (which corresponds to the first six
-#' columns of a PED file) of the same name and in the same directory as the BED
-#' file exists, it is optional to provide \code{n} and the number of individuals
-#' as well as the rownames of the \code{BEDMatrix} will be detected
-#' automatically. If a BIM file (which corresponds to the MAP file that
-#' accompanies a PED file) of the same name and in the same directory as the BED
-#' file exists, it is optional to provide \code{p} and the number of markers as
-#' well as the colnames of the \code{BEDMatrix} will be detected automatically.
-#' For very large BED file it is advised to provide \code{n} and \code{p}
-#' manually to speed up object creation. In that case \code{rownames} and
-#' \code{colnames} will be set to \code{NULL} and have to be specified
-#' manually.
+#' file (with or without extension) as \code{path}, the number of individuals
+#' as \code{n}, and the number of markers as \code{p}. If a FAM file (which
+#' corresponds to the first six columns of a PED file) of the same name and in
+#' the same directory as the BED file exists, it is optional to provide
+#' \code{n} and the number of individuals as well as the rownames of the
+#' \code{BEDMatrix} will be detected automatically. If a BIM file (which
+#' corresponds to the MAP file that accompanies a PED file) of the same name
+#' and in the same directory as the BED file exists, it is optional to provide
+#' \code{p} and the number of markers as well as the colnames of the
+#' \code{BEDMatrix} will be detected automatically.  For very large BED file it
+#' is advised to provide \code{n} and \code{p} manually to speed up object
+#' creation. In that case \code{rownames} and \code{colnames} will be set to
+#' \code{NULL} and have to be specified manually.
 #'
 #' A BED file can be created from a PED file with
 #' \href{http://pngu.mgh.harvard.edu/~purcell/plink/}{PLINK} using \code{plink
@@ -38,7 +38,7 @@ delims <- "[ \t]"
 #' called \code{BEDMatrix_} that memory maps the BED file via
 #' \code{Boost.Interprocess} of the \code{BH} package.
 #'
-#' @param path Path to the binary PED file.
+#' @param path Path to the binary PED file, with or without extension.
 #' @param n The number of individuals. Optional if FAM file of same name as BED
 #'   file exists. If provided, \code{rownames} will be set to \code{NULL} and
 #'   have to be provided manually.
@@ -49,7 +49,11 @@ delims <- "[ \t]"
 BEDMatrix <- function(path, n = NULL, p = NULL) {
     path <- path.expand(path)
     if (!file.exists(path)) {
-        stop("File not found.")
+        # Try to add extension (common in PLINK).
+        path <- paste0(path, ".bed")
+        if (!file.exists(path)) {
+            stop("File not found.")
+        }
     }
     dir <- substr(path, 1, nchar(path) - 4)
     if (is.null(n)) {
