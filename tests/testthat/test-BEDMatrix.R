@@ -156,6 +156,17 @@ test_that("subsetting", {
     expect_equal(bed[, c("mrk_3", "mrk_1"), drop = FALSE], raw[, c("mrk_3", "mrk_1"), drop = FALSE])
     expect_equal(bed[c("id_3", "id_1"), c("mrk_3", "mrk_1"), drop = FALSE], raw[c("id_3", "id_1"), c("mrk_3", "mrk_1"), drop = FALSE])
 
+    # Do not modify indexes.
+    i <- seq_len(6 * 3)
+    bed[i]
+    expect_equal(i, seq_len(6 * 3))
+
+    i <- seq_len(6)
+    j <- seq_len(3)
+    bed[i, j]
+    expect_equal(i, seq_len(6))
+    expect_equal(j, seq_len(3))
+
 })
 
 test_that("length", {

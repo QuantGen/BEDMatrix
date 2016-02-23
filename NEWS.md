@@ -6,6 +6,7 @@
 * Add `as.matrix` method.
 * Add `is.matrix` method.
 * Store dimensions in S3 wrapper as `dims` attribute to allow for faster recreation when saved.
+* Fix bug that modified `i` and `j` when subsetting.
 
 # BEDMatrix 1.1.0
 

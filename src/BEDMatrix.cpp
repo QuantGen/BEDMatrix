@@ -105,14 +105,14 @@ Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::List x, Rcpp::IntegerVector i
         Rcpp::stop("Invalid dimensions.");
     }
     // Convert from 1-index to 0-index.
-    i = i - 1;
+    Rcpp::IntegerVector i0(i - 1);
     // Keep size of i.
     std::size_t size_i = i.size();
     // Reserve output vector.
     Rcpp::IntegerVector out(size_i);
     // Iterate over indexes.
     for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
-        out(idx_i) = this->get_genotype(i[idx_i] % this->nrow, i[idx_i] / this->nrow);
+        out(idx_i) = this->get_genotype(i0[idx_i] % this->nrow, i0[idx_i] / this->nrow);
     }
     return out;
 }
@@ -123,19 +123,19 @@ Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i
         Rcpp::stop("Invalid dimensions.");
     }
     // Convert from 1-index to 0-index.
-    i = i - 1;
-    j = j - 1;
+    Rcpp::IntegerVector i0(i - 1);
+    Rcpp::IntegerVector j0(j - 1);
     // Keep sizes of i and j.
     std::size_t size_i = i.size();
     std::size_t size_j = j.size();
     // Reserve output matrix.
     Rcpp::IntegerMatrix out(size_i, size_j);
-    preserve_dimnames(x, out, i, j);
+    preserve_dimnames(x, out, i0, j0);
     // Iterate over column indexes.
     for (std::size_t idx_j = 0; idx_j < size_j; idx_j++) {
         // Iterate over row indexes.
         for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
-            out(idx_i, idx_j) = this->get_genotype(i[idx_i], j[idx_j]);
+            out(idx_i, idx_j) = this->get_genotype(i0[idx_i], j0[idx_j]);
         }
     }
     return out;
