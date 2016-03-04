@@ -1,8 +1,16 @@
+## Resubmission
+
+This is a resubmission. In this version I have removed the `vgcore.9160`
+folder.
+
+---
+
 ## Test environments
 
 * Local Arch Linux install, R 3.2.3
 * Ubuntu 12.04.05 on Travis CI, R. 3.2.3
 * win-builder, R-release and R-devel
+
 
 ## R CMD check results
 
