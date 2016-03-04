@@ -1,7 +1,7 @@
-# BEDMatrix 1.1.0.9000
+# BEDMatrix 1.2.0
 
 * Support `path` without extension (like PLINK).
-* Add `path` attribute.
+* Add `path` attribute (to reattach instance after saving it to RData).
 * Add `length` method.
 * Add `as.matrix` method.
 * Add `is.matrix` method.
