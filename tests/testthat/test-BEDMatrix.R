@@ -85,6 +85,7 @@ colnames(bed) <- paste0("mrk_", 1:ncol(bed))
 test_that("subsetting", {
 
     expect_equal(bed[], raw[])
+    expect_equal(typeof(bed[]), "integer")
 
     expect_equal(bed[1, ], raw[1, ])
     expect_equal(bed[, 1], raw[, 1])
@@ -92,6 +93,7 @@ test_that("subsetting", {
     expect_equal(bed[1, , drop = FALSE], raw[1, , drop = FALSE])
     expect_equal(bed[, 1, drop = FALSE], raw[, 1, drop = FALSE])
     expect_equal(bed[1, 1, drop = FALSE], raw[1, 1, drop = FALSE])
+    expect_equal(typeof(bed[1, ]), "integer")
 
     expect_equal(bed[1:2, ], raw[1:2, ])
     expect_equal(bed[, 1:2], raw[, 1:2])
@@ -99,6 +101,7 @@ test_that("subsetting", {
     expect_equal(bed[1:2, , drop = FALSE], raw[1:2, , drop = FALSE])
     expect_equal(bed[, 1:2, drop = FALSE], raw[, 1:2, drop = FALSE])
     expect_equal(bed[1:2, 1:2, drop = FALSE], raw[1:2, 1:2, drop = FALSE])
+    expect_equal(typeof(bed[1:2, ]), "integer")
 
     expect_equal(bed[2:1, ], raw[2:1, ])
     expect_equal(bed[, 2:1], raw[, 2:1])
@@ -106,6 +109,7 @@ test_that("subsetting", {
     expect_equal(bed[2:1, , drop = FALSE], raw[2:1, , drop = FALSE])
     expect_equal(bed[, 2:1, drop = FALSE], raw[, 2:1, drop = FALSE])
     expect_equal(bed[2:1, 2:1, drop = FALSE], raw[2:1, 2:1, drop = FALSE])
+    expect_equal(typeof(bed[2:1, ]), "integer")
 
     expect_equal(bed[c(3, 1), ], raw[c(3, 1), ])
     expect_equal(bed[, c(3, 1)], raw[, c(3, 1)])
@@ -113,6 +117,7 @@ test_that("subsetting", {
     expect_equal(bed[c(3, 1), , drop = FALSE], raw[c(3, 1), , drop = FALSE])
     expect_equal(bed[, c(3, 1), drop = FALSE], raw[, c(3, 1), drop = FALSE])
     expect_equal(bed[c(3, 1), c(3, 1), drop = FALSE], raw[c(3, 1), c(3, 1), drop = FALSE])
+    expect_equal(typeof(bed[c(3, 1), ]), "integer")
 
     expect_equal(bed[c(TRUE, FALSE, TRUE), ], raw[c(TRUE, FALSE, TRUE), ])
     expect_equal(bed[, c(TRUE, FALSE, TRUE)], raw[, c(TRUE, FALSE, TRUE)])
@@ -120,6 +125,7 @@ test_that("subsetting", {
     expect_equal(bed[c(TRUE, FALSE, TRUE), , drop = FALSE], raw[c(TRUE, FALSE, TRUE), , drop = FALSE])
     expect_equal(bed[, c(TRUE, FALSE, TRUE), drop = FALSE], raw[, c(TRUE, FALSE, TRUE), drop = FALSE])
     expect_equal(bed[c(TRUE, FALSE, TRUE), c(TRUE, FALSE, TRUE), drop = FALSE], raw[c(TRUE, FALSE, TRUE), c(TRUE, FALSE, TRUE), drop = FALSE])
+    expect_equal(typeof(bed[c(TRUE, FALSE, TRUE), ]), "integer")
 
     expect_equal(bed[1], raw[1])
     expect_equal(bed[1:2], raw[1:2])
@@ -127,6 +133,7 @@ test_that("subsetting", {
     expect_equal(bed[c(3, 1)], raw[c(3, 1)])
     expect_equal(bed[c(TRUE, FALSE, TRUE)], raw[c(TRUE, FALSE, TRUE)])
     expect_equal(bed[raw > 1], raw[raw > 1])
+    expect_equal(typeof(bed[1]), "integer")
 
     expect_equal(bed["id_1", ], raw["id_1", ])
     expect_equal(bed[, "mrk_1"], raw[, "mrk_1"])
@@ -134,6 +141,7 @@ test_that("subsetting", {
     expect_equal(bed["id_1", , drop = FALSE], raw["id_1", , drop = FALSE])
     expect_equal(bed[, "mrk_1", drop = FALSE], raw[, "mrk_1", drop = FALSE])
     expect_equal(bed["id_1", "mrk_1", drop = FALSE], raw["id_1", "mrk_1", drop = FALSE])
+    expect_equal(typeof(bed["id_1", ]), "integer")
 
     expect_equal(bed[c("id_1", "id_2"), ], raw[c("id_1", "id_2"), ])
     expect_equal(bed[, c("mrk_1", "mrk_2")], raw[, c("mrk_1", "mrk_2")])
@@ -141,6 +149,7 @@ test_that("subsetting", {
     expect_equal(bed[c("id_1", "id_2"), , drop = FALSE], raw[c("id_1", "id_2"), , drop = FALSE])
     expect_equal(bed[, c("mrk_1", "mrk_2"), drop = FALSE], raw[, c("mrk_1", "mrk_2"), drop = FALSE])
     expect_equal(bed[c("id_1", "id_2"), c("mrk_1", "mrk_2"), drop = FALSE], raw[c("id_1", "id_2"), c("mrk_1", "mrk_2"), drop = FALSE])
+    expect_equal(typeof(bed[c("id_1", "id_2"), ]), "integer")
 
     expect_equal(bed[c("id_2", "id_1"), ], raw[c("id_2", "id_1"), ])
     expect_equal(bed[, c("mrk_2", "mrk_1")], raw[, c("mrk_2", "mrk_1")])
@@ -148,6 +157,7 @@ test_that("subsetting", {
     expect_equal(bed[c("id_2", "id_1"), , drop = FALSE], raw[c("id_2", "id_1"), , drop = FALSE])
     expect_equal(bed[, c("mrk_2", "mrk_1"), drop = FALSE], raw[, c("mrk_2", "mrk_1"), drop = FALSE])
     expect_equal(bed[c("id_2", "id_1"), c("mrk_2", "mrk_1"), drop = FALSE], raw[c("id_2", "id_1"), c("mrk_2", "mrk_1"), drop = FALSE])
+    expect_equal(typeof(bed[c("id_2", "id_1"), ]), "integer")
 
     expect_equal(bed[c("id_3", "id_1"), ], raw[c("id_3", "id_1"), ])
     expect_equal(bed[, c("mrk_3", "mrk_1")], raw[, c("mrk_3", "mrk_1")])
@@ -155,6 +165,7 @@ test_that("subsetting", {
     expect_equal(bed[c("id_3", "id_1"), , drop = FALSE], raw[c("id_3", "id_1"), , drop = FALSE])
     expect_equal(bed[, c("mrk_3", "mrk_1"), drop = FALSE], raw[, c("mrk_3", "mrk_1"), drop = FALSE])
     expect_equal(bed[c("id_3", "id_1"), c("mrk_3", "mrk_1"), drop = FALSE], raw[c("id_3", "id_1"), c("mrk_3", "mrk_1"), drop = FALSE])
+    expect_equal(typeof(bed[c("id_3", "id_1"), ]), "integer")
 
     # Do not modify indexes.
     i <- seq_len(6 * 3)
