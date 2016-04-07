@@ -130,18 +130,14 @@ print.BEDMatrix <- function(x, ...) {
         } else if (class(i) == "logical") {
             i <- which(rep_len(i, n))
         } else if (class(i) == "character") {
-            i <- sapply(i, function(name) {
-                which(rownames(x) == name)
-            }, USE.NAMES = FALSE)
+            i <- match(i, rownames(x))
         }
         if (missing(j)) {
             j <- 1:p
         } else if (class(j) == "logical") {
             j <- which(rep_len(j, p))
         } else if (class(j) == "character") {
-            j <- sapply(j, function(name) {
-                which(colnames(x) == name)
-            }, USE.NAMES = FALSE)
+            j <- match(j, colnames(x))
         }
         subset <- rcpp_obj$matrixSubset(x, i, j)
         # Let R handle drop behavior.

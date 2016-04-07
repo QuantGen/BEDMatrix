@@ -1,3 +1,7 @@
+# BEDMatrix 1.2.0.9000
+
+* Speed up character subsetting.
+
 # BEDMatrix 1.2.0
 
 * Support `path` without extension (like PLINK).
