@@ -2,8 +2,6 @@ language: r
 sudo: false
 cache: packages
 warnings_are_errors: true
-r_packages:
-  - roxygen2
 r_github_packages:
   - agrueneberg/staticdocs
 after_success:
