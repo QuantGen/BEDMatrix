@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^revdep$
-.pversion
 ^\.travis\.yml$
+^revdep$
+inst/staticdocs
 cran-comments.md
+.pversion
