@@ -23,7 +23,6 @@ LinkingTo:
     Rcpp,
     BH
 Suggests:
-    data.table,
     testthat,
     roxygen2
 RoxygenNote: 5.0.1
