@@ -65,14 +65,23 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
             stop("FAM file of same name not found. Provide number of individuals (n).")
         } else {
             message("Extracting number of individuals and rownames from FAM file...")
-            fam <- readLines(paste0(dir, ".fam"))
-            # Determine n.
-            n <- length(fam)
-            # Determine rownames.
-            rownames <- sapply(strsplit(fam, delims), function(line) {
-                # Concatenate family ID and subject ID
-                return(paste0(line[1], "_", line[2]))
-            })
+            famPath <- paste0(dir, ".fam")
+            if (requireNamespace("data.table", quietly = TRUE)) {
+                fam <- data.table::fread(famPath, select = c(1, 2), data.table = FALSE, showProgress = FALSE)
+                # Determine n.
+                n <- nrow(fam)
+                # Determine rownames.
+                rownames <- paste0(fam[, 1], "_", fam[, 2])
+            } else {
+                fam <- readLines(famPath)
+                # Determine n.
+                n <- length(fam)
+                # Determine rownames.
+                rownames <- sapply(strsplit(fam, delims), function(line) {
+                    # Concatenate family ID and subject ID
+                    return(paste0(line[1], "_", line[2]))
+                })
+            }
         }
     } else {
         n <- as.integer(n)
@@ -84,14 +93,23 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
             stop("BIM file of same name not found. Provide number of markers (p).")
         } else {
             message("Extracting number of markers and colnames from BIM file...")
-            bim <- readLines(paste0(dir, ".bim"))
-            # Determine p.
-            p <- length(bim)
-            # Determine colnames.
-            colnames <- sapply(strsplit(bim, delims), function(line) {
-                # Concatenate SNP name and minor allele (like --recodeA)
-                return(paste0(line[2], "_", line[5]))
-            })
+            bimPath <- paste0(dir, ".bim")
+            if (requireNamespace("data.table", quietly = TRUE)) {
+                bim <- data.table::fread(bimPath, select = c(2, 5), data.table = FALSE, showProgress = FALSE)
+                # Determine p.
+                p <- nrow(bim)
+                # Determine colnames.
+                colnames <- paste0(bim[, 1], "_", bim[, 2])
+            } else {
+                bim <- readLines(bimPath)
+                # Determine p.
+                p <- length(bim)
+                # Determine colnames.
+                colnames <- sapply(strsplit(bim, delims), function(line) {
+                    # Concatenate SNP name and minor allele (like --recodeA)
+                    return(paste0(line[2], "_", line[5]))
+                })
+            }
         }
     } else {
         p <- as.integer(p)

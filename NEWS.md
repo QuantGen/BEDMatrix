@@ -1,6 +1,8 @@
 # BEDMatrix 1.2.0.9000
 
 * Speed up character subsetting.
+* Speed up detection of `n`, `p`, `rownames`, and `colnames` during
+  initialization if `data.table` package is installed.
 
 # BEDMatrix 1.2.0
 
