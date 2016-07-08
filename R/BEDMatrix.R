@@ -136,6 +136,11 @@ print.BEDMatrix <- function(x, ...) {
 }
 
 #' @export
+str.BEDMatrix <- function(object, ...) {
+    print(object)
+}
+
+#' @export
 `[.BEDMatrix` <- function(x, i, j, drop = TRUE) {
     rcpp_obj <- attr(x, "_instance")
     dims <- dim(x)
