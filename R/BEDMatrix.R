@@ -132,7 +132,7 @@ print.BEDMatrix <- function(x, ...) {
     dims <- dim(x)
     n <- dims[1]
     p <- dims[2]
-    cat(paste(n, "x", p, "BEDMatrix"), "\n")
+    cat("BEDMatrix: ", n, " x ", p, " [", attr(x, "path"), "]\n", sep = "")
 }
 
 #' @export
