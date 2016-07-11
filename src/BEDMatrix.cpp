@@ -87,7 +87,11 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     // Remove the other genotypes by shifting the genotype of interest
     // to the end of the byte and masking with 00000011.
     char genotype = genotypes >> which_genotype & 3;
-    // Remap genotype value.
+    // Remap genotype value to resemble RAW file, i.e. 0 indicates homozygous
+    // major allele, 1 indicates heterozygous, and 2 indicates homozygous minor
+    // allele. In BED, the coding is different: homozygous minor allele is 0
+    // (00) and homozygous major allele is 3 (11).
+    // Reminder: Each byte is read backwards.
     int mapping = NA_INTEGER; // missing
     if (genotype == 0) {
         mapping = 2; // homozygous AA

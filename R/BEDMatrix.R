@@ -5,8 +5,12 @@ delims <- "[ \t]"
 #'
 #' \code{BEDMatrix} is an S3 class that behaves similarly to a regular
 #' \code{matrix} by implementing key methods such as \code{[}, \code{dim}, and
-#' \code{dimnames}. Subsets are extracted directly and on-demand from the binary
-#' PED file without loading the entire file into memory through memory mapping.
+#' \code{dimnames}. Subsets are extracted directly and on-demand from the
+#' binary PED file without loading the entire file into memory through memory
+#' mapping. The subsets are coded similarly to RAW files generated with the
+#' \code{--recodeA} argument in PLINK: \code{0} indicates homozygous major
+#' allele, \code{1} indicates heterozygous, and \code{2} indicates homozygous
+#' minor allele.
 #'
 #' A \code{BEDMatrix} instance can be created by providing the path to the BED
 #' file (with or without extension) as \code{path}, the number of individuals
