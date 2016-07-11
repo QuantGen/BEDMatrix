@@ -12,12 +12,12 @@ This package is deliberately kept simple. For computational methods that use BED
 Example
 -------
 
-This example uses a very simple BED file that is bundled with the R package. It was generated from the PLINK files in the [`inst/extdata` folder](https://github.com/QuantGen/BEDMatrix/tree/master/inst/extdata) ([see below on how to convert a PED file to a BED file](#how-do-i-create-a-bed-file-from-a-ped-file-using-plink)).
+This example uses a BED version of the `mice` dataset that is included in the [BGLR package](https://github.com/gdlc/BGLR-R). See the [mice.bed gist](https://gist.github.com/agrueneberg/812564cbe860db4ee864d019be940aaf) for instructions on how it was generated.
 
 To get the path to the example BED file (`system.file` finds the full file names of files in packages and is only used to find the example data):
 
 ```r
-> path <- system.file("extdata", "example.bed", package = "BEDMatrix")
+> path <- system.file("extdata", "mice.bed", package = "BEDMatrix")
 ```
 
 To wrap the example BED file in a BEDMatrix object:
@@ -28,24 +28,28 @@ Extracting number of individuals and rownames from FAM file...
 Extracting number of markers and colnames from BIM file...
 ```
 
-To print the dimensions of the BEDMatrix object:
+To get the dimensions of the BEDMatrix object:
 
 ```r
 > dim(m)
-[1] 6 3
+[1]  1814 10346
 ```
 
-To print the entire BEDMatrix object:
+To extract a subset of the BEDMatrix object:
 
 ```r
-> m[]
-    snp1_G snp2_1 snp3_A
-1_1      2      0      0
-1_2      0     NA      1
-1_3     NA      1      1
-2_1      0      0     NA
-2_2      0      0     NA
-2_3      0      0      2
+> m[1:10, 1:3]
+                      rs3683945_G rs3707673_G rs6269442_G
+A048005080_A048005080           1           1           1
+A048006063_A048006063           1           1           2
+A048006555_A048006555           2           0           2
+A048007096_A048007096           1           1           1
+A048010273_A048010273           2           0           2
+A048010371_A048010371           1           1           1
+A048011040_A048011040           1           1           1
+A048011287_A048011287           1           1           2
+A048011567_A048011567           1           1           2
+A048013559_A048013559           2           0           2
 ```
 
 
