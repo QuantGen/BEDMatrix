@@ -68,3 +68,9 @@ To get the current development version from GitHub:
 # install.packages("devtools")
 devtools::install_github("QuantGen/BEDMatrix")
 ```
+
+
+Documentation
+-------------
+
+Further documentation can be found on [RDocumentation](http://www.rdocumentation.org/packages/BEDMatrix).
