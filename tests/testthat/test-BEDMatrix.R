@@ -17,7 +17,7 @@ parseRaw <- function(path) {
 # Prepare dummy data
 raw <- parseRaw(system.file("extdata", "example.raw", package = "BEDMatrix"))
 examplePath <- system.file("extdata", "example.bed", package = "BEDMatrix")
-standalonePath <- system.file("extdata", "standalone.bed", package = "BEDMatrix")
+standalonePath <- "standalone.bed"
 
 for (path in c(examplePath, sub(".bed", "", examplePath))) {
 
