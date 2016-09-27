@@ -13,7 +13,7 @@ BEDMatrix(path, n = NULL, p = NULL)
 file exists. If provided, \code{rownames} will be set to \code{NULL} and
 have to be provided manually.}
 
-\item{p}{The number of markers. Optional if MAP file of same name as BED file
+\item{p}{The number of markers. Optional if BIM file of same name as BED file
 exists. If provided, \code{colnames} will be set to \code{NULL} and have
 to be provided manually.}
 }

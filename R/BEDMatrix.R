@@ -49,7 +49,7 @@ delims <- "[ \t]"
 #' @param n The number of individuals. Optional if FAM file of same name as BED
 #'   file exists. If provided, \code{rownames} will be set to \code{NULL} and
 #'   have to be provided manually.
-#' @param p The number of markers. Optional if MAP file of same name as BED file
+#' @param p The number of markers. Optional if BIM file of same name as BED file
 #'   exists. If provided, \code{colnames} will be set to \code{NULL} and have
 #'   to be provided manually.
 #' @export
