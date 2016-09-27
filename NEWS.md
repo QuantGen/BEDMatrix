@@ -1,4 +1,4 @@
-# BEDMatrix 1.2.0.9000
+# BEDMatrix 1.3.0
 
 * Speed up character subsetting.
 * Speed up detection of `n`, `p`, `rownames`, and `colnames` during
