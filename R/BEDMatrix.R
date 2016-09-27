@@ -56,7 +56,7 @@ delims <- "[ \t]"
 BEDMatrix <- function(path, n = NULL, p = NULL) {
     path <- path.expand(path)
     if (!file.exists(path)) {
-        # Try to add extension (common in PLINK).
+        # Try to add extension (common in PLINK)
         path <- paste0(path, ".bed")
         if (!file.exists(path)) {
             stop("File not found.")
@@ -64,7 +64,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
     }
     dir <- substr(path, 1, nchar(path) - 4)
     if (is.null(n)) {
-        # Check if FAM file exists.
+        # Check if FAM file exists
         if (!file.exists(paste0(dir, ".fam"))) {
             stop("FAM file of same name not found. Provide number of individuals (n).")
         } else {
@@ -72,15 +72,15 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
             famPath <- paste0(dir, ".fam")
             if (requireNamespace("data.table", quietly = TRUE)) {
                 fam <- data.table::fread(famPath, select = c(1, 2), data.table = FALSE, showProgress = FALSE)
-                # Determine n.
+                # Determine n
                 n <- nrow(fam)
-                # Determine rownames.
+                # Determine rownames
                 rownames <- paste0(fam[, 1], "_", fam[, 2])
             } else {
                 fam <- readLines(famPath)
-                # Determine n.
+                # Determine n
                 n <- length(fam)
-                # Determine rownames.
+                # Determine rownames
                 rownames <- sapply(strsplit(fam, delims), function(line) {
                     # Concatenate family ID and subject ID
                     return(paste0(line[1], "_", line[2]))
@@ -92,7 +92,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
         rownames <- NULL
     }
     if (is.null(p)) {
-        # Check if BIM file exists.
+        # Check if BIM file exists
         if (!file.exists(paste0(dir, ".bim"))) {
             stop("BIM file of same name not found. Provide number of markers (p).")
         } else {
@@ -100,15 +100,15 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
             bimPath <- paste0(dir, ".bim")
             if (requireNamespace("data.table", quietly = TRUE)) {
                 bim <- data.table::fread(bimPath, select = c(2, 5), data.table = FALSE, showProgress = FALSE)
-                # Determine p.
+                # Determine p
                 p <- nrow(bim)
-                # Determine colnames.
+                # Determine colnames
                 colnames <- paste0(bim[, 1], "_", bim[, 2])
             } else {
                 bim <- readLines(bimPath)
-                # Determine p.
+                # Determine p
                 p <- length(bim)
-                # Determine colnames.
+                # Determine colnames
                 colnames <- sapply(strsplit(bim, delims), function(line) {
                     # Concatenate SNP name and minor allele (like --recodeA)
                     return(paste0(line[2], "_", line[5]))
@@ -167,7 +167,7 @@ str.BEDMatrix <- function(object, ...) {
             j <- match(j, colnames(x))
         }
         subset <- rcpp_obj$matrixSubset(x, i, j)
-        # Let R handle drop behavior.
+        # Let R handle drop behavior
         if (drop == TRUE && (nrow(subset) == 1 || ncol(subset) == 1)) {
             subset <- subset[, ]
         }
