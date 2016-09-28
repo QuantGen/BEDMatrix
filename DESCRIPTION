@@ -1,5 +1,5 @@
 Package: BEDMatrix
-Version: 1.3.0
+Version: 1.3.0.9000
 License: MIT + file LICENSE
 Title: Matrices Backed by Binary PED Files (PLINK)
 Description: A matrix-like data structure that allows for efficient,
