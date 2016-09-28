@@ -53,6 +53,7 @@ delims <- "[ \t]"
 #'   exists. If provided, \code{colnames} will be set to \code{NULL} and have
 #'   to be provided manually.
 #' @export
+#' @example man/examples/BEDMatrix.R
 BEDMatrix <- function(path, n = NULL, p = NULL) {
     path <- path.expand(path)
     if (!file.exists(path)) {

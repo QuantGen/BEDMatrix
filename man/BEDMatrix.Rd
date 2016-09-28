@@ -61,4 +61,14 @@ the underlying \code{Rcpp} module. The \code{Rcpp} module exposes an S4 class
 called \code{BEDMatrix_} that memory maps the BED file via
 \code{Boost.Interprocess} of the \code{BH} package.
 }
+\examples{
+# Create an example BEDMatrix object
+m <- BEDMatrix(system.file("extdata", "example.bed", package = "BEDMatrix"))
+
+# Get the dimensions of the example BEDMatrix object
+dim(m)
+
+# Extract a subset of the example BEDMatrix object
+m[1:3, ]
+}
 

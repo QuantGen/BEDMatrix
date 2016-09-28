@@ -3,6 +3,8 @@
 This is a resubmission. In this version I have:
 
 - Used the canonical CRAN URL.
+- Added some examples.
+
 
 ## Test environments
 
