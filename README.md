@@ -2,7 +2,7 @@ BEDMatrix
 =========
 
 [![Travis-CI Build Status](https://travis-ci.org/QuantGen/BEDMatrix.svg?branch=master)](https://travis-ci.org/QuantGen/BEDMatrix)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BEDMatrix)](http://cran.r-project.org/package=BEDMatrix)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BEDMatrix)](https://cran.r-project.org/package=BEDMatrix)
 
 BEDMatrix is an R package that provides a wrapper around [binary PED (also known as BED) files](http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#bed), one of the genotype/phenotype file formats of [PLINK](http://pngu.mgh.harvard.edu/~purcell/plink/), the whole genome association analysis toolset. BEDMatrix objects are created in R by simply providing the path to a BED file and once created, they behave similarly to regular matrices with the advantage that genotypes are retrieved on demand without loading the entire file into memory. This allows handling of very large files with limited use of memory. Technically, a BEDMatrix is a memory-mapped matrix backed by a binary PED file.
 

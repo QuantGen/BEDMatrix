@@ -1,3 +1,9 @@
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+- Used the canonical CRAN URL.
+
 ## Test environments
 
 * Local Arch Linux install, R 3.3.1
