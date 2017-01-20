@@ -1,17 +1,15 @@
 context("BEDMatrix")
 
 parseRaw <- function(path) {
-    file <- file(path)
-    lines <- readLines(file)
-    out <- t(sapply(strsplit(lines[2:length(lines)], " "), function(line) {
-        line <- line[7:length(line)]
-        line <- gsub("NA", NA, line)
-        as.integer(line)
-    }))
-    rownames(out) <- paste0("id_", 1:nrow(out))
-    colnames(out) <- paste0("mrk_", 1:ncol(out))
-    close(file)
-    return(out)
+    lines <- strsplit(readLines(path), " ")
+    header <- lines[[1]]
+    data <- matrix(data = unlist(lines[2:length(lines)]), nrow = 50, ncol = 1006, byrow = TRUE)
+    pheno <- data[, 1:6]
+    geno <- data[, 7:ncol(data)]
+    suppressWarnings(mode(geno) <- "integer")
+    rownames(geno) <- paste0(pheno[, 1], "_", pheno[, 2])
+    colnames(geno) <- header[7:length(header)]
+    return(geno)
 }
 
 # Prepare dummy data
@@ -31,7 +29,7 @@ for (path in c(examplePath, sub(".bed", "", examplePath))) {
 
     test_that("it determines n from FAM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(nrow(bed), 6)
+        expect_equal(nrow(bed), nrow(raw))
         expect_message(BEDMatrix(path = path), "Extracting number of individuals and rownames from FAM file\\.\\.\\.")
     })
 
@@ -41,13 +39,13 @@ for (path in c(examplePath, sub(".bed", "", examplePath))) {
 
     test_that("it determines rownames from FAM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(rownames(bed), c("1_1", "1_2", "1_3", "2_1", "2_2", "2_3"))
+        expect_equal(rownames(bed), rownames(raw))
         expect_message(BEDMatrix(path = path), "Extracting number of individuals and rownames from FAM file\\.\\.\\.")
     })
 
     test_that("it determines p from BIM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(ncol(bed), 3)
+        expect_equal(ncol(bed), ncol(raw))
         expect_message(BEDMatrix(path = path), "Extracting number of markers and colnames from BIM file\\.\\.\\.")
     })
 
@@ -57,17 +55,17 @@ for (path in c(examplePath, sub(".bed", "", examplePath))) {
 
     test_that("it determines colnames from BIM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(colnames(bed), c("snp1_G", "snp2_1", "snp3_A"))
+        expect_equal(colnames(bed), colnames(raw))
         expect_message(BEDMatrix(path = path), "Extracting number of markers and colnames from BIM file\\.\\.\\.")
     })
 
     test_that("it accepts n and p if FAM or BIM file are present", {
-        bed <- BEDMatrix(path = path, n = 6, p = 3)
+        bed <- BEDMatrix(path = path, n = nrow(raw), p = ncol(raw))
         expect_equal(dimnames(bed), list(NULL, NULL))
     })
 
     test_that("it accepts n and p if FAM or BIM file is not found", {
-        bed <- BEDMatrix(path = standalonePath, n = 6, p = 3)
+        bed <- BEDMatrix(path = standalonePath, n = 3, p = 6)
         expect_equal(dimnames(bed), list(NULL, NULL))
     })
 
@@ -78,9 +76,7 @@ for (path in c(examplePath, sub(".bed", "", examplePath))) {
 }
 
 # Prepare dummy BED matrix
-bed <- BEDMatrix(path = examplePath, n = 6, p = 3)
-rownames(bed) <- paste0("id_", 1:nrow(bed))
-colnames(bed) <- paste0("mrk_", 1:ncol(bed))
+suppressMessages(bed <- BEDMatrix(path = examplePath))
 
 test_that("subsetting", {
 
@@ -135,48 +131,48 @@ test_that("subsetting", {
     expect_equal(bed[raw > 1], raw[raw > 1])
     expect_equal(typeof(bed[1]), "integer")
 
-    expect_equal(bed["id_1", ], raw["id_1", ])
-    expect_equal(bed[, "mrk_1"], raw[, "mrk_1"])
-    expect_equal(bed["id_1", "mrk_1"], raw["id_1", "mrk_1"])
-    expect_equal(bed["id_1", , drop = FALSE], raw["id_1", , drop = FALSE])
-    expect_equal(bed[, "mrk_1", drop = FALSE], raw[, "mrk_1", drop = FALSE])
-    expect_equal(bed["id_1", "mrk_1", drop = FALSE], raw["id_1", "mrk_1", drop = FALSE])
-    expect_equal(typeof(bed["id_1", ]), "integer")
+    expect_equal(bed["per0_per0", ], raw["per0_per0", ])
+    expect_equal(bed[, "snp0_A"], raw[, "snp0_A"])
+    expect_equal(bed["per0_per0", "snp0_A"], raw["per0_per0", "snp0_A"])
+    expect_equal(bed["per0_per0", , drop = FALSE], raw["per0_per0", , drop = FALSE])
+    expect_equal(bed[, "snp0_A", drop = FALSE], raw[, "snp0_A", drop = FALSE])
+    expect_equal(bed["per0_per0", "snp0_A", drop = FALSE], raw["per0_per0", "snp0_A", drop = FALSE])
+    expect_equal(typeof(bed["per0_per0", ]), "integer")
 
-    expect_equal(bed[c("id_1", "id_2"), ], raw[c("id_1", "id_2"), ])
-    expect_equal(bed[, c("mrk_1", "mrk_2")], raw[, c("mrk_1", "mrk_2")])
-    expect_equal(bed[c("id_1", "id_2"), c("mrk_1", "mrk_2")], raw[c("id_1", "id_2"), c("mrk_1", "mrk_2")])
-    expect_equal(bed[c("id_1", "id_2"), , drop = FALSE], raw[c("id_1", "id_2"), , drop = FALSE])
-    expect_equal(bed[, c("mrk_1", "mrk_2"), drop = FALSE], raw[, c("mrk_1", "mrk_2"), drop = FALSE])
-    expect_equal(bed[c("id_1", "id_2"), c("mrk_1", "mrk_2"), drop = FALSE], raw[c("id_1", "id_2"), c("mrk_1", "mrk_2"), drop = FALSE])
-    expect_equal(typeof(bed[c("id_1", "id_2"), ]), "integer")
+    expect_equal(bed[c("per0_per0", "per1_per1"), ], raw[c("per0_per0", "per1_per1"), ])
+    expect_equal(bed[, c("snp0_A", "snp1_C")], raw[, c("snp0_A", "snp1_C")])
+    expect_equal(bed[c("per0_per0", "per1_per1"), c("snp0_A", "snp1_C")], raw[c("per0_per0", "per1_per1"), c("snp0_A", "snp1_C")])
+    expect_equal(bed[c("per0_per0", "per1_per1"), , drop = FALSE], raw[c("per0_per0", "per1_per1"), , drop = FALSE])
+    expect_equal(bed[, c("snp0_A", "snp1_C"), drop = FALSE], raw[, c("snp0_A", "snp1_C"), drop = FALSE])
+    expect_equal(bed[c("per0_per0", "per1_per1"), c("snp0_A", "snp1_C"), drop = FALSE], raw[c("per0_per0", "per1_per1"), c("snp0_A", "snp1_C"), drop = FALSE])
+    expect_equal(typeof(bed[c("per0_per0", "per1_per1"), ]), "integer")
 
-    expect_equal(bed[c("id_2", "id_1"), ], raw[c("id_2", "id_1"), ])
-    expect_equal(bed[, c("mrk_2", "mrk_1")], raw[, c("mrk_2", "mrk_1")])
-    expect_equal(bed[c("id_2", "id_1"), c("mrk_2", "mrk_1")], raw[c("id_2", "id_1"), c("mrk_2", "mrk_1")])
-    expect_equal(bed[c("id_2", "id_1"), , drop = FALSE], raw[c("id_2", "id_1"), , drop = FALSE])
-    expect_equal(bed[, c("mrk_2", "mrk_1"), drop = FALSE], raw[, c("mrk_2", "mrk_1"), drop = FALSE])
-    expect_equal(bed[c("id_2", "id_1"), c("mrk_2", "mrk_1"), drop = FALSE], raw[c("id_2", "id_1"), c("mrk_2", "mrk_1"), drop = FALSE])
-    expect_equal(typeof(bed[c("id_2", "id_1"), ]), "integer")
+    expect_equal(bed[c("per1_per1", "per0_per0"), ], raw[c("per1_per1", "per0_per0"), ])
+    expect_equal(bed[, c("snp1_C", "snp0_A")], raw[, c("snp1_C", "snp0_A")])
+    expect_equal(bed[c("per1_per1", "per0_per0"), c("snp1_C", "snp0_A")], raw[c("per1_per1", "per0_per0"), c("snp1_C", "snp0_A")])
+    expect_equal(bed[c("per1_per1", "per0_per0"), , drop = FALSE], raw[c("per1_per1", "per0_per0"), , drop = FALSE])
+    expect_equal(bed[, c("snp1_C", "snp0_A"), drop = FALSE], raw[, c("snp1_C", "snp0_A"), drop = FALSE])
+    expect_equal(bed[c("per1_per1", "per0_per0"), c("snp1_C", "snp0_A"), drop = FALSE], raw[c("per1_per1", "per0_per0"), c("snp1_C", "snp0_A"), drop = FALSE])
+    expect_equal(typeof(bed[c("per1_per1", "per0_per0"), ]), "integer")
 
-    expect_equal(bed[c("id_3", "id_1"), ], raw[c("id_3", "id_1"), ])
-    expect_equal(bed[, c("mrk_3", "mrk_1")], raw[, c("mrk_3", "mrk_1")])
-    expect_equal(bed[c("id_3", "id_1"), c("mrk_3", "mrk_1")], raw[c("id_3", "id_1"), c("mrk_3", "mrk_1")])
-    expect_equal(bed[c("id_3", "id_1"), , drop = FALSE], raw[c("id_3", "id_1"), , drop = FALSE])
-    expect_equal(bed[, c("mrk_3", "mrk_1"), drop = FALSE], raw[, c("mrk_3", "mrk_1"), drop = FALSE])
-    expect_equal(bed[c("id_3", "id_1"), c("mrk_3", "mrk_1"), drop = FALSE], raw[c("id_3", "id_1"), c("mrk_3", "mrk_1"), drop = FALSE])
-    expect_equal(typeof(bed[c("id_3", "id_1"), ]), "integer")
+    expect_equal(bed[c("per2_per2", "per0_per0"), ], raw[c("per2_per2", "per0_per0"), ])
+    expect_equal(bed[, c("snp2_G", "snp0_A")], raw[, c("snp2_G", "snp0_A")])
+    expect_equal(bed[c("per2_per2", "per0_per0"), c("snp2_G", "snp0_A")], raw[c("per2_per2", "per0_per0"), c("snp2_G", "snp0_A")])
+    expect_equal(bed[c("per2_per2", "per0_per0"), , drop = FALSE], raw[c("per2_per2", "per0_per0"), , drop = FALSE])
+    expect_equal(bed[, c("snp2_G", "snp0_A"), drop = FALSE], raw[, c("snp2_G", "snp0_A"), drop = FALSE])
+    expect_equal(bed[c("per2_per2", "per0_per0"), c("snp2_G", "snp0_A"), drop = FALSE], raw[c("per2_per2", "per0_per0"), c("snp2_G", "snp0_A"), drop = FALSE])
+    expect_equal(typeof(bed[c("per2_per2", "per0_per0"), ]), "integer")
 
     # Do not modify indexes
-    i <- seq_len(6 * 3)
+    i <- seq_len(nrow(raw) * ncol(raw))
     bed[i]
-    expect_equal(i, seq_len(6 * 3))
+    expect_equal(i, seq_len(nrow(raw) * ncol(raw)))
 
-    i <- seq_len(6)
-    j <- seq_len(3)
+    i <- seq_len(nrow(raw))
+    j <- seq_len(ncol(raw))
     bed[i, j]
-    expect_equal(i, seq_len(6))
-    expect_equal(j, seq_len(3))
+    expect_equal(i, seq_len(nrow(raw)))
+    expect_equal(j, seq_len(ncol(raw)))
 
 })
 

@@ -13,7 +13,7 @@ This package is deliberately kept simple. For computational methods that use BED
 Example
 -------
 
-This example uses a very simple BED file that is bundled with this R package. It was generated from the PLINK files in the [`inst/extdata` folder](https://github.com/QuantGen/BEDMatrix/tree/master/inst/extdata) using `plink --file example --make-bed --out example`.
+This example uses a dummy BED file that is bundled with this R package. It was generated using `plink --dummy 500 1000 0.02 acgt --seed 4711 --out example` with PLINK 1.90 beta 3.452.
 
 To get the path to the example BED file (`system.file` finds the full file names of files in packages and is only used to find the example data):
 
@@ -33,17 +33,17 @@ To get the dimensions of the BEDMatrix object:
 
 ```r
 > dim(m)
-[1] 6 3
+[1] 50 1000
 ```
 
 To extract a subset of the BEDMatrix object:
 
 ```r
-> m[1:3, ]
-    snp1_G snp2_1 snp3_A
-1_1      2      0      0
-1_2      0     NA      1
-1_3     NA      1      1
+> m[1:3, 1:5]
+          snp0_A snp1_C snp2_G snp3_G snp4_G
+per0_per0      0      1      1      1      0
+per1_per1      1      1      1      1     NA
+per2_per2      1      0      0      2      0
 ```
 
 
