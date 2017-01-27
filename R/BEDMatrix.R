@@ -133,6 +133,37 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
 }
 
 #' @export
+dim.BEDMatrix <- function(x) {
+    attr(x, "dims")
+}
+
+#' @export
+dimnames.BEDMatrix <- function(x) {
+    attr(x, "dnames")
+}
+
+#' @export
+`dimnames<-.BEDMatrix` <- function(x, value) {
+    d <- dim(x)
+    v1 <- value[[1]]
+    v2 <- value[[2]]
+    if (!is.list(value) || length(value) != 2 || !(is.null(v1) || length(v1) == d[1]) || !(is.null(v2) || length(v2) == d[2])) {
+        stop("invalid dimnames")
+    }
+    attr(x, "dnames") <- lapply(value, function(v) {
+        if (!is.null(v)) {
+            as.character(v)
+        }
+    })
+    return(x)
+}
+
+#' @export
+length.BEDMatrix <- function(x) {
+    prod(dim(x))
+}
+
+#' @export
 print.BEDMatrix <- function(x, ...) {
     dims <- dim(x)
     n <- dims[1]
@@ -199,42 +230,11 @@ str.BEDMatrix <- function(object, ...) {
 }
 
 #' @export
-dim.BEDMatrix <- function(x) {
-    attr(x, "dims")
-}
-
-#' @export
-dimnames.BEDMatrix <- function(x) {
-    attr(x, "dnames")
-}
-
-#' @export
-`dimnames<-.BEDMatrix` <- function(x, value) {
-    d <- dim(x)
-    v1 <- value[[1]]
-    v2 <- value[[2]]
-    if (!is.list(value) || length(value) != 2 || !(is.null(v1) || length(v1) == d[1]) || !(is.null(v2) || length(v2) == d[2])) {
-        stop("invalid dimnames")
-    }
-    attr(x, "dnames") <- lapply(value, function(v) {
-        if (!is.null(v)) {
-            as.character(v)
-        }
-    })
-    return(x)
-}
-
-#' @export
-length.BEDMatrix <- function(x) {
-    prod(dim(x))
+as.matrix.BEDMatrix <- function(x, ...) {
+    x[, , drop = FALSE]
 }
 
 #' @export
 is.matrix.BEDMatrix <- function(x) {
     TRUE
-}
-
-#' @export
-as.matrix.BEDMatrix <- function(x, ...) {
-    x[, , drop = FALSE]
 }
