@@ -214,13 +214,13 @@ str.BEDMatrix <- function(object, ...) {
             if (class(i) == "matrix") {
                 i <- as.vector(i)
                 if (class(i) == "logical") {
-                  i <- which(rep_len(i, n * p))
-                  # matrix treats NAs as TRUE
-                  i <- sort(c(i, which(is.na(x[]))))
+                    i <- which(rep_len(i, n * p))
+                    # matrix treats NAs as TRUE
+                    i <- sort(c(i, which(is.na(x[]))))
                 }
             } else {
                 if (class(i) == "logical") {
-                  i <- which(rep_len(i, n * p))
+                    i <- which(rep_len(i, n * p))
                 }
             }
             subset <- rcpp_obj$vectorSubset(x, i)
