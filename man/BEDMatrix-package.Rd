@@ -14,4 +14,3 @@ without loading the entire file into memory. This allows handling of very
 large files with limited use of memory. Technically, a \code{BEDMatrix} is a
 memory-mapped matrix backed by a binary PED file.
 }
-

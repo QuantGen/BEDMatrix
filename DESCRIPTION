@@ -28,4 +28,5 @@ Suggests:
     roxygen2
 Remotes:
     agrueneberg/subsette
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
+Roxygen: list(markdown = TRUE)

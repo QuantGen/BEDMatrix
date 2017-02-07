@@ -10,55 +10,50 @@ BEDMatrix(path, n = NULL, p = NULL)
 \item{path}{Path to the binary PED file, with or without extension.}
 
 \item{n}{The number of individuals. Optional if FAM file of same name as BED
-file exists. If provided, \code{rownames} will be set to \code{NULL} and
-have to be provided manually.}
+file exists. If provided, \code{rownames} will be set to \code{NULL} and have to be
+provided manually.}
 
-\item{p}{The number of markers. Optional if BIM file of same name as BED file
-exists. If provided, \code{colnames} will be set to \code{NULL} and have
-to be provided manually.}
+\item{p}{The number of markers. Optional if BIM file of same name as BED
+file exists. If provided, \code{colnames} will be set to \code{NULL} and have to be
+provided manually.}
 }
 \description{
-\code{BEDMatrix} is an S3 class that behaves similarly to a regular
-\code{matrix} by implementing key methods such as \code{[}, \code{dim}, and
-\code{dimnames}. Subsets are extracted directly and on-demand from the
-binary PED file without loading the entire file into memory through memory
-mapping. The subsets are coded similarly to RAW files generated with the
-\code{--recodeA} argument in PLINK: \code{0} indicates homozygous major
-allele, \code{1} indicates heterozygous, and \code{2} indicates homozygous
-minor allele.
+\code{BEDMatrix} is an S3 class that behaves similarly to a regular \code{matrix} by
+implementing key methods such as \code{[}, \code{dim}, and \code{dimnames}. Subsets are
+extracted directly and on-demand from the binary PED file without loading
+the entire file into memory through memory mapping. The subsets are coded
+similarly to RAW files generated with the \code{--recodeA} argument in PLINK: \code{0}
+indicates homozygous major allele, \code{1} indicates heterozygous, and \code{2}
+indicates homozygous minor allele.
 }
 \details{
-A \code{BEDMatrix} instance can be created by providing the path to the BED
-file (with or without extension) as \code{path}, the number of individuals
-as \code{n}, and the number of markers as \code{p}. If a FAM file (which
-corresponds to the first six columns of a PED file) of the same name and in
-the same directory as the BED file exists, it is optional to provide
-\code{n} and the number of individuals as well as the rownames of the
-\code{BEDMatrix} will be detected automatically. The rownames will be
-generated based on the IID and FID of each individual, concatenated by
-\code{_}.  If a BIM file (which corresponds to the MAP file that accompanies
-a PED file) of the same name and in the same directory as the BED file
-exists, it is optional to provide \code{p} and the number of markers as well
-as the colnames of the \code{BEDMatrix} will be detected automatically. The
+A \code{BEDMatrix} instance can be created by providing the path to the BED file
+(with or without extension) as \code{path}, the number of individuals as \code{n}, and
+the number of markers as \code{p}. If a FAM file (which corresponds to the first
+six columns of a PED file) of the same name and in the same directory as the
+BED file exists, it is optional to provide \code{n} and the number of individuals
+as well as the rownames of the \code{BEDMatrix} will be detected automatically.
+The rownames will be generated based on the IID and FID of each individual,
+concatenated by \code{_}.  If a BIM file (which corresponds to the MAP file that
+accompanies a PED file) of the same name and in the same directory as the
+BED file exists, it is optional to provide \code{p} and the number of markers as
+well as the colnames of the \code{BEDMatrix} will be detected automatically. The
 colnames will be generated based on the SNP name and the minor allele,
-concatenated by \code{_} (similar to the colnames in a RAW file). For very
-large BED file it is advised to provide \code{n} and \code{p} manually to
-speed up object creation. In that case \code{rownames} and \code{colnames}
-will be set to \code{NULL} and have to be specified manually.
+concatenated by \code{_} (similar to the colnames in a RAW file). For very large
+BED file it is advised to provide \code{n} and \code{p} manually to speed up object
+creation. In that case \code{rownames} and \code{colnames} will be set to \code{NULL} and
+have to be specified manually.
 
 A BED file can be created from a PED file with
-\href{http://pngu.mgh.harvard.edu/~purcell/plink/}{PLINK} using \code{plink
---file myfile --make-bed}. BED files are storage and query efficient, and can
-be transformed back into the original PED file with PLINK using \code{plink
---bfile myfile --recode}.
+\href{http://pngu.mgh.harvard.edu/~purcell/plink/}{PLINK} using \code{plink --file myfile --make-bed}. BED files are storage and query efficient, and can be
+transformed back into the original PED file with PLINK using \code{plink --bfile myfile --recode}.
 
-Internally, \code{BEDMatrix} inherits from \code{list} and
-exposes a few attributes that should not be relied upon in actual code:
-\code{path}, \code{dims}, \code{dnames}, and \code{_instance}. \code{path}
-stores the path to the BED file. \code{dims} and \code{dnames} contain the
-dimensions and dimnames of the BEDMatrix object. \code{_instance} points to
-the underlying \code{Rcpp} module. The \code{Rcpp} module exposes an S4 class
-called \code{BEDMatrix_} that memory maps the BED file via
+Internally, \code{BEDMatrix} inherits from \code{list} and exposes a few attributes
+that should not be relied upon in actual code: \code{path}, \code{dims}, \code{dnames}, and
+\code{_instance}. \code{path} stores the path to the BED file. \code{dims} and \code{dnames}
+contain the dimensions and dimnames of the BEDMatrix object. \code{_instance}
+points to the underlying \code{Rcpp} module. The \code{Rcpp} module exposes an S4
+class called \code{BEDMatrix_} that memory maps the BED file via
 \code{Boost.Interprocess} of the \code{BH} package.
 }
 \examples{
@@ -71,4 +66,3 @@ dim(m)
 # Extract a subset of the example BEDMatrix object
 m[1:3, ]
 }
-
