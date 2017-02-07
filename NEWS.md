@@ -1,3 +1,7 @@
+# BEDMatrix 1.3.0.9000
+
+* Support subsetting by `NA`.
+
 # BEDMatrix 1.3.0
 
 * Speed up character subsetting.

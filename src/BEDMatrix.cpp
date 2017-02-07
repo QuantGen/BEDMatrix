@@ -115,7 +115,11 @@ Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::List x, Rcpp::IntegerVector i
     Rcpp::IntegerVector out(size_i);
     // Iterate over indexes
     for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
-        out(idx_i) = this->get_genotype(i0[idx_i] % this->nrow, i0[idx_i] / this->nrow);
+        if (Rcpp::IntegerVector::is_na(i0[idx_i])) {
+            out(idx_i) = NA_INTEGER;
+        } else {
+            out(idx_i) = this->get_genotype(i0[idx_i] % this->nrow, i0[idx_i] / this->nrow);
+        }
     }
     return out;
 }
@@ -138,7 +142,11 @@ Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i
     for (std::size_t idx_j = 0; idx_j < size_j; idx_j++) {
         // Iterate over row indexes
         for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
-            out(idx_i, idx_j) = this->get_genotype(i0[idx_i], j0[idx_j]);
+            if (Rcpp::IntegerVector::is_na(i0[idx_i]) || Rcpp::IntegerVector::is_na(j0[idx_j])) {
+                out(idx_i, idx_j) = NA_INTEGER;
+            } else {
+                out(idx_i, idx_j) = this->get_genotype(i0[idx_i], j0[idx_j]);
+            }
         }
     }
     return out;
