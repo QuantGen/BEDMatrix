@@ -26,4 +26,6 @@ Suggests:
     data.table,
     testthat,
     roxygen2
+Remotes:
+    agrueneberg/subsette
 RoxygenNote: 5.0.1

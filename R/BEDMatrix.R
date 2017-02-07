@@ -176,58 +176,18 @@ str.BEDMatrix <- function(object, ...) {
     print(object)
 }
 
-#' @export
-`[.BEDMatrix` <- function(x, i, j, drop = TRUE) {
+subset_vector <- function(x, i) {
     rcpp_obj <- attr(x, "_instance")
-    dims <- dim(x)
-    n <- dims[1]
-    p <- dims[2]
-    if (nargs() > 2) {
-        # Case [i, j]
-        if (missing(i)) {
-            i <- 1:n
-        } else if (class(i) == "logical") {
-            i <- which(rep_len(i, n))
-        } else if (class(i) == "character") {
-            i <- match(i, rownames(x))
-        }
-        if (missing(j)) {
-            j <- 1:p
-        } else if (class(j) == "logical") {
-            j <- which(rep_len(j, p))
-        } else if (class(j) == "character") {
-            j <- match(j, colnames(x))
-        }
-        subset <- rcpp_obj$matrixSubset(x, i, j)
-        # Let R handle drop behavior
-        if (drop == TRUE && (nrow(subset) == 1 || ncol(subset) == 1)) {
-            subset <- subset[, ]
-        }
-    } else {
-        if (missing(i)) {
-            # Case []
-            i <- 1:n
-            j <- 1:p
-            subset <- rcpp_obj$matrixSubset(x, i, j)
-        } else {
-            # Case [i]
-            if (class(i) == "matrix") {
-                i <- as.vector(i)
-                if (class(i) == "logical") {
-                    i <- which(rep_len(i, n * p))
-                    # matrix treats NAs as TRUE
-                    i <- sort(c(i, which(is.na(x[]))))
-                }
-            } else {
-                if (class(i) == "logical") {
-                    i <- which(rep_len(i, n * p))
-                }
-            }
-            subset <- rcpp_obj$vectorSubset(x, i)
-        }
-    }
-    return(subset)
+    rcpp_obj$vectorSubset(x, i)
 }
+
+subset_matrix <- function(x, i, j) {
+    rcpp_obj <- attr(x, "_instance")
+    rcpp_obj$matrixSubset(x, i, j)
+}
+
+#' @export
+`[.BEDMatrix` <- subsette::subsette(subset_vector = subset_vector, subset_matrix = subset_matrix)
 
 #' @export
 as.matrix.BEDMatrix <- function(x, ...) {
