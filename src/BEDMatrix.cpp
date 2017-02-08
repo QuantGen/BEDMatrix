@@ -125,7 +125,7 @@ Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::List x, Rcpp::IntegerVector i
 Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
     // Check if indexes are out of bounds
     if (Rcpp::is_true(Rcpp::any(i > this->nrow)) || Rcpp::is_true(Rcpp::any(j > this->ncol))) {
-        Rcpp::stop("Invalid dimensions.");
+        Rcpp::stop("subscript out of bounds");
     }
     // Convert from 1-index to 0-index
     Rcpp::IntegerVector i0(i - 1);
