@@ -103,19 +103,17 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
 }
 
 Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::List x, Rcpp::IntegerVector i) {
-    // Check if index is out of bounds
-    if (Rcpp::is_true(Rcpp::any(i > this->nrow * this->ncol))) {
-        Rcpp::stop("Invalid dimensions.");
-    }
     // Convert from 1-index to 0-index
     Rcpp::IntegerVector i0(i - 1);
     // Keep size of i
     std::size_t size_i = i.size();
     // Reserve output vector
     Rcpp::IntegerVector out(size_i);
+    // Get bounds
+    std::size_t bounds = this->nrow * this->ncol;
     // Iterate over indexes
     for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
-        if (Rcpp::IntegerVector::is_na(i0[idx_i])) {
+        if (Rcpp::IntegerVector::is_na(i0[idx_i]) || i0[idx_i] >= bounds) {
             out(idx_i) = NA_INTEGER;
         } else {
             out(idx_i) = this->get_genotype(i0[idx_i] % this->nrow, i0[idx_i] / this->nrow);
