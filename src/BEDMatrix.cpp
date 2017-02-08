@@ -9,24 +9,6 @@
 #include <Rcpp.h>
 #include <string>
 
-Rcpp::IntegerMatrix& preserve_dimnames(const Rcpp::List& x, Rcpp::IntegerMatrix& out, const Rcpp::IntegerVector& i, const Rcpp::IntegerVector& j) {
-    Rcpp::List out_dimnames = Rcpp::List::create(
-        R_NilValue,
-        R_NilValue
-    );
-    Rcpp::List in_dimnames = x.attr("dnames");
-    Rcpp::RObject in_rownames = in_dimnames[0];
-    Rcpp::RObject in_colnames = in_dimnames[1];
-    if (!in_rownames.isNULL()) {
-        out_dimnames[0] = Rcpp::CharacterVector(in_rownames)[i];
-    }
-    if (!in_colnames.isNULL()) {
-        out_dimnames[1] = Rcpp::CharacterVector(in_colnames)[j];
-    }
-    out.attr("dimnames") = out_dimnames;
-    return out;
-}
-
 class BEDMatrix {
     public:
         BEDMatrix(std::string path, std::size_t n, std::size_t p);
@@ -135,7 +117,6 @@ Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i
     std::size_t size_j = j.size();
     // Reserve output matrix
     Rcpp::IntegerMatrix out(size_i, size_j);
-    preserve_dimnames(x, out, i0, j0);
     // Iterate over column indexes
     for (std::size_t idx_j = 0; idx_j < size_j; idx_j++) {
         // Iterate over row indexes

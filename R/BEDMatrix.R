@@ -183,7 +183,14 @@ subset_vector <- function(x, i) {
 
 subset_matrix <- function(x, i, j) {
     rcpp_obj <- attr(x, "_instance")
-    rcpp_obj$matrixSubset(x, i, j)
+    subset <- rcpp_obj$matrixSubset(x, i, j)
+    # Preserve dimnames
+    names <- attr(x, "dnames")
+    dimnames(subset) <- list(
+        names[[1]][i],
+        names[[2]][j]
+    )
+    return(subset)
 }
 
 #' @export
