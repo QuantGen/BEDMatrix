@@ -1,22 +1,3 @@
-context("BEDMatrix")
-
-parseRaw <- function(path) {
-    lines <- strsplit(readLines(path), " ")
-    header <- lines[[1]]
-    data <- matrix(data = unlist(lines[2:length(lines)]), nrow = 50, ncol = 1006, byrow = TRUE)
-    pheno <- data[, 1:6]
-    geno <- data[, 7:ncol(data)]
-    suppressWarnings(mode(geno) <- "integer")
-    rownames(geno) <- paste0(pheno[, 1], "_", pheno[, 2])
-    colnames(geno) <- header[7:length(header)]
-    return(geno)
-}
-
-# Prepare dummy data
-raw <- parseRaw(system.file("extdata", "example.raw", package = "BEDMatrix"))
-examplePath <- system.file("extdata", "example.bed", package = "BEDMatrix")
-standalonePath <- "standalone.bed"
-
 for (path in c(examplePath, sub(".bed", "", examplePath))) {
 
     test_that("it throws an error if file does not exist", {
@@ -29,7 +10,7 @@ for (path in c(examplePath, sub(".bed", "", examplePath))) {
 
     test_that("it determines n from FAM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(nrow(bed), nrow(raw))
+        expect_equal(nrow(bed), nrow(TST_B))
         expect_message(BEDMatrix(path = path), "Extracting number of individuals and rownames from FAM file\\.\\.\\.")
     })
 
@@ -39,13 +20,13 @@ for (path in c(examplePath, sub(".bed", "", examplePath))) {
 
     test_that("it determines rownames from FAM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(rownames(bed), rownames(raw))
+        expect_equal(rownames(bed), rownames(TST_B))
         expect_message(BEDMatrix(path = path), "Extracting number of individuals and rownames from FAM file\\.\\.\\.")
     })
 
     test_that("it determines p from BIM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(ncol(bed), ncol(raw))
+        expect_equal(ncol(bed), ncol(TST_B))
         expect_message(BEDMatrix(path = path), "Extracting number of markers and colnames from BIM file\\.\\.\\.")
     })
 
@@ -55,12 +36,12 @@ for (path in c(examplePath, sub(".bed", "", examplePath))) {
 
     test_that("it determines colnames from BIM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(colnames(bed), colnames(raw))
+        expect_equal(colnames(bed), colnames(TST_B))
         expect_message(BEDMatrix(path = path), "Extracting number of markers and colnames from BIM file\\.\\.\\.")
     })
 
     test_that("it accepts n and p if FAM or BIM file are present", {
-        bed <- BEDMatrix(path = path, n = nrow(raw), p = ncol(raw))
+        bed <- BEDMatrix(path = path, n = nrow(TST_B), p = ncol(TST_B))
         expect_equal(dimnames(bed), list(NULL, NULL))
     })
 
@@ -74,10 +55,3 @@ for (path in c(examplePath, sub(".bed", "", examplePath))) {
     })
 
 }
-
-# Prepare dummy BED matrix
-suppressMessages(bed <- BEDMatrix(path = examplePath))
-
-test_that("length", {
-    expect_equal(length(bed), length(raw))
-})
