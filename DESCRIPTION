@@ -18,7 +18,8 @@ Depends:
     R (>= 3.0.0)
 Imports:
     methods,
-    Rcpp (>= 0.12.1)
+    Rcpp (>= 0.12.1),
+    subsette
 LinkingTo:
     Rcpp,
     BH
