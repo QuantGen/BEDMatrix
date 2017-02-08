@@ -2,6 +2,8 @@
 
 * Support subsetting by `NA`.
 * Use [subsette package](https://github.com/agrueneberg/subsette) for subsetting
+* Fix minor subsetting bugs
+* Update example
 
 # BEDMatrix 1.3.0
 
