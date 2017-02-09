@@ -1,7 +1,7 @@
 # Delimiters used in PED files.
 delims <- "[ \t]"
 
-#' Creates a matrix wrapper around binary PED files.
+#' Creates a Matrix Wrapper Around Binary PED Files.
 #'
 #' `BEDMatrix` is an S3 class that behaves similarly to a regular `matrix` by
 #' implementing key methods such as `[`, `dim`, and `dimnames`. Subsets are

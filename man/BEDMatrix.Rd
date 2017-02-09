@@ -2,7 +2,7 @@
 % Please edit documentation in R/BEDMatrix.R
 \name{BEDMatrix}
 \alias{BEDMatrix}
-\title{Creates a matrix wrapper around binary PED files.}
+\title{Creates a Matrix Wrapper Around Binary PED Files.}
 \usage{
 BEDMatrix(path, n = NULL, p = NULL)
 }
