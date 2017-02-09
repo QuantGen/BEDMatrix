@@ -19,7 +19,7 @@ Depends:
 Imports:
     methods,
     Rcpp (>= 0.12.1),
-    subsette
+    crochet
 LinkingTo:
     Rcpp,
     BH
@@ -28,6 +28,6 @@ Suggests:
     testthat,
     roxygen2
 Remotes:
-    agrueneberg/subsette
+    agrueneberg/crochet
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)

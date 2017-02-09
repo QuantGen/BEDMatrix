@@ -1,7 +1,7 @@
 # BEDMatrix 1.3.0.9000
 
 * Support subsetting by `NA`.
-* Use [subsette package](https://github.com/agrueneberg/subsette) for subsetting
+* Use [crochet package](https://github.com/agrueneberg/crochet) for subsetting
 * Fix minor subsetting bugs
 * Update example
 

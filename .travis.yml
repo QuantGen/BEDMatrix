@@ -2,4 +2,4 @@ language: r
 sudo: false
 cache: packages
 warnings_are_errors: true
-r_github_packages: agrueneberg/subsette # install_packages does not install tests
+r_github_packages: agrueneberg/crochet # install_packages does not install tests

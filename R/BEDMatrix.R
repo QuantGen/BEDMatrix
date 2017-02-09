@@ -191,7 +191,7 @@ subset_matrix <- function(x, i, j) {
 }
 
 #' @export
-`[.BEDMatrix` <- subsette::subsette(subset_vector = subset_vector, subset_matrix = subset_matrix)
+`[.BEDMatrix` <- crochet::crochet(subset_vector = subset_vector, subset_matrix = subset_matrix)
 
 #' @export
 as.matrix.BEDMatrix <- function(x, ...) {
