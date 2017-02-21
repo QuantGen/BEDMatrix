@@ -29,8 +29,8 @@ delims <- "[ \t]"
 #' have to be specified manually.
 #'
 #' A BED file can be created from a PED file with
-#' [PLINK](http://pngu.mgh.harvard.edu/~purcell/plink/) using `plink --file
-#' myfile --make-bed`. BED files are storage and query efficient, and can be
+#' [PLINK](https://www.cog-genomics.org/plink2) using `plink --file myfile
+#' --make-bed`. BED files are storage and query efficient, and can be
 #' transformed back into the original PED file with PLINK using `plink --bfile
 #' myfile --recode`.
 #'

@@ -45,7 +45,7 @@ creation. In that case \code{rownames} and \code{colnames} will be set to \code{
 have to be specified manually.
 
 A BED file can be created from a PED file with
-\href{http://pngu.mgh.harvard.edu/~purcell/plink/}{PLINK} using \code{plink --file myfile --make-bed}. BED files are storage and query efficient, and can be
+\href{https://www.cog-genomics.org/plink2}{PLINK} using \code{plink --file myfile --make-bed}. BED files are storage and query efficient, and can be
 transformed back into the original PED file with PLINK using \code{plink --bfile myfile --recode}.
 
 Internally, \code{BEDMatrix} inherits from \code{list} and exposes a few attributes
