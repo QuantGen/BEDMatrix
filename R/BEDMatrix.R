@@ -175,12 +175,12 @@ str.BEDMatrix <- function(object, ...) {
 
 subset_vector <- function(x, i) {
     rcpp_obj <- attr(x, "_instance")
-    rcpp_obj$vectorSubset(x, i)
+    rcpp_obj$vectorSubset(i)
 }
 
 subset_matrix <- function(x, i, j) {
     rcpp_obj <- attr(x, "_instance")
-    subset <- rcpp_obj$matrixSubset(x, i, j)
+    subset <- rcpp_obj$matrixSubset(i, j)
     # Preserve dimnames
     names <- attr(x, "dnames")
     dimnames(subset) <- list(

@@ -12,8 +12,8 @@
 class BEDMatrix {
     public:
         BEDMatrix(std::string path, std::size_t n, std::size_t p);
-        Rcpp::IntegerVector vector_subset(Rcpp::List x, Rcpp::IntegerVector i);
-        Rcpp::IntegerMatrix matrix_subset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j);
+        Rcpp::IntegerVector vector_subset(Rcpp::IntegerVector i);
+        Rcpp::IntegerMatrix matrix_subset(Rcpp::IntegerVector i, Rcpp::IntegerVector j);
         std::size_t get_nrow();
         std::size_t get_ncol();
     private:
@@ -84,7 +84,7 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     return mapping;
 }
 
-Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::List x, Rcpp::IntegerVector i) {
+Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::IntegerVector i) {
     // Convert from 1-index to 0-index
     Rcpp::IntegerVector i0(i - 1);
     // Keep size of i
@@ -104,7 +104,7 @@ Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::List x, Rcpp::IntegerVector i
     return out;
 }
 
-Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::List x, Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
+Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
     // Check if indexes are out of bounds
     if (Rcpp::is_true(Rcpp::any(i > this->nrow)) || Rcpp::is_true(Rcpp::any(j > this->ncol))) {
         Rcpp::stop("subscript out of bounds");
