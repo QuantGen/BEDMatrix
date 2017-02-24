@@ -1,3 +1,6 @@
+# Delimiters used in PED files
+delims <- "[ \t]"
+
 #' @useDynLib BEDMatrix BEDMatrix__new
 initialize <- function(.Object, path, n = NULL, p = NULL) {
     path <- path.expand(path)
@@ -96,9 +99,6 @@ show <- function(object) {
     p <- dims[2]
     cat("BEDMatrix: ", n, " x ", p, " [", object@path, "]\n", sep = "")
 }
-
-# Delimiters used in PED files.
-delims <- "[ \t]"
 
 #' Creates a Matrix Wrapper Around Binary PED Files.
 #'
