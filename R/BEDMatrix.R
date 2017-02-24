@@ -154,9 +154,11 @@ show <- function(object) {
 #' @example man/examples/BEDMatrix.R
 BEDMatrix <- setClass("BEDMatrix", slots = list(xptr = "externalptr", dims = "integer", dnames = "list", path = "character"))
 
+#' @describeIn BEDMatrix Method to construct a [BEDMatrix-class] object.
 #' @export
 setMethod("initialize", signature(.Object = "BEDMatrix"), initialize)
 
+#' @describeIn BEDMatrix Method to print a [BEDMatrix-class] object.
 #' @export
 setMethod("show", signature(object = "BEDMatrix"), show)
 

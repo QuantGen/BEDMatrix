@@ -4,7 +4,14 @@
 \name{BEDMatrix-class}
 \alias{BEDMatrix-class}
 \alias{BEDMatrix}
+\alias{initialize,BEDMatrix-method}
+\alias{show,BEDMatrix-method}
 \title{Creates a Matrix Wrapper Around Binary PED Files.}
+\usage{
+\S4method{initialize}{BEDMatrix}(.Object, path, n = NULL, p = NULL)
+
+\S4method{show}{BEDMatrix}(object)
+}
 \arguments{
 \item{path}{Path to the binary PED file, with or without extension.}
 
@@ -58,6 +65,13 @@ the dimensions and dimnames of the \linkS4class{BEDMatrix} object. \code{xptr} i
 external pointer that points to the underlying \code{Rcpp} functions that
 memory-map the BED file via \code{Boost.Interprocess} of the \code{BH} package.
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{initialize}: Method to construct a \linkS4class{BEDMatrix} object.
+
+\item \code{show}: Method to print a \linkS4class{BEDMatrix} object.
+}}
+
 \examples{
 # Create an example BEDMatrix object
 m <- BEDMatrix(system.file("extdata", "example.bed", package = "BEDMatrix"))
