@@ -14,8 +14,6 @@ class BEDMatrix {
         BEDMatrix(std::string path, std::size_t n, std::size_t p);
         Rcpp::IntegerVector vector_subset(Rcpp::IntegerVector i);
         Rcpp::IntegerMatrix matrix_subset(Rcpp::IntegerVector i, Rcpp::IntegerVector j);
-        std::size_t get_nrow();
-        std::size_t get_ncol();
     private:
         BEDMatrix(const BEDMatrix&);
         BEDMatrix& operator=(const BEDMatrix&);
@@ -131,15 +129,6 @@ Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::IntegerVector i, Rcpp::Intege
     return out;
 }
 
-
-std::size_t BEDMatrix::get_nrow() {
-    return this->nrow;
-};
-
-std::size_t BEDMatrix::get_ncol() {
-    return this->ncol;
-};
-
 const unsigned short int BEDMatrix::length_header = 3;
 
 RCPP_MODULE(mod_BEDMatrix) {
@@ -150,8 +139,6 @@ RCPP_MODULE(mod_BEDMatrix) {
     .constructor<std::string, std::size_t, std::size_t>()
     .method("vectorSubset", &BEDMatrix::vector_subset)
     .method("matrixSubset", &BEDMatrix::matrix_subset)
-    .property("n", &BEDMatrix::get_nrow)
-    .property("p", &BEDMatrix::get_ncol)
     ;
 
 }

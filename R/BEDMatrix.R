@@ -124,7 +124,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL) {
     class(s3_obj) <- "BEDMatrix"
     attr(s3_obj, "_instance") <- rcpp_obj
     attr(s3_obj, "dnames") <- list(rownames, colnames)
-    attr(s3_obj, "dims") <- c(rcpp_obj$n, rcpp_obj$p)
+    attr(s3_obj, "dims") <- c(n, p)
     attr(s3_obj, "path") <- path
     return(s3_obj)
 }
