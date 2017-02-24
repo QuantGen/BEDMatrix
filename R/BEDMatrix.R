@@ -200,9 +200,6 @@ str.BEDMatrix <- function(object, ...) {
 }
 
 #' @export
-`[.BEDMatrix` <- crochet::extract(subset_vector = subset_vector, subset_matrix = subset_matrix)
-
-#' @export
 as.matrix.BEDMatrix <- function(x, ...) {
     x[, , drop = FALSE]
 }
