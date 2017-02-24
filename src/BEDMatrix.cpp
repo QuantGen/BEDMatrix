@@ -12,8 +12,8 @@
 class BEDMatrix {
     public:
         BEDMatrix(std::string path, std::size_t n, std::size_t p);
-        Rcpp::IntegerVector vector_subset(Rcpp::IntegerVector i);
-        Rcpp::IntegerMatrix matrix_subset(Rcpp::IntegerVector i, Rcpp::IntegerVector j);
+        Rcpp::IntegerVector subset_vector(Rcpp::IntegerVector i);
+        Rcpp::IntegerMatrix subset_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j);
     private:
         BEDMatrix(const BEDMatrix&);
         BEDMatrix& operator=(const BEDMatrix&);
@@ -31,13 +31,13 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), 
     try {
         this->file = boost::interprocess::file_mapping(path.c_str(), boost::interprocess::read_only);
     } catch(const boost::interprocess::interprocess_exception& e) {
-        Rcpp::stop("File not found.");
+        throw std::runtime_error("File not found.");
     }
     this->file_region = boost::interprocess::mapped_region(this->file, boost::interprocess::read_only);
     this->file_data = static_cast<const char*>(this->file_region.get_address());
     // Check magic number
     if (!(this->file_data[0] == '\x6C' && this->file_data[1] == '\x1B')) {
-        Rcpp::stop("File is not a binary PED file.");
+        throw std::runtime_error("File is not a binary PED file.");
     }
     // Check mode: 00000001 indicates the default SNP-major mode (i.e.
     // list all individuals for first SNP, all individuals for second
@@ -45,13 +45,13 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), 
     // mode (i.e. list all SNPs for the first individual, list all SNPs
     // for the second individual, etc)
     if (this->file_data[2] != '\x01') {
-        Rcpp::stop("Individual-major mode is not supported.");
+        throw std::runtime_error("Individual-major mode is not supported.");
     }
     // Get number of bytes
     const std::size_t num_bytes = this->file_region.get_size();
     // Check if given dimensions match the file
     if ((this->nrow * this->ncol) + (this->byte_padding * this->ncol) != (num_bytes - this->length_header) * 4) {
-        Rcpp::stop("n or p does not match the dimensions of the file.");
+        throw std::runtime_error("n or p does not match the dimensions of the file.");
     }
 }
 
@@ -82,7 +82,7 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     return mapping;
 }
 
-Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::IntegerVector i) {
+Rcpp::IntegerVector BEDMatrix::subset_vector(Rcpp::IntegerVector i) {
     // Convert from 1-index to 0-index
     Rcpp::IntegerVector i0(i - 1);
     // Keep size of i
@@ -102,10 +102,10 @@ Rcpp::IntegerVector BEDMatrix::vector_subset(Rcpp::IntegerVector i) {
     return out;
 }
 
-Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
+Rcpp::IntegerMatrix BEDMatrix::subset_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
     // Check if indexes are out of bounds
     if (Rcpp::is_true(Rcpp::any(i > this->nrow)) || Rcpp::is_true(Rcpp::any(j > this->ncol))) {
-        Rcpp::stop("subscript out of bounds");
+        throw std::runtime_error("subscript out of bounds");
     }
     // Convert from 1-index to 0-index
     Rcpp::IntegerVector i0(i - 1);
@@ -131,14 +131,48 @@ Rcpp::IntegerMatrix BEDMatrix::matrix_subset(Rcpp::IntegerVector i, Rcpp::Intege
 
 const unsigned short int BEDMatrix::length_header = 3;
 
-RCPP_MODULE(mod_BEDMatrix) {
+// Export BEDMatrix::BEDMatrix
+RcppExport SEXP BEDMatrix__new(SEXP path_, SEXP n_, SEXP p_) {
+    // Convert inputs to appropriate C++ types
+    std::string path = Rcpp::as<std::string>(path_);
+    std::size_t n = Rcpp::as<std::size_t>(n_);
+    std::size_t p = Rcpp::as<std::size_t>(p_);
+    try {
+        // Create a pointer to a BEDMatrix object and wrap it as an external
+        // pointer
+        Rcpp::XPtr<BEDMatrix> ptr(new BEDMatrix(path, n, p), true);
+        // Return the external pointer to the R side
+        return ptr;
+    } catch(std::exception &ex) {
+        forward_exception_to_r(ex);
+    }
+};
 
-    using namespace Rcpp;
+// Export BEDMatrix::subset_vector
+RcppExport SEXP BEDMatrix__subset_vector(SEXP xp_, SEXP i_) {
+    // Convert inputs to appropriate C++ types
+    Rcpp::XPtr<BEDMatrix> ptr(xp_);
+    Rcpp::IntegerVector i = Rcpp::as<Rcpp::IntegerVector>(i_);
+    try {
+        // Invoke the subset_vector function
+        Rcpp::IntegerVector res = ptr->subset_vector(i);
+        return res;
+    } catch(std::exception &ex) {
+        forward_exception_to_r(ex);
+    }
+};
 
-    class_<BEDMatrix>("BEDMatrix_")
-    .constructor<std::string, std::size_t, std::size_t>()
-    .method("vectorSubset", &BEDMatrix::vector_subset)
-    .method("matrixSubset", &BEDMatrix::matrix_subset)
-    ;
-
-}
+// Export BEDMatrix::subset_matrix
+RcppExport SEXP BEDMatrix__subset_matrix(SEXP xp_, SEXP i_, SEXP j_) {
+    // Convert inputs to appropriate C++ types
+    Rcpp::XPtr<BEDMatrix> ptr(xp_);
+    Rcpp::IntegerVector i = Rcpp::as<Rcpp::IntegerVector>(i_);
+    Rcpp::IntegerVector j = Rcpp::as<Rcpp::IntegerVector>(j_);
+    try {
+        // Invoke the subset_matrix function
+        Rcpp::IntegerMatrix res = ptr->subset_matrix(i, j);
+        return res;
+    } catch(std::exception &ex) {
+        forward_exception_to_r(ex);
+    }
+};

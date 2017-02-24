@@ -4,6 +4,7 @@
 * Use [crochet package](https://github.com/agrueneberg/crochet) for subsetting
 * Fix minor subsetting bugs
 * Update example
+* Remove intermediate S3 `BEDMatrix` type
 
 # BEDMatrix 1.3.0
 
