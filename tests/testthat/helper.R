@@ -10,11 +10,15 @@ parseRaw <- function(path) {
     return(geno)
 }
 
-examplePath <- system.file("extdata", "example.bed", package = "BEDMatrix")
+examplePath <- system.file("extdata", package = "BEDMatrix")
+# Fix devtools not redirecting system.file calls
+if (examplePath == "") {
+    examplePath <- "../../inst/extdata"
+}
 standalonePath <- "standalone.bed"
 
-TST_A <- suppressMessages(BEDMatrix(path = examplePath))
-TST_B <- parseRaw(system.file("extdata", "example.raw", package = "BEDMatrix"))
+TST_A <- suppressMessages(BEDMatrix(path = paste0(examplePath, "/example.bed")))
+TST_B <- parseRaw(paste0(examplePath, "/example.raw"))
 
 OUT_OF_BOUNDS_INT <- length(TST_A) + 1
 OUT_OF_BOUNDS_CHAR <- "snp1000_U"
