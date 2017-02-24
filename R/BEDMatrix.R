@@ -14,11 +14,11 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
     dir <- substr(path, 1, nchar(path) - 4)
     if (is.null(n)) {
         # Check if FAM file exists
-        if (!file.exists(paste0(dir, ".fam"))) {
+        famPath <- paste0(dir, ".fam")
+        if (!file.exists(famPath)) {
             stop("FAM file of same name not found. Provide number of individuals (n).")
         } else {
             message("Extracting number of individuals and rownames from FAM file...")
-            famPath <- paste0(dir, ".fam")
             if (requireNamespace("data.table", quietly = TRUE)) {
                 fam <- data.table::fread(famPath, select = c(1, 2), data.table = FALSE, showProgress = FALSE)
                 # Determine n
@@ -42,11 +42,11 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
     }
     if (is.null(p)) {
         # Check if BIM file exists
-        if (!file.exists(paste0(dir, ".bim"))) {
+        bimPath <- paste0(dir, ".bim")
+        if (!file.exists(bimPath)) {
             stop("BIM file of same name not found. Provide number of markers (p).")
         } else {
             message("Extracting number of markers and colnames from BIM file...")
-            bimPath <- paste0(dir, ".bim")
             if (requireNamespace("data.table", quietly = TRUE)) {
                 bim <- data.table::fread(bimPath, select = c(2, 5), data.table = FALSE, showProgress = FALSE)
                 # Determine p
