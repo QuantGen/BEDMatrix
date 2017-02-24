@@ -1,4 +1,4 @@
-for (path in c(paste0(examplePath, "/example"), paste0(examplePath, "/example.bed"))) {
+for (path in c(paste0(extdataPath, "/example"), paste0(extdataPath, "/example.bed"))) {
 
     test_that("it throws an error if file does not exist", {
         expect_error(BEDMatrix("NOT_FOUND"), "File not found\\.")
