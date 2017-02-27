@@ -5,7 +5,7 @@ BEDMatrix
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BEDMatrix)](https://cran.r-project.org/package=BEDMatrix)
 [![Rdoc](http://www.rdocumentation.org/badges/version/BEDMatrix)](http://www.rdocumentation.org/packages/BEDMatrix)
 
-BEDMatrix is an R package that provides a wrapper around [binary PED (also known as BED) files](https://www.cog-genomics.org/plink2/formats#bed), one of the genotype/phenotype file formats of [PLINK](https://www.cog-genomics.org/plink2), the whole genome association analysis toolset. BEDMatrix objects are created in R by simply providing the path to a BED file and once created, they behave similarly to regular matrices with the advantage that genotypes are retrieved on demand without loading the entire file into memory. This allows handling of very large files with limited use of memory. Technically, a BEDMatrix is a memory-mapped matrix backed by a binary PED file.
+BEDMatrix is an R package that provides a matrix-like wrapper around [.bed](https://www.cog-genomics.org/plink2/formats#bed), one of the genotype/phenotype file formats of [PLINK](https://www.cog-genomics.org/plink2), the whole genome association analysis toolset. BEDMatrix objects are created in R by simply providing the path to a .bed file and once created, they behave similarly to regular matrices with the advantage that genotypes are retrieved on demand without loading the entire file into memory. This allows handling of very large files with limited use of memory.
 
 This package is deliberately kept simple. For computational methods that use BEDMatrix check out the [BGData package](https://github.com/QuantGen/BGData).
 
@@ -13,15 +13,15 @@ This package is deliberately kept simple. For computational methods that use BED
 Example
 -------
 
-This example uses a dummy BED file that is bundled with this R package. It was generated using `plink --dummy 500 1000 0.02 acgt --seed 4711 --out example` with PLINK 1.90 beta 3.452.
+This example uses a dummy .bed file that is bundled with this R package. It was generated using `plink --dummy 500 1000 0.02 acgt --seed 4711 --out example` with PLINK 1.90 beta 3.452.
 
-To get the path to the example BED file (`system.file` finds the full file names of files in packages and is only used to find the example data):
+To get the path to the example .bed file (`system.file` finds the full file names of files in packages and is only used to find the example data):
 
 ```r
 > path <- system.file("extdata", "example.bed", package = "BEDMatrix")
 ```
 
-To wrap the example BED file in a BEDMatrix object:
+To wrap the example .bed file in a BEDMatrix object:
 
 ```r
 > m <- BEDMatrix(path)

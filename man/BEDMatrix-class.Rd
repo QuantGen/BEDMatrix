@@ -4,81 +4,100 @@
 \name{BEDMatrix-class}
 \alias{BEDMatrix-class}
 \alias{BEDMatrix}
-\alias{initialize,BEDMatrix-method}
-\alias{show,BEDMatrix-method}
-\title{Creates a Matrix Wrapper Around Binary PED Files.}
-\usage{
-\S4method{initialize}{BEDMatrix}(.Object, path, n = NULL, p = NULL)
-
-\S4method{show}{BEDMatrix}(object)
-}
-\arguments{
-\item{path}{Path to the binary PED file, with or without extension.}
-
-\item{n}{The number of individuals. Optional if FAM file of same name as BED
-file exists. If provided, \code{rownames} will be set to \code{NULL} and have to be
-provided manually.}
-
-\item{p}{The number of markers. Optional if BIM file of same name as BED
-file exists. If provided, \code{colnames} will be set to \code{NULL} and have to be
-provided manually.}
-}
-\value{
-A \code{BEDMatrix} object.
-}
+\title{A Class to Extract Genotypes from a PLINK .bed File.}
 \description{
-\linkS4class{BEDMatrix} is an S3 class that behaves similarly to a regular
-\code{matrix} by implementing key methods such as \code{[}, \code{dim}, and \code{dimnames}.
-Subsets are extracted directly and on-demand from the binary PED file
-without loading the entire file into memory through memory mapping. The
-subsets are coded similarly to RAW files generated with the \code{--recodeA}
-argument in PLINK: \code{0} indicates homozygous major allele, \code{1} indicates
-heterozygous, and \code{2} indicates homozygous minor allele.
+\code{BEDMatrix} is a class that maps a \href{https://www.cog-genomics.org/plink2/formats#bed}{PLINK .bed}
+file into memory and behaves similarly to a regular \code{matrix} by implementing
+key methods such as \code{[}, \code{dim}, and \code{dimnames}.  Subsets are extracted
+directly and on-demand from the .bed file without loading the entire file
+into memory.
 }
 \details{
-A \linkS4class{BEDMatrix} instance can be created by providing the path to the BED
-file (with or without extension) as \code{path}, the number of individuals as
-\code{n}, and the number of markers as \code{p}. If a FAM file (which corresponds to
-the first six columns of a PED file) of the same name and in the same
-directory as the BED file exists, it is optional to provide \code{n} and the
-number of individuals as well as the rownames of the \linkS4class{BEDMatrix}
-object will be detected automatically.  The rownames will be generated based
-on the IID and FID of each individual, concatenated by \code{_}.  If a BIM file
-(which corresponds to the MAP file that accompanies a PED file) of the same
-name and in the same directory as the BED file exists, it is optional to
-provide \code{p} and the number of markers as well as the colnames of the
-\linkS4class{BEDMatrix} object will be detected automatically. The colnames will
-be generated based on the SNP name and the minor allele, concatenated by \code{_}
-(similar to the colnames in a RAW file). For very large BED file it is
-advised to provide \code{n} and \code{p} manually to speed up object creation. In that
-case \code{rownames} and \code{colnames} will be set to \code{NULL} and have to be
-specified manually.
+The subsets extracted from a \code{BEDMatrix} object are coded similarly to
+\href{https://www.cog-genomics.org/plink2/formats#raw}{.raw} files (generated
+with the \code{--recodeA} argument in
+\href{https://www.cog-genomics.org/plink2/}{PLINK}): \code{0} indicates homozygous
+major allele, \code{1} indicates heterozygous, and \code{2} indicates homozygous minor
+allele.
 
-A BED file can be created from a PED file with
-\href{https://www.cog-genomics.org/plink2}{PLINK} using \code{plink --file myfile --make-bed}. BED files are storage and query efficient, and can be
-transformed back into the original PED file with PLINK using \code{plink --bfile myfile --recode}.
-
-Internally, \linkS4class{BEDMatrix} is an S4 class with the following slots that
-should not be relied upon in actual code: \code{path}, \code{dims}, \code{dnames}, and
-\code{xptr}. \code{path} stores the path to the BED file. \code{dims} and \code{dnames} contain
-the dimensions and dimnames of the \linkS4class{BEDMatrix} object. \code{xptr} is an
-external pointer that points to the underlying \code{Rcpp} functions that
-memory-map the BED file via \code{Boost.Interprocess} of the \code{BH} package.
+Internally, this class is an S4 class with the following slots that should
+not be relied upon in actual code: \code{xptr}, \code{dims}, \code{dnames}, and \code{path}. The
+.bed file is mapped into memory using the \link[Rcpp:Rcpp-package]{Rcpp} package
+and the \code{Boost.Interprocess} library provided by the \link[BH:BH-package]{BH}
+package.
 }
-\section{Methods (by generic)}{
-\itemize{
-\item \code{initialize}: Method to construct a \linkS4class{BEDMatrix} object.
+\section{Slots}{
 
-\item \code{show}: Method to print a \linkS4class{BEDMatrix} object.
+\describe{
+\item{\code{xptr}}{The external pointer to the underlying \link[Rcpp:Rcpp-package]{Rcpp}
+code.}
+
+\item{\code{dims}}{The number of samples and variants as determined by the the
+accompanying \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
+\href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files or by the \code{n}
+and \code{p} parameters of the \link[=initialize,BEDMatrix-method]{constructor
+function}.}
+
+\item{\code{dnames}}{The row names and column names of the object as determined by
+the accompanying \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
+\href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files, unless the
+\code{n} and \code{p} parameters of the \link[=initialize,BEDMatrix-method]{constructor
+function} were provided.}
+
+\item{\code{path}}{The path to the .bed file.}
 }}
 
-\examples{
-# Create an example BEDMatrix object
-m <- BEDMatrix(system.file("extdata", "example.bed", package = "BEDMatrix"))
+\section{Methods}{
 
-# Get the dimensions of the example BEDMatrix object
+\itemize{
+\item \code{[}
+\item \code{dim}
+\item \code{dimnames}
+\item \code{dimnames<-}
+\item \code{as.matrix}
+\item \code{is.matrix}
+\item \code{length}
+\item \code{str}
+\item \code{show}
+\item \code{initialize}
+}
+}
+
+\examples{
+# Get the path to the example .bed file
+path <- system.file("extdata", "example.bed", package = "BEDMatrix")
+
+# Create a BEDMatrix object the example .bed file
+m <- BEDMatrix(path)
+
+# Get the dimensions of the BEDMatrix object
 dim(m)
 
-# Extract a subset of the example BEDMatrix object
+# Get the row names of the BEDMatrix object
+rownames(m)
+
+# Get the column names of the BEDMatrix object
+colnames(m)
+
+# Extract genotypes for the specified sample(s)
+m[1, ]
 m[1:3, ]
+m["per0_per0", ]
+m[c("per0_per0", "per1_per1", "per2_per2"), ]
+
+# Extract genotypes for a particular variant
+m[, 1]
+m[, c("snp0_A", "snp1_C", "snp2_G")]
+
+# Extract genotypes for the specified samples and variants
+m[
+    c("per0_per0", "per1_per1", "per2_per2"),
+    c("snp0_A", "snp1_C", "snp2_G")
+]
+}
+\seealso{
+\link[=initialize,BEDMatrix-method]{initialize()} to create a
+\code{BEDMatrix} object from a .bed file, \link{BEDMatrix-package} to learn more about
+.bed files, \link[LinkedMatrix:LinkedMatrix-package]{LinkedMatrix} to link
+several \code{BEDMatrix} objects together.
 }
