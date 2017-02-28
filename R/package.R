@@ -24,10 +24,10 @@
 #' [PLINK](https://www.cog-genomics.org/plink2) using `plink --file myfile
 #' --make-bed`.
 #'
+#' @seealso [BEDMatrix-class] to learn more about the `BEDMatrix` class.
 #' @docType package
 #' @name BEDMatrix-package
 #' @aliases BEDMatrix-package
-#' @seealso [BEDMatrix-class] to learn more about the `BEDMatrix` class.
 #' @import methods Rcpp
 NULL
 
