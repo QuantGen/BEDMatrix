@@ -12,8 +12,8 @@
 class BEDMatrix {
     public:
         BEDMatrix(std::string path, std::size_t n, std::size_t p);
-        Rcpp::IntegerVector subset_vector(Rcpp::IntegerVector i);
-        Rcpp::IntegerMatrix subset_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j);
+        Rcpp::IntegerVector extract_vector(Rcpp::IntegerVector i);
+        Rcpp::IntegerMatrix extract_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j);
     private:
         BEDMatrix(const BEDMatrix&);
         BEDMatrix& operator=(const BEDMatrix&);
@@ -82,7 +82,7 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     return mapping;
 }
 
-Rcpp::IntegerVector BEDMatrix::subset_vector(Rcpp::IntegerVector i) {
+Rcpp::IntegerVector BEDMatrix::extract_vector(Rcpp::IntegerVector i) {
     // Convert from 1-index to 0-index
     Rcpp::IntegerVector i0(i - 1);
     // Keep size of i
@@ -102,7 +102,7 @@ Rcpp::IntegerVector BEDMatrix::subset_vector(Rcpp::IntegerVector i) {
     return out;
 }
 
-Rcpp::IntegerMatrix BEDMatrix::subset_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
+Rcpp::IntegerMatrix BEDMatrix::extract_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
     // Check if indexes are out of bounds
     if (Rcpp::is_true(Rcpp::any(i > this->nrow)) || Rcpp::is_true(Rcpp::any(j > this->ncol))) {
         throw std::runtime_error("subscript out of bounds");
@@ -148,29 +148,29 @@ RcppExport SEXP BEDMatrix__new(SEXP path_, SEXP n_, SEXP p_) {
     }
 };
 
-// Export BEDMatrix::subset_vector
-RcppExport SEXP BEDMatrix__subset_vector(SEXP xp_, SEXP i_) {
+// Export BEDMatrix::extract_vector
+RcppExport SEXP BEDMatrix__extract_vector(SEXP xp_, SEXP i_) {
     // Convert inputs to appropriate C++ types
     Rcpp::XPtr<BEDMatrix> ptr(xp_);
     Rcpp::IntegerVector i = Rcpp::as<Rcpp::IntegerVector>(i_);
     try {
-        // Invoke the subset_vector function
-        Rcpp::IntegerVector res = ptr->subset_vector(i);
+        // Invoke the extract_vector function
+        Rcpp::IntegerVector res = ptr->extract_vector(i);
         return res;
     } catch(std::exception &ex) {
         forward_exception_to_r(ex);
     }
 };
 
-// Export BEDMatrix::subset_matrix
-RcppExport SEXP BEDMatrix__subset_matrix(SEXP xp_, SEXP i_, SEXP j_) {
+// Export BEDMatrix::extract_matrix
+RcppExport SEXP BEDMatrix__extract_matrix(SEXP xp_, SEXP i_, SEXP j_) {
     // Convert inputs to appropriate C++ types
     Rcpp::XPtr<BEDMatrix> ptr(xp_);
     Rcpp::IntegerVector i = Rcpp::as<Rcpp::IntegerVector>(i_);
     Rcpp::IntegerVector j = Rcpp::as<Rcpp::IntegerVector>(j_);
     try {
-        // Invoke the subset_matrix function
-        Rcpp::IntegerMatrix res = ptr->subset_matrix(i, j);
+        // Invoke the extract_matrix function
+        Rcpp::IntegerMatrix res = ptr->extract_matrix(i, j);
         return res;
     } catch(std::exception &ex) {
         forward_exception_to_r(ex);

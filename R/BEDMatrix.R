@@ -76,14 +76,14 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
     return(.Object)
 }
 
-#' @useDynLib BEDMatrix BEDMatrix__subset_vector
-subset_vector <- function(x, i) {
-    .Call("BEDMatrix__subset_vector", x@xptr, i)
+#' @useDynLib BEDMatrix BEDMatrix__extract_vector
+extract_vector <- function(x, i) {
+    .Call("BEDMatrix__extract_vector", x@xptr, i)
 }
 
-#' @useDynLib BEDMatrix BEDMatrix__subset_matrix
-subset_matrix <- function(x, i, j) {
-    subset <- .Call("BEDMatrix__subset_matrix", x@xptr, i, j)
+#' @useDynLib BEDMatrix BEDMatrix__extract_matrix
+extract_matrix <- function(x, i, j) {
+    subset <- .Call("BEDMatrix__extract_matrix", x@xptr, i, j)
     # Preserve dimnames
     names <- x@dnames
     dimnames(subset) <- list(
@@ -211,7 +211,7 @@ setMethod("initialize", signature(.Object = "BEDMatrix"), initialize)
 setMethod("show", signature(object = "BEDMatrix"), show)
 
 #' @export
-`[.BEDMatrix` <- crochet::extract(subset_vector = subset_vector, subset_matrix = subset_matrix)
+`[.BEDMatrix` <- crochet::extract(extract_vector = extract_vector, extract_matrix = extract_matrix)
 
 #' @export
 dim.BEDMatrix <- function(x) {
