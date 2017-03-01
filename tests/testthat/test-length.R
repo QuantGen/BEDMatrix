@@ -1,3 +1,3 @@
 test_that("length", {
-    expect_equal(length(TST_A), length(TST_B))
+    expect_equal(length(CROCHET_EXTRACT_A), length(CROCHET_EXTRACT_B))
 })

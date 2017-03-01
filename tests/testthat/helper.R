@@ -17,8 +17,8 @@ if (extdataPath == "") {
 }
 standalonePath <- "standalone.bed"
 
-TST_A <- suppressMessages(BEDMatrix(path = paste0(extdataPath, "/example.bed")))
-TST_B <- parseRaw(paste0(extdataPath, "/example.raw"))
+CROCHET_EXTRACT_A <- suppressMessages(BEDMatrix(path = paste0(extdataPath, "/example.bed")))
+CROCHET_EXTRACT_B <- parseRaw(paste0(extdataPath, "/example.raw"))
 
-OUT_OF_BOUNDS_INT <- length(TST_A) + 1
+OUT_OF_BOUNDS_INT <- length(CROCHET_EXTRACT_A) + 1
 OUT_OF_BOUNDS_CHAR <- "snp1000_U"
