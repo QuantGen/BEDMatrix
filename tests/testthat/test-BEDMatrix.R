@@ -10,7 +10,7 @@ for (path in c(paste0(extdataPath, "/example"), paste0(extdataPath, "/example.be
 
     test_that("it determines n from FAM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(nrow(bed), nrow(CROCHET_EXTRACT_B))
+        expect_equal(nrow(bed), nrow(CROCHET_EXTRACT_ENV$COMPARE_OBJECT))
         expect_message(BEDMatrix(path = path), "Extracting number of individuals and rownames from FAM file\\.\\.\\.")
     })
 
@@ -20,13 +20,13 @@ for (path in c(paste0(extdataPath, "/example"), paste0(extdataPath, "/example.be
 
     test_that("it determines rownames from FAM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(rownames(bed), rownames(CROCHET_EXTRACT_B))
+        expect_equal(rownames(bed), rownames(CROCHET_EXTRACT_ENV$COMPARE_OBJECT))
         expect_message(BEDMatrix(path = path), "Extracting number of individuals and rownames from FAM file\\.\\.\\.")
     })
 
     test_that("it determines p from BIM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(ncol(bed), ncol(CROCHET_EXTRACT_B))
+        expect_equal(ncol(bed), ncol(CROCHET_EXTRACT_ENV$COMPARE_OBJECT))
         expect_message(BEDMatrix(path = path), "Extracting number of markers and colnames from BIM file\\.\\.\\.")
     })
 
@@ -36,12 +36,12 @@ for (path in c(paste0(extdataPath, "/example"), paste0(extdataPath, "/example.be
 
     test_that("it determines colnames from BIM file", {
         bed <- BEDMatrix(path = path)
-        expect_equal(colnames(bed), colnames(CROCHET_EXTRACT_B))
+        expect_equal(colnames(bed), colnames(CROCHET_EXTRACT_ENV$COMPARE_OBJECT))
         expect_message(BEDMatrix(path = path), "Extracting number of markers and colnames from BIM file\\.\\.\\.")
     })
 
     test_that("it accepts n and p if FAM or BIM file are present", {
-        bed <- BEDMatrix(path = path, n = nrow(CROCHET_EXTRACT_B), p = ncol(CROCHET_EXTRACT_B))
+        bed <- BEDMatrix(path = path, n = nrow(CROCHET_EXTRACT_ENV$COMPARE_OBJECT), p = ncol(CROCHET_EXTRACT_ENV$COMPARE_OBJECT))
         expect_equal(dimnames(bed), list(NULL, NULL))
     })
 

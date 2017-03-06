@@ -17,8 +17,8 @@ if (extdataPath == "") {
 }
 standalonePath <- "standalone.bed"
 
-CROCHET_EXTRACT_A <- suppressMessages(BEDMatrix(path = paste0(extdataPath, "/example.bed")))
-CROCHET_EXTRACT_B <- parseRaw(paste0(extdataPath, "/example.raw"))
-
-OUT_OF_BOUNDS_INT <- length(CROCHET_EXTRACT_A) + 1
-OUT_OF_BOUNDS_CHAR <- "snp1000_U"
+CROCHET_EXTRACT_ENV <- new.env()
+CROCHET_EXTRACT_ENV$COMPARE_OBJECT <- parseRaw(paste0(extdataPath, "/example.raw"))
+CROCHET_EXTRACT_ENV$CUSTOM_OBJECT <- suppressMessages(BEDMatrix(path = paste0(extdataPath, "/example.bed")))
+CROCHET_EXTRACT_ENV$OUT_OF_BOUNDS_INT <- length(CROCHET_EXTRACT_ENV$CUSTOM_OBJECT) + 1
+CROCHET_EXTRACT_ENV$OUT_OF_BOUNDS_CHAR <- "snp1000_U"
