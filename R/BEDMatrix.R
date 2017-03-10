@@ -11,7 +11,7 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
             stop("File not found.")
         }
     }
-    dir <- substr(path, 1, nchar(path) - 4)
+    dir <- substr(path, 1L, nchar(path) - 4L)
     if (is.null(n)) {
         # Check if FAM file exists
         famPath <- paste0(dir, ".fam")
@@ -20,11 +20,11 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
         } else {
             message("Extracting number of individuals and rownames from FAM file...")
             if (requireNamespace("data.table", quietly = TRUE)) {
-                fam <- data.table::fread(famPath, select = c(1, 2), data.table = FALSE, showProgress = FALSE)
+                fam <- data.table::fread(famPath, select = c(1L, 2L), data.table = FALSE, showProgress = FALSE)
                 # Determine n
                 n <- nrow(fam)
                 # Determine rownames
-                rownames <- paste0(fam[, 1], "_", fam[, 2])
+                rownames <- paste0(fam[, 1L], "_", fam[, 2L])
             } else {
                 fam <- readLines(famPath)
                 # Determine n
@@ -32,7 +32,7 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
                 # Determine rownames
                 rownames <- sapply(strsplit(fam, delims), function(line) {
                     # Concatenate family ID and subject ID
-                    return(paste0(line[1], "_", line[2]))
+                    return(paste0(line[1L], "_", line[2L]))
                 })
             }
         }
@@ -48,11 +48,11 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
         } else {
             message("Extracting number of markers and colnames from BIM file...")
             if (requireNamespace("data.table", quietly = TRUE)) {
-                bim <- data.table::fread(bimPath, select = c(2, 5), data.table = FALSE, showProgress = FALSE)
+                bim <- data.table::fread(bimPath, select = c(2L, 5L), data.table = FALSE, showProgress = FALSE)
                 # Determine p
                 p <- nrow(bim)
                 # Determine colnames
-                colnames <- paste0(bim[, 1], "_", bim[, 2])
+                colnames <- paste0(bim[, 1L], "_", bim[, 2L])
             } else {
                 bim <- readLines(bimPath)
                 # Determine p
@@ -60,7 +60,7 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
                 # Determine colnames
                 colnames <- sapply(strsplit(bim, delims), function(line) {
                     # Concatenate SNP name and minor allele (like --recodeA)
-                    return(paste0(line[2], "_", line[5]))
+                    return(paste0(line[2L], "_", line[5L]))
                 })
             }
         }
@@ -87,16 +87,16 @@ extract_matrix <- function(x, i, j) {
     # Preserve dimnames
     names <- x@dnames
     dimnames(subset) <- list(
-        names[[1]][i],
-        names[[2]][j]
+        names[[1L]][i],
+        names[[2L]][j]
     )
     return(subset)
 }
 
 show <- function(object) {
     dims <- dim(object)
-    n <- dims[1]
-    p <- dims[2]
+    n <- dims[1L]
+    p <- dims[2L]
     cat("BEDMatrix: ", n, " x ", p, " [", object@path, "]\n", sep = "")
 }
 
@@ -226,9 +226,9 @@ dimnames.BEDMatrix <- function(x) {
 #' @export
 `dimnames<-.BEDMatrix` <- function(x, value) {
     d <- dim(x)
-    v1 <- value[[1]]
-    v2 <- value[[2]]
-    if (!is.list(value) || length(value) != 2 || !(is.null(v1) || length(v1) == d[1]) || !(is.null(v2) || length(v2) == d[2])) {
+    v1 <- value[[1L]]
+    v2 <- value[[2L]]
+    if (!is.list(value) || length(value) != 2L || !(is.null(v1) || length(v1) == d[1L]) || !(is.null(v2) || length(v2) == d[2L])) {
         stop("invalid dimnames")
     }
     x@dnames <- lapply(value, function(v) {
