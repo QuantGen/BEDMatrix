@@ -145,6 +145,7 @@ RcppExport SEXP BEDMatrix__new(SEXP path_, SEXP n_, SEXP p_) {
         return ptr;
     } catch(std::exception &ex) {
         forward_exception_to_r(ex);
+        return 0;
     }
 };
 
@@ -159,6 +160,7 @@ RcppExport SEXP BEDMatrix__extract_vector(SEXP xp_, SEXP i_) {
         return res;
     } catch(std::exception &ex) {
         forward_exception_to_r(ex);
+        return 0;
     }
 };
 
@@ -174,5 +176,6 @@ RcppExport SEXP BEDMatrix__extract_matrix(SEXP xp_, SEXP i_, SEXP j_) {
         return res;
     } catch(std::exception &ex) {
         forward_exception_to_r(ex);
+        return 0;
     }
 };
