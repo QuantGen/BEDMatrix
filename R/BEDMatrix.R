@@ -104,7 +104,7 @@ show <- function(object) {
 #'
 #' `BEDMatrix` is a class that maps a [PLINK .bed](https://www.cog-genomics.org/plink2/formats#bed)
 #' file into memory and behaves similarly to a regular `matrix` by implementing
-#' key methods such as `[`, `dim`, and `dimnames`.  Subsets are extracted
+#' key methods such as `[`, `dim`, and `dimnames`. Subsets are extracted
 #' directly and on-demand from the .bed file without loading the entire file
 #' into memory.
 #'
@@ -165,9 +165,9 @@ BEDMatrix <- setClass("BEDMatrix", slots = list(xptr = "externalptr", dims = "in
 #' [.bed](https://www.cog-genomics.org/plink2/formats#bed) files must be
 #' accompanied by [.fam](https://www.cog-genomics.org/plink2/formats#fam) and
 #' [.bim](https://www.cog-genomics.org/plink2/formats#bim) files: .fam files
-#' contain sample information, and .bim files contain variant information.  If
+#' contain sample information, and .bim files contain variant information. If
 #' the name of the .bed file is *plink*.bed then the names of the .fam and .bim
-#' files have to be *plink*.fam and *plink*.bim, respectively.  The .fam and
+#' files have to be *plink*.fam and *plink*.bim, respectively. The .fam and
 #' .bim files are used to extract the number and names of samples and variants.
 #'
 #' For very large .bed files, reading the .fam and .bim files can take a long

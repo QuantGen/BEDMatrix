@@ -8,7 +8,7 @@
 \description{
 \code{BEDMatrix} is a class that maps a \href{https://www.cog-genomics.org/plink2/formats#bed}{PLINK .bed}
 file into memory and behaves similarly to a regular \code{matrix} by implementing
-key methods such as \code{[}, \code{dim}, and \code{dimnames}.  Subsets are extracted
+key methods such as \code{[}, \code{dim}, and \code{dimnames}. Subsets are extracted
 directly and on-demand from the .bed file without loading the entire file
 into memory.
 }

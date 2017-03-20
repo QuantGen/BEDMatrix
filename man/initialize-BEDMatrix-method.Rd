@@ -40,9 +40,9 @@ into memory.
 \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} files must be
 accompanied by \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
 \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files: .fam files
-contain sample information, and .bim files contain variant information.  If
+contain sample information, and .bim files contain variant information. If
 the name of the .bed file is \emph{plink}.bed then the names of the .fam and .bim
-files have to be \emph{plink}.fam and \emph{plink}.bim, respectively.  The .fam and
+files have to be \emph{plink}.fam and \emph{plink}.bim, respectively. The .fam and
 .bim files are used to extract the number and names of samples and variants.
 
 For very large .bed files, reading the .fam and .bim files can take a long
