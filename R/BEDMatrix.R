@@ -154,7 +154,7 @@ show <- function(object) {
 #' @aliases BEDMatrix-class
 #' @export BEDMatrix
 #' @exportClass BEDMatrix
-BEDMatrix <- setClass("BEDMatrix", slots = list(xptr = "externalptr", dims = "integer", dnames = "list", path = "character"))
+BEDMatrix <- setClass("BEDMatrix", slots = c(xptr = "externalptr", dims = "integer", dnames = "list", path = "character"))
 
 #' Create a BEDMatrix Object from a PLINK .bed File.
 #'
