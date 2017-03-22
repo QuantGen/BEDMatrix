@@ -17,13 +17,13 @@ This example uses a dummy .bed file that is bundled with this R package. It was 
 
 To get the path to the example .bed file (`system.file` finds the full file names of files in packages and is only used to find the example data):
 
-```r
+```R
 > path <- system.file("extdata", "example.bed", package = "BEDMatrix")
 ```
 
 To wrap the example .bed file in a BEDMatrix object:
 
-```r
+```R
 > m <- BEDMatrix(path)
 Extracting number of individuals and rownames from FAM file...
 Extracting number of markers and colnames from BIM file...
@@ -31,14 +31,14 @@ Extracting number of markers and colnames from BIM file...
 
 To get the dimensions of the BEDMatrix object:
 
-```r
+```R
 > dim(m)
 [1] 50 1000
 ```
 
 To extract a subset of the BEDMatrix object:
 
-```r
+```R
 > m[1:3, 1:5]
           snp0_A snp1_C snp2_G snp3_G snp4_G
 per0_per0      0      1      1      1      0
@@ -52,13 +52,13 @@ Installation
 
 To get the current released version from CRAN:
 
-```r
+```R
 install.packages("BEDMatrix")
 ```
 
 To get the current development version from GitHub:
 
-```r
+```R
 # install.packages("devtools")
 devtools::install_github("QuantGen/BEDMatrix")
 ```
