@@ -39,13 +39,13 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), 
     if (!(this->file_data[0] == '\x6C' && this->file_data[1] == '\x1B')) {
         throw std::runtime_error("File is not a binary PED file.");
     }
-    // Check mode: 00000001 indicates the default SNP-major mode (i.e.
-    // list all individuals for first SNP, all individuals for second
-    // SNP, etc), 00000000 indicates the unsupported individual-major
-    // mode (i.e. list all SNPs for the first individual, list all SNPs
-    // for the second individual, etc)
+    // Check mode: 00000001 indicates the default variant-major mode (i.e.
+    // list all samples for first variant, all samples for second variant,
+    // etc), 00000000 indicates the unsupported sample-major mode (i.e. list
+    // all variants for the first sample, list all variants for the second
+    // sample, etc)
     if (this->file_data[2] != '\x01') {
-        throw std::runtime_error("Individual-major mode is not supported.");
+        throw std::runtime_error("Sample-major mode is not supported.");
     }
     // Get number of bytes
     const std::size_t num_bytes = this->file_region.get_size();

@@ -16,9 +16,9 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
         # Check if FAM file exists
         famPath <- paste0(dir, ".fam")
         if (!file.exists(famPath)) {
-            stop("FAM file of same name not found. Provide number of individuals (n).")
+            stop("FAM file of same name not found. Provide number of samples (n).")
         } else {
-            message("Extracting number of individuals and rownames from FAM file...")
+            message("Extracting number of samples and rownames from FAM file...")
             if (requireNamespace("data.table", quietly = TRUE)) {
                 fam <- data.table::fread(famPath, select = c(1L, 2L), data.table = FALSE, showProgress = FALSE)
                 # Determine n
@@ -44,9 +44,9 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
         # Check if BIM file exists
         bimPath <- paste0(dir, ".bim")
         if (!file.exists(bimPath)) {
-            stop("BIM file of same name not found. Provide number of markers (p).")
+            stop("BIM file of same name not found. Provide number of variants (p).")
         } else {
-            message("Extracting number of markers and colnames from BIM file...")
+            message("Extracting number of variants and colnames from BIM file...")
             if (requireNamespace("data.table", quietly = TRUE)) {
                 bim <- data.table::fread(bimPath, select = c(2L, 5L), data.table = FALSE, showProgress = FALSE)
                 # Determine p
@@ -191,7 +191,7 @@ BEDMatrix <- setClass("BEDMatrix", slots = c(xptr = "externalptr", dims = "integ
 #' If a positive integer, the .fam file is not read and `rownames` will be set
 #' to `NULL` and have to be provided manually.
 #' @param p The number of variants. If `NULL` (the default) the number of
-#' markers will be determined from the accompanying
+#' variants will be determined from the accompanying
 #' [.bim](https://www.cog-genomics.org/plink2/formats#bim) file (of the same
 #' name as the [.bed](https://www.cog-genomics.org/plink2/formats#bed) file).
 #' If a positive integer, the .bim file is not read and `colnames` will be set

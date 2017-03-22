@@ -22,7 +22,7 @@ If a positive integer, the .fam file is not read and \code{rownames} will be set
 to \code{NULL} and have to be provided manually.}
 
 \item{p}{The number of variants. If \code{NULL} (the default) the number of
-markers will be determined from the accompanying
+variants will be determined from the accompanying
 \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} file (of the same
 name as the \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} file).
 If a positive integer, the .bim file is not read and \code{colnames} will be set
