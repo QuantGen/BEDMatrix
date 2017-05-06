@@ -1,4 +1,4 @@
-# BEDMatrix 1.3.0.9000
+# BEDMatrix 1.4.0
 
 * Support subsetting by `NA`.
 * Use [crochet package](https://CRAN.R-project.org/package=crochet) for subsetting
