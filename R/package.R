@@ -31,8 +31,3 @@
 #' @import methods Rcpp
 #' @useDynLib BEDMatrix, .registration = TRUE
 NULL
-
-
-release_questions <- function() {
-    c("Have you updated the NEWS file?")
-}
