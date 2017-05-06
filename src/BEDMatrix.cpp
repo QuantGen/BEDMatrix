@@ -93,7 +93,7 @@ Rcpp::IntegerVector BEDMatrix::extract_vector(Rcpp::IntegerVector i) {
     std::size_t bounds = this->nrow * this->ncol;
     // Iterate over indexes
     for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
-        if (Rcpp::IntegerVector::is_na(i0[idx_i]) || i0[idx_i] >= bounds) {
+        if (Rcpp::IntegerVector::is_na(i0[idx_i]) || static_cast<std::size_t>(i0[idx_i]) >= bounds) {
             out(idx_i) = NA_INTEGER;
         } else {
             out(idx_i) = this->get_genotype(i0[idx_i] % this->nrow, i0[idx_i] / this->nrow);
