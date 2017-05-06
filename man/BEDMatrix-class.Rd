@@ -29,22 +29,24 @@ package.
 \section{Slots}{
 
 \describe{
-\item{\code{xptr}}{The external pointer to the underlying \link[Rcpp:Rcpp-package]{Rcpp}
+\item{\code{xptr}}{An external pointer to the underlying \link[Rcpp:Rcpp-package]{Rcpp}
 code.}
 
-\item{\code{dims}}{The number of samples and variants as determined by the the
-accompanying \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
+\item{\code{dims}}{An integer vector specifying the number of samples and variants
+as determined by the the accompanying
+\href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
 \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files or by the \code{n}
 and \code{p} parameters of the \link[=initialize,BEDMatrix-method]{constructor
 function}.}
 
-\item{\code{dnames}}{The row names and column names of the object as determined by
-the accompanying \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
-\href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files, unless the
-\code{n} and \code{p} parameters of the \link[=initialize,BEDMatrix-method]{constructor
+\item{\code{dnames}}{A list describing the row names and column names of the object
+as determined by the accompanying
+\href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
+\href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files, or \code{NULL} if
+the \code{n} and \code{p} parameters of the \link[=initialize,BEDMatrix-method]{constructor
 function} were provided.}
 
-\item{\code{path}}{The path to the .bed file.}
+\item{\code{path}}{A character string containing the path to the .bed file.}
 }}
 
 \section{Methods}{

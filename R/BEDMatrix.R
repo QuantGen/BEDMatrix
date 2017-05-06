@@ -130,19 +130,21 @@ show <- function(object) {
 #' - `show`
 #' - `initialize`
 #'
-#' @slot xptr The external pointer to the underlying [Rcpp][Rcpp::Rcpp-package]
+#' @slot xptr An external pointer to the underlying [Rcpp][Rcpp::Rcpp-package]
 #' code.
-#' @slot dims The number of samples and variants as determined by the the
-#' accompanying [.fam](https://www.cog-genomics.org/plink2/formats#fam) and
+#' @slot dims An integer vector specifying the number of samples and variants
+#' as determined by the the accompanying
+#' [.fam](https://www.cog-genomics.org/plink2/formats#fam) and
 #' [.bim](https://www.cog-genomics.org/plink2/formats#bim) files or by the `n`
 #' and `p` parameters of the [constructor
 #' function][initialize,BEDMatrix-method()].
-#' @slot dnames The row names and column names of the object as determined by
-#' the accompanying [.fam](https://www.cog-genomics.org/plink2/formats#fam) and
-#' [.bim](https://www.cog-genomics.org/plink2/formats#bim) files, unless the
-#' `n` and `p` parameters of the [constructor
+#' @slot dnames A list describing the row names and column names of the object
+#' as determined by the accompanying
+#' [.fam](https://www.cog-genomics.org/plink2/formats#fam) and
+#' [.bim](https://www.cog-genomics.org/plink2/formats#bim) files, or `NULL` if
+#' the `n` and `p` parameters of the [constructor
 #' function][initialize,BEDMatrix-method()] were provided.
-#' @slot path The path to the .bed file.
+#' @slot path A character string containing the path to the .bed file.
 #' @seealso [initialize()][initialize,BEDMatrix-method()] to create a
 #' `BEDMatrix` object from a .bed file, [BEDMatrix-package] to learn more about
 #' .bed files, [LinkedMatrix][LinkedMatrix::LinkedMatrix-package] to link
