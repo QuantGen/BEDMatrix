@@ -29,6 +29,7 @@
 #' @name BEDMatrix-package
 #' @aliases BEDMatrix-package
 #' @import methods Rcpp
+#' @useDynLib BEDMatrix, .registration = TRUE
 NULL
 
 

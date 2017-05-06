@@ -1,7 +1,6 @@
 # Delimiters used in PED files
 delims <- "[ \t]"
 
-#' @useDynLib BEDMatrix BEDMatrix__new
 initialize <- function(.Object, path, n = NULL, p = NULL) {
     path <- path.expand(path)
     if (!file.exists(path)) {
@@ -76,12 +75,10 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
     return(.Object)
 }
 
-#' @useDynLib BEDMatrix BEDMatrix__extract_vector
 extract_vector <- function(x, i) {
     .Call("BEDMatrix__extract_vector", x@xptr, i)
 }
 
-#' @useDynLib BEDMatrix BEDMatrix__extract_matrix
 extract_matrix <- function(x, i, j) {
     subset <- .Call("BEDMatrix__extract_matrix", x@xptr, i, j)
     # Preserve dimnames
