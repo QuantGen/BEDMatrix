@@ -1,7 +1,7 @@
 # BEDMatrix 1.3.0.9000
 
 * Support subsetting by `NA`.
-* Use [crochet package](https://github.com/agrueneberg/crochet) for subsetting
+* Use [crochet package](https://CRAN.R-project.org/package=crochet) for subsetting
 * Fix minor subsetting bugs
 * Update example
 * Remove intermediate S3 `BEDMatrix` type
