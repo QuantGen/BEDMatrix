@@ -1,3 +1,11 @@
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+- Enclosed the URL in the Description: section of the DESCRIPTION file in
+  "<...>".
+
+
 ## Test environments
 
 * Local Arch Linux install, R 3.4.0
