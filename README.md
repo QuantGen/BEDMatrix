@@ -47,16 +47,16 @@ per2_per2      1      0      0      2      0
 ```
 
 
-Installation Instructions
--------------------------
+Installation
+------------
 
-To get the current stable version from CRAN:
+Install the stable version from CRAN:
 
 ```R
 install.packages("BEDMatrix")
 ```
 
-To get the current development version from GitHub:
+Alternatively, install the development version from GitHub:
 
 ```R
 # install.packages("devtools")
