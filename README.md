@@ -18,32 +18,32 @@ This example uses a dummy .bed file that is bundled with this R package. It was 
 To get the path to the example .bed file (`system.file` finds the full file names of files in packages and is only used to find the example data):
 
 ```R
-> path <- system.file("extdata", "example.bed", package = "BEDMatrix")
+path <- system.file("extdata", "example.bed", package = "BEDMatrix")
 ```
 
 To wrap the example .bed file in a BEDMatrix object:
 
 ```R
-> m <- BEDMatrix(path)
-Extracting number of samples and rownames from FAM file...
-Extracting number of variants and colnames from BIM file...
+m <- BEDMatrix(path)
+#> Extracting number of samples and rownames from FAM file...
+#> Extracting number of variants and colnames from BIM file...
 ```
 
 To get the dimensions of the BEDMatrix object:
 
 ```R
-> dim(m)
-[1] 50 1000
+dim(m)
+#> [1] 50 1000
 ```
 
 To extract a subset of the BEDMatrix object:
 
 ```R
-> m[1:3, 1:5]
-          snp0_A snp1_C snp2_G snp3_G snp4_G
-per0_per0      0      1      1      1      0
-per1_per1      1      1      1      1     NA
-per2_per2      1      0      0      2      0
+m[1:3, 1:5]
+#>           snp0_A snp1_C snp2_G snp3_G snp4_G
+#> per0_per0      0      1      1      1      0
+#> per1_per1      1      1      1      1     NA
+#> per2_per2      1      0      0      2      0
 ```
 
 
