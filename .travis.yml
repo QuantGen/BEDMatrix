@@ -2,6 +2,9 @@ language: r
 sudo: false
 cache: packages
 warnings_are_errors: true
-r_github_packages: agrueneberg/crochet # install_packages does not install tests
+r_binary_packages:
+  - devtools
+r_github_packages:
+  - agrueneberg/crochet # install_packages does not install tests
 after_success:
   - Rscript -e 'covr::codecov()'
