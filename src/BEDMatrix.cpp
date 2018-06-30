@@ -26,7 +26,6 @@ class BEDMatrix {
         const char* file_data;
         std::size_t nrow;
         std::size_t ncol;
-        static const unsigned short int length_header;
 };
 
 BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), ncol(p) {
@@ -52,7 +51,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), 
     // Get number of bytes
     const std::size_t num_bytes = this->file_region.get_size();
     // Check if given dimensions match the file
-    if ((this->ncol * ceil(this->nrow / 4.0)) != (num_bytes - this->length_header)) {
+    if ((this->ncol * ceil(this->nrow / 4.0)) != (num_bytes - PLINK_BED_HEADER_LENGTH)) {
         throw std::runtime_error("n or p does not match the dimensions of the file.");
     }
 }
@@ -128,8 +127,6 @@ Rcpp::IntegerMatrix BEDMatrix::extract_matrix(Rcpp::IntegerVector i, Rcpp::Integ
     }
     return out;
 }
-
-const unsigned short int BEDMatrix::length_header = 3;
 
 // Export BEDMatrix::BEDMatrix
 RcppExport SEXP BEDMatrix__new(SEXP path_, SEXP n_, SEXP p_) {
