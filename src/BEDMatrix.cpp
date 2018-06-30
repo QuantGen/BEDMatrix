@@ -23,7 +23,7 @@ class BEDMatrix {
         int get_genotype(std::size_t i, std::size_t j);
         boost::interprocess::file_mapping file;
         boost::interprocess::mapped_region file_region;
-        const char* file_data;
+        uint8_t* file_data;
         std::size_t nrow;
         std::size_t ncol;
 };
@@ -35,7 +35,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), 
         throw std::runtime_error("File not found.");
     }
     this->file_region = boost::interprocess::mapped_region(this->file, boost::interprocess::read_only);
-    this->file_data = static_cast<const char*>(this->file_region.get_address());
+    this->file_data = static_cast<uint8_t*>(this->file_region.get_address());
     // Check magic number
     if (!(this->file_data[0] == '\x6C' && this->file_data[1] == '\x1B')) {
         throw std::runtime_error("File is not a binary PED file.");
@@ -62,10 +62,10 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     std::size_t n_bytes = this->nrow / PLINK_BED_GENOTYPES_PER_BYTE + (this->nrow % PLINK_BED_GENOTYPES_PER_BYTE != 0); // fast ceil for int
     std::size_t i_genotypes = 2 * (i - i_bytes * PLINK_BED_GENOTYPES_PER_BYTE);
     // Load byte from map
-    char genotypes = this->file_data[PLINK_BED_HEADER_LENGTH + (j * n_bytes + i_bytes)];
+    uint8_t genotypes = this->file_data[PLINK_BED_HEADER_LENGTH + (j * n_bytes + i_bytes)];
     // Extract genotypes from byte by shifting the genotype of interest to the
     // end of the byte and masking with 00000011
-    char genotype = genotypes >> i_genotypes & 3;
+    uint8_t genotype = genotypes >> i_genotypes & 3;
     // Remap genotype value to resemble RAW file, i.e. 0 indicates homozygous
     // major allele, 1 indicates heterozygous, and 2 indicates homozygous minor
     // allele. In BED, the coding is different: homozygous minor allele is 0
