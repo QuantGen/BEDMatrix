@@ -51,7 +51,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), 
     // Get number of bytes
     const std::size_t num_bytes = this->file_region.get_size();
     // Check if given dimensions match the file
-    if ((this->ncol * ceil(this->nrow / 4.0)) != (num_bytes - PLINK_BED_HEADER_LENGTH)) {
+    if ((this->ncol * ceil((double) this->nrow / PLINK_BED_GENOTYPES_PER_BYTE)) != (num_bytes - PLINK_BED_HEADER_LENGTH)) {
         throw std::runtime_error("n or p does not match the dimensions of the file.");
     }
 }
