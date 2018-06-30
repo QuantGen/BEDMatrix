@@ -1,5 +1,8 @@
 // [[Rcpp::depends(BH)]]
 
+#define PLINK_BED_HEADER_LENGTH 3
+#define PLINK_BED_GENOTYPES_PER_BYTE 4
+
 #include <boost/interprocess/file_mapping.hpp>
 #include <boost/interprocess/exceptions.hpp>
 #include <boost/interprocess/mapped_region.hpp>
@@ -23,11 +26,10 @@ class BEDMatrix {
         const char* file_data;
         std::size_t nrow;
         std::size_t ncol;
-        unsigned short int byte_padding; // Each new "row" starts a new byte
         static const unsigned short int length_header;
 };
 
-BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), ncol(p), byte_padding((n % 4 == 0) ? 0 : 4 - (n % 4)) {
+BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), ncol(p) {
     try {
         this->file = boost::interprocess::file_mapping(path.c_str(), boost::interprocess::read_only);
     } catch(const boost::interprocess::interprocess_exception& e) {
@@ -56,17 +58,15 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), 
 }
 
 int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
-    // Reduce two-dimensional index to one-dimensional index with the mode
-    std::size_t which_pos = (j * this->nrow) + i + (this->byte_padding * j);
-    // Every byte encodes 4 genotypes, find the one of interest
-    std::size_t which_byte = std::floor(which_pos / 4);
-    // Find genotype in byte
-    unsigned short int which_genotype = (which_pos % 4) * 2;
-    // Read in the whole byte
-    char genotypes = this->file_data[which_byte + this->length_header];
-    // Remove the other genotypes by shifting the genotype of interest
-    // to the end of the byte and masking with 00000011
-    char genotype = genotypes >> which_genotype & 3;
+    // Each byte encodes 4 genotypes; adjust indices
+    std::size_t i_bytes = i / PLINK_BED_GENOTYPES_PER_BYTE;
+    std::size_t n_bytes = this->nrow / PLINK_BED_GENOTYPES_PER_BYTE + (this->nrow % PLINK_BED_GENOTYPES_PER_BYTE != 0); // fast ceil for int
+    std::size_t i_genotypes = 2 * (i - i_bytes * PLINK_BED_GENOTYPES_PER_BYTE);
+    // Load byte from map
+    char genotypes = this->file_data[PLINK_BED_HEADER_LENGTH + (j * n_bytes + i_bytes)];
+    // Extract genotypes from byte by shifting the genotype of interest to the
+    // end of the byte and masking with 00000011
+    char genotype = genotypes >> i_genotypes & 3;
     // Remap genotype value to resemble RAW file, i.e. 0 indicates homozygous
     // major allele, 1 indicates heterozygous, and 2 indicates homozygous minor
     // allele. In BED, the coding is different: homozygous minor allele is 0
