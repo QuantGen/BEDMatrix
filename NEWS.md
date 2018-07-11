@@ -1,3 +1,7 @@
+# BEDMatrix 1.4.1
+
+* Specify fileset name in messages during instantiation.
+
 # BEDMatrix 1.4.0
 
 * Support subsetting by `NA`.

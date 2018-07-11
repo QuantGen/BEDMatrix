@@ -11,33 +11,33 @@ for (path in c(paste0(extdataPath, "/example"), paste0(extdataPath, "/example.be
     test_that("it determines n from FAM file", {
         bed <- BEDMatrix(path = path)
         expect_equal(nrow(bed), nrow(CROCHET_EXTRACT_ENV$COMPARE_OBJECT))
-        expect_message(BEDMatrix(path = path), "Extracting number of samples and rownames from FAM file\\.\\.\\.")
+        expect_message(BEDMatrix(path = path), "Extracting number of samples and rownames from example\\.fam\\.\\.\\.")
     })
 
     test_that("it throws an error if FAM file is not found and n is not given", {
-        expect_error(BEDMatrix(path = standalonePath), "FAM file of same name not found\\. Provide number of samples \\(n\\)\\.")
+        expect_error(BEDMatrix(path = standalonePath), "standalone.fam not found\\. Provide number of samples \\(n\\)\\.")
     })
 
     test_that("it determines rownames from FAM file", {
         bed <- BEDMatrix(path = path)
         expect_equal(rownames(bed), rownames(CROCHET_EXTRACT_ENV$COMPARE_OBJECT))
-        expect_message(BEDMatrix(path = path), "Extracting number of samples and rownames from FAM file\\.\\.\\.")
+        expect_message(BEDMatrix(path = path), "Extracting number of samples and rownames from example\\.fam\\.\\.\\.")
     })
 
     test_that("it determines p from BIM file", {
         bed <- BEDMatrix(path = path)
         expect_equal(ncol(bed), ncol(CROCHET_EXTRACT_ENV$COMPARE_OBJECT))
-        expect_message(BEDMatrix(path = path), "Extracting number of variants and colnames from BIM file\\.\\.\\.")
+        expect_message(BEDMatrix(path = path), "Extracting number of variants and colnames from example\\.bim\\.\\.\\.")
     })
 
     test_that("it throws an error if BIM file is not found and p is not given", {
-        expect_error(BEDMatrix(path = standalonePath), "FAM file of same name not found\\. Provide number of samples \\(n\\)\\.")
+        expect_error(BEDMatrix(path = standalonePath), "standalone.fam not found\\. Provide number of samples \\(n\\)\\.")
     })
 
     test_that("it determines colnames from BIM file", {
         bed <- BEDMatrix(path = path)
         expect_equal(colnames(bed), colnames(CROCHET_EXTRACT_ENV$COMPARE_OBJECT))
-        expect_message(BEDMatrix(path = path), "Extracting number of variants and colnames from BIM file\\.\\.\\.")
+        expect_message(BEDMatrix(path = path), "Extracting number of variants and colnames from example\\.bim\\.\\.\\.")
     })
 
     test_that("it accepts n and p if FAM or BIM file are present", {
