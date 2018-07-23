@@ -14,7 +14,7 @@
 
 class BEDMatrix {
     public:
-        BEDMatrix(std::string path, std::size_t n, std::size_t p);
+        BEDMatrix(std::string path, std::size_t n, std::size_t p, std::string advice);
         Rcpp::IntegerVector extract_vector(Rcpp::IntegerVector i);
         Rcpp::IntegerMatrix extract_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j);
     private:
@@ -28,13 +28,20 @@ class BEDMatrix {
         std::size_t ncol;
 };
 
-BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), ncol(p) {
+BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p, std::string advice) : nrow(n), ncol(p) {
     try {
         this->file = boost::interprocess::file_mapping(path.c_str(), boost::interprocess::read_only);
     } catch(const boost::interprocess::interprocess_exception& e) {
         throw std::runtime_error("File not found.");
     }
     this->file_region = boost::interprocess::mapped_region(this->file, boost::interprocess::read_only);
+    if (advice == "random") {
+        this->file_region.advise(boost::interprocess::mapped_region::advice_types::advice_random);
+    } else if (advice == "sequential") {
+        this->file_region.advise(boost::interprocess::mapped_region::advice_types::advice_sequential);
+    } else {
+        this->file_region.advise(boost::interprocess::mapped_region::advice_types::advice_normal);
+    }
     this->file_data = static_cast<uint8_t*>(this->file_region.get_address());
     // Check magic number
     if (!(this->file_data[0] == '\x6C' && this->file_data[1] == '\x1B')) {
@@ -129,15 +136,16 @@ Rcpp::IntegerMatrix BEDMatrix::extract_matrix(Rcpp::IntegerVector i, Rcpp::Integ
 }
 
 // Export BEDMatrix::BEDMatrix
-RcppExport SEXP BEDMatrix__new(SEXP path_, SEXP n_, SEXP p_) {
+RcppExport SEXP BEDMatrix__new(SEXP path_, SEXP n_, SEXP p_, SEXP advice_) {
     // Convert inputs to appropriate C++ types
     std::string path = Rcpp::as<std::string>(path_);
     std::size_t n = Rcpp::as<std::size_t>(n_);
     std::size_t p = Rcpp::as<std::size_t>(p_);
+    std::string advice = Rcpp::as<std::string>(advice_);
     try {
         // Create a pointer to a BEDMatrix object and wrap it as an external
         // pointer
-        Rcpp::XPtr<BEDMatrix> ptr(new BEDMatrix(path, n, p), true);
+        Rcpp::XPtr<BEDMatrix> ptr(new BEDMatrix(path, n, p, advice), true);
         // Return the external pointer to the R side
         return ptr;
     } catch(std::exception &ex) {
