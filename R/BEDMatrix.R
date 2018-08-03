@@ -1,7 +1,7 @@
 # Delimiters used in PED files
 delims <- "[ \t]"
 
-initialize <- function(.Object, path, n = NULL, p = NULL, advice = "normal") {
+initialize <- function(.Object, path, n = NULL, p = NULL) {
     path <- path.expand(path)
     if (!file.exists(path)) {
         # Try to add extension (common in PLINK)
@@ -69,7 +69,7 @@ initialize <- function(.Object, path, n = NULL, p = NULL, advice = "normal") {
         colnames <- NULL
     }
     # Create Rcpp object
-    .Object@xptr <- .Call("BEDMatrix__new", path, n, p, advice)
+    .Object@xptr <- .Call("BEDMatrix__new", path, n, p)
     .Object@path <- path
     .Object@dims <- c(n, p)
     .Object@dnames <- list(rownames, colnames)
@@ -196,8 +196,6 @@ BEDMatrix <- setClass("BEDMatrix", slots = c(xptr = "externalptr", dims = "integ
 #' name as the [.bed](https://www.cog-genomics.org/plink2/formats#bed) file).
 #' If a positive integer, the .bim file is not read and `colnames` will be set
 #' to `NULL` and have to be provided manually.
-#' @param advice Advice about expected use of memory: `random`, `sequential`,
-#' or `normal` (default).
 #' @return A [BEDMatrix-class] object.
 #' @example man/examples/initialize.R
 #' @seealso [BEDMatrix-package] to learn more about .bed files.
