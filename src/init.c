@@ -3,23 +3,19 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
-/* FIXME: 
-   Check these declarations against the C/Fortran source code.
-*/
+extern SEXP C_extract_matrix(SEXP, SEXP, SEXP);
+extern SEXP C_extract_vector(SEXP, SEXP);
+extern SEXP C_new(SEXP, SEXP, SEXP);
 
-/* .Call calls */
-extern SEXP BEDMatrix__extract_matrix(SEXP, SEXP, SEXP);
-extern SEXP BEDMatrix__extract_vector(SEXP, SEXP);
-extern SEXP BEDMatrix__new(SEXP, SEXP, SEXP);
-
-static const R_CallMethodDef CallEntries[] = {
-    {"BEDMatrix__extract_matrix", (DL_FUNC) &BEDMatrix__extract_matrix, 3},
-    {"BEDMatrix__extract_vector", (DL_FUNC) &BEDMatrix__extract_vector, 2},
-    {"BEDMatrix__new",            (DL_FUNC) &BEDMatrix__new,            3},
+static const R_CallMethodDef callEntries[] = {
+    {"C_extract_matrix", (DL_FUNC) &C_extract_matrix, 3},
+    {"C_extract_vector", (DL_FUNC) &C_extract_vector, 2},
+    {"C_new", (DL_FUNC) &C_new, 3},
     {NULL, NULL, 0}
 };
 
 void R_init_BEDMatrix(DllInfo *dll) {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_registerRoutines(dll, NULL, callEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
+    R_forceSymbols(dll, TRUE);
 }
