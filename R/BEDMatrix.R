@@ -100,11 +100,11 @@ show <- function(object) {
 
 #' A Class to Extract Genotypes from a PLINK .bed File.
 #'
-#' `BEDMatrix` is a class that maps a [PLINK .bed](https://www.cog-genomics.org/plink2/formats#bed)
-#' file into memory and behaves similarly to a regular `matrix` by implementing
-#' key methods such as `[`, `dim`, and `dimnames`. Subsets are extracted
-#' directly and on-demand from the .bed file without loading the entire file
-#' into memory.
+#' `BEDMatrix` is a class that maps a [PLINK
+#' .bed](https://www.cog-genomics.org/plink2/formats#bed) file into memory and
+#' behaves similarly to a regular `matrix` by implementing key methods such as
+#' `[`, `dim`, and `dimnames`. Subsets are extracted directly and on-demand
+#' from the .bed file without loading the entire file into memory.
 #'
 #' The subsets extracted from a `BEDMatrix` object are coded similarly to
 #' [.raw](https://www.cog-genomics.org/plink2/formats#raw) files (generated
