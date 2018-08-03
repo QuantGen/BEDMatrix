@@ -1,5 +1,7 @@
-library("devtools")
+#!/usr/bin/env Rscript
 
-res <- revdep_check()
-revdep_check_save_summary(res)
-revdep_check_save_logs(res)
+library(devtools)
+
+revdep_check(bioconductor = TRUE)
+revdep_check_save_summary()
+revdep_check_print_problems()
