@@ -1,23 +1,15 @@
-## Resubmission
-
-This is a resubmission. In this version I have:
-
-- Enclosed the URL in the Description: section of the DESCRIPTION file in
-  "<...>".
-
-
 ## Test environments
 
-* Local Arch Linux install, R 3.4.0
-* Ubuntu 12.04.05 on Travis CI, R. 3.4.0
-* win-builder, R-release and R-devel
+* Local Arch Linux install: R 3.5.1
+* Travis CI: R 3.5.0
+* win-builder: R Under development (unstable)
 
 
 ## R CMD check results
 
-There were no ERRORs, WARNINGs, or NOTEs (except wrong spelling suggestions).
+There were 0 errors, 0 warnings, and 0 notes.
 
 
-## Downstream dependencies
+## revdep_check results
 
-There are currently no downstream dependencies for this package.
+There were 0 packages with problems.
