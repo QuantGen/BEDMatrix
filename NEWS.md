@@ -2,6 +2,7 @@
 
 * Specify fileset name in messages during instantiation.
 
+
 # BEDMatrix 1.4.0
 
 * Support subsetting by `NA`.
@@ -10,12 +11,14 @@
 * Update example
 * Remove intermediate S3 `BEDMatrix` type
 
+
 # BEDMatrix 1.3.0
 
 * Speed up character subsetting.
 * Speed up detection of `n`, `p`, `rownames`, and `colnames` during
   initialization if `data.table` package is installed.
 * Support `str` function.
+
 
 # BEDMatrix 1.2.0
 
@@ -28,11 +31,13 @@
   recreation when saved.
 * Fix bug that modified `i` and `j` when subsetting.
 
+
 # BEDMatrix 1.1.0
 
 * Restore cross-platform compatibility by dropping the system dependency on
   `Boost.IOStreams` in favor of `Boost.Interprocess` which provides header-only
   memory-mapping and is therefore supported by the `BH` package.
+
 
 # BEDMatrix 1.0.1
 
@@ -40,6 +45,7 @@
   tests as when compiling R.
 * Improve messages in configure script to distinguish between Boost headers and
   Boost libraries.
+
 
 # BEDMatrix 1.0.0
 
