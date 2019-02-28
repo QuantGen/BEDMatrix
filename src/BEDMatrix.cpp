@@ -12,6 +12,10 @@
 #include <Rcpp.h>
 #include <string>
 
+static std::size_t int_ceil(std::size_t x, std::size_t y) {
+    return x / y + (x % y != 0);
+}
+
 class BEDMatrix {
     public:
         BEDMatrix(std::string path, std::size_t n, std::size_t p);
@@ -51,7 +55,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_sampl
     // Get number of bytes
     const std::size_t num_bytes = this->file_region.get_size();
     // Check if given dimensions match the file
-    if ((this->num_variants * ceil((double) this->num_samples / PLINK_BED_GENOTYPES_PER_BYTE)) != (num_bytes - PLINK_BED_HEADER_LENGTH)) {
+    if ((this->num_variants * int_ceil(this->num_samples, PLINK_BED_GENOTYPES_PER_BYTE)) != (num_bytes - PLINK_BED_HEADER_LENGTH)) {
         throw std::runtime_error("n or p does not match the dimensions of the file.");
     }
 }
@@ -59,7 +63,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_sampl
 int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     // Each byte encodes 4 genotypes; adjust indices
     std::size_t i_bytes = i / PLINK_BED_GENOTYPES_PER_BYTE;
-    std::size_t n_bytes = this->num_samples / PLINK_BED_GENOTYPES_PER_BYTE + (this->num_samples % PLINK_BED_GENOTYPES_PER_BYTE != 0); // fast ceil for int
+    std::size_t n_bytes = int_ceil(this->num_samples, PLINK_BED_GENOTYPES_PER_BYTE);
     std::size_t i_genotypes = 2 * (i - i_bytes * PLINK_BED_GENOTYPES_PER_BYTE);
     // Load byte from map
     uint8_t genotypes = this->file_data[PLINK_BED_HEADER_LENGTH + (j * n_bytes + i_bytes)];
