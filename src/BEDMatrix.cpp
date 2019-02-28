@@ -30,6 +30,7 @@ class BEDMatrix {
         uint8_t* file_data;
         std::size_t num_samples;
         std::size_t num_variants;
+        std::size_t num_bytes_per_variant; // ceil(num_samples / PLINK_BED_GENOTYPES_PER_BYTE)
 };
 
 BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_samples(n), num_variants(p) {
@@ -58,15 +59,15 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_sampl
     if ((this->num_variants * int_ceil(this->num_samples, PLINK_BED_GENOTYPES_PER_BYTE)) != (num_bytes - PLINK_BED_HEADER_LENGTH)) {
         throw std::runtime_error("n or p does not match the dimensions of the file.");
     }
+    this->num_bytes_per_variant = int_ceil(this->num_samples, PLINK_BED_GENOTYPES_PER_BYTE);;
 }
 
 int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     // Each byte encodes 4 genotypes; adjust indices
     std::size_t i_bytes = i / PLINK_BED_GENOTYPES_PER_BYTE;
-    std::size_t n_bytes = int_ceil(this->num_samples, PLINK_BED_GENOTYPES_PER_BYTE);
     std::size_t i_genotypes = 2 * (i - i_bytes * PLINK_BED_GENOTYPES_PER_BYTE);
     // Load byte from map
-    uint8_t genotypes = this->file_data[PLINK_BED_HEADER_LENGTH + (j * n_bytes + i_bytes)];
+    uint8_t genotypes = this->file_data[PLINK_BED_HEADER_LENGTH + (j * this->num_bytes_per_variant + i_bytes)];
     // Extract genotypes from byte by shifting the genotype of interest to the
     // end of the byte and masking with 00000011
     uint8_t genotype = genotypes >> i_genotypes & 0x03;
