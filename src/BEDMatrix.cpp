@@ -37,7 +37,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), 
     this->file_region = boost::interprocess::mapped_region(this->file, boost::interprocess::read_only);
     this->file_data = static_cast<uint8_t*>(this->file_region.get_address());
     // Check magic number
-    if (!(this->file_data[0] == '\x6C' && this->file_data[1] == '\x1B')) {
+    if (!(this->file_data[0] == 0x6C && this->file_data[1] == 0x1B)) {
         throw std::runtime_error("File is not a binary PED file.");
     }
     // Check mode: 00000001 indicates the default variant-major mode (i.e.
@@ -45,7 +45,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : nrow(n), 
     // etc), 00000000 indicates the unsupported sample-major mode (i.e. list
     // all variants for the first sample, list all variants for the second
     // sample, etc)
-    if (this->file_data[2] != '\x01') {
+    if (this->file_data[2] != 0x01) {
         throw std::runtime_error("Sample-major mode is not supported.");
     }
     // Get number of bytes
@@ -65,7 +65,7 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     uint8_t genotypes = this->file_data[PLINK_BED_HEADER_LENGTH + (j * n_bytes + i_bytes)];
     // Extract genotypes from byte by shifting the genotype of interest to the
     // end of the byte and masking with 00000011
-    uint8_t genotype = genotypes >> i_genotypes & 3;
+    uint8_t genotype = genotypes >> i_genotypes & 0x03;
     // Remap genotype value to resemble RAW file, i.e. 0 indicates homozygous
     // major allele, 1 indicates heterozygous, and 2 indicates homozygous minor
     // allele. In BED, the coding is different: homozygous minor allele is 0
