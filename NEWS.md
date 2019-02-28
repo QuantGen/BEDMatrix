@@ -1,3 +1,8 @@
+# BEDMatrix 1.4.2
+
+* Add `names_simple` option to BEDMatrix initialization function (contributed by Alex Ochoa).
+
+
 # BEDMatrix 1.4.1
 
 * Specify fileset name in messages during instantiation.

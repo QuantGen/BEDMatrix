@@ -1,7 +1,7 @@
 # Delimiters used in PED files
 delims <- "[ \t]"
 
-initialize <- function(.Object, path, n = NULL, p = NULL) {
+initialize <- function(.Object, path, n = NULL, p = NULL, names_simple=FALSE) {
     path <- path.expand(path)
     if (!file.exists(path)) {
         # Try to add extension (common in PLINK)
@@ -24,16 +24,27 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
                 # Determine n
                 n <- nrow(fam)
                 # Determine rownames
-                rownames <- paste0(fam[, 1L], "_", fam[, 2L])
+                if (names_simple) {
+                    rownames <- fam[, 2L] # use subject ID only
+                } else {
+                    rownames <- paste0(fam[, 1L], "_", fam[, 2L])
+                }
             } else {
                 fam <- readLines(famPath)
                 # Determine n
                 n <- length(fam)
                 # Determine rownames
-                rownames <- sapply(strsplit(fam, delims), function(line) {
-                    # Concatenate family ID and subject ID
-                    return(paste0(line[1L], "_", line[2L]))
-                })
+                if (names_simple) {
+                    rownames <- sapply(strsplit(fam, delims), function(line) {
+                        # use subject ID only
+                        return(line[2L])
+                    })
+                } else {
+                    rownames <- sapply(strsplit(fam, delims), function(line) {
+                        # Concatenate family ID and subject ID
+                        return(paste0(line[1L], "_", line[2L]))
+                    })
+                }
             }
         }
     } else {
@@ -52,16 +63,27 @@ initialize <- function(.Object, path, n = NULL, p = NULL) {
                 # Determine p
                 p <- nrow(bim)
                 # Determine colnames
-                colnames <- paste0(bim[, 1L], "_", bim[, 2L])
+                if (names_simple) {
+                    colnames <- bim[, 1L] # use SNP name only
+                } else {
+                    colnames <- paste0(bim[, 1L], "_", bim[, 2L])
+                }
             } else {
                 bim <- readLines(bimPath)
                 # Determine p
                 p <- length(bim)
                 # Determine colnames
-                colnames <- sapply(strsplit(bim, delims), function(line) {
-                    # Concatenate SNP name and minor allele (like --recodeA)
-                    return(paste0(line[2L], "_", line[5L]))
-                })
+                if (names_simple) {
+                    colnames <- sapply(strsplit(bim, delims), function(line) {
+                        # use SNP name only
+                        return(line[2L])
+                    })
+                } else {
+                    colnames <- sapply(strsplit(bim, delims), function(line) {
+                        # Concatenate SNP name and minor allele (like --recodeA)
+                        return(paste0(line[2L], "_", line[5L]))
+                    })
+                }
             }
         }
     } else {
@@ -196,6 +218,10 @@ BEDMatrix <- setClass("BEDMatrix", slots = c(xptr = "externalptr", dims = "integ
 #' name as the [.bed](https://www.cog-genomics.org/plink2/formats#bed) file).
 #' If a positive integer, the .bim file is not read and `colnames` will be set
 #' to `NULL` and have to be provided manually.
+#' @param names_simple Simplifies the format of the rownames and columnames.
+#' If `FALSE` (the default) rownames are concatenated family and subject IDs,
+#' while colnames are concatenated SNP IDs and minor alleles.  If `TRUE`,
+#' rownames are subject IDs only and colnames are SNP IDs only.
 #' @return A [BEDMatrix-class] object.
 #' @example man/examples/initialize.R
 #' @seealso [BEDMatrix-package] to learn more about .bed files.
