@@ -5,7 +5,8 @@
 \alias{initialize,BEDMatrix-method}
 \title{Create a BEDMatrix Object from a PLINK .bed File.}
 \usage{
-\S4method{initialize}{BEDMatrix}(.Object, path, n = NULL, p = NULL)
+\S4method{initialize}{BEDMatrix}(.Object, path, n = NULL, p = NULL,
+  simple_names = FALSE)
 }
 \arguments{
 \item{.Object}{Internal, used by \code{\link[methods:initialize]{methods::initialize()}} generic.}
@@ -27,6 +28,12 @@ variants will be determined from the accompanying
 name as the \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} file).
 If a positive integer, the .bim file is not read and \code{colnames} will be set
 to \code{NULL} and have to be provided manually.}
+
+\item{simple_names}{Whether to simplify the format of the dimension names.
+If \code{FALSE} (the default), row names are concatenations of family IDs, \code{_},
+and within-family IDs, while column names are concatenations of variant
+names, \code{_}, and minor alleles. If \code{TRUE}, row names are within-family IDs
+only and column names are variant names only.}
 }
 \value{
 A \linkS4class{BEDMatrix} object.
