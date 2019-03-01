@@ -37,7 +37,7 @@ initialize <- function(.Object, path, n = NULL, p = NULL, simple_names = FALSE) 
                     rownames <- paste0(fam[, 1L], "_", fam[, 2L])
                 }
             } else {
-                fam <- readLines(famPath)
+                fam <- readLines(famPath) # much faster than read.table
                 # Determine n
                 n <- length(fam)
                 # Determine rownames
@@ -83,7 +83,7 @@ initialize <- function(.Object, path, n = NULL, p = NULL, simple_names = FALSE) 
                     colnames <- paste0(bim[, 1L], "_", bim[, 2L])
                 }
             } else {
-                bim <- readLines(bimPath)
+                bim <- readLines(bimPath) # much faster than read.table
                 # Determine p
                 p <- length(bim)
                 # Determine colnames
