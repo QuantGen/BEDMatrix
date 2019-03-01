@@ -20,7 +20,12 @@ initialize <- function(.Object, path, n = NULL, p = NULL, simple_names = FALSE) 
         } else {
             message("Extracting number of samples and rownames from ", filesetName, ".fam...")
             if (requireNamespace("data.table", quietly = TRUE)) {
-                fam <- data.table::fread(famPath, select = c(1L, 2L), data.table = FALSE, showProgress = FALSE)
+                if (simple_names) {
+                    famColumns <- c(2L)
+                } else {
+                    famColumns <- c(1L, 2L)
+                }
+                fam <- data.table::fread(famPath, select = famColumns, data.table = FALSE, showProgress = FALSE)
                 # Determine n
                 n <- nrow(fam)
                 # Determine rownames
@@ -61,7 +66,12 @@ initialize <- function(.Object, path, n = NULL, p = NULL, simple_names = FALSE) 
         } else {
             message("Extracting number of variants and colnames from ", filesetName, ".bim...")
             if (requireNamespace("data.table", quietly = TRUE)) {
-                bim <- data.table::fread(bimPath, select = c(2L, 5L), data.table = FALSE, showProgress = FALSE)
+                if (simple_names) {
+                    bimColumns <- c(2L)
+                } else {
+                    bimColumns <- c(2L, 5L)
+                }
+                bim <- data.table::fread(bimPath, select = bimColumns, data.table = FALSE, showProgress = FALSE)
                 # Determine p
                 p <- nrow(bim)
                 # Determine colnames
