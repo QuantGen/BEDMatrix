@@ -1,4 +1,4 @@
-# Delimiters used in PED files
+# Delimiters used in .fam and .bim files
 delims <- "[ \t]"
 
 initialize <- function(.Object, path, n = NULL, p = NULL) {

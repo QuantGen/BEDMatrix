@@ -5,7 +5,7 @@ for (path in c(paste0(extdataPath, "/example"), paste0(extdataPath, "/example.be
     })
 
     test_that("it throws an error if file is not a BED file", {
-        expect_error(BEDMatrix(system.file("extdata", "example.raw", package = "BEDMatrix")), "File is not a binary PED file\\.")
+        expect_error(BEDMatrix(system.file("extdata", "example.raw", package = "BEDMatrix")), "File is not a PLINK .bed file\\.")
     })
 
     test_that("it determines n from FAM file", {

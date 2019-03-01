@@ -43,7 +43,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_sampl
     this->file_data = static_cast<uint8_t*>(this->file_region.get_address());
     // Check magic number
     if (!(this->file_data[0] == 0x6C && this->file_data[1] == 0x1B)) {
-        throw std::runtime_error("File is not a binary PED file.");
+        throw std::runtime_error("File is not a PLINK .bed file.");
     }
     // Check mode: 00000001 indicates the default variant-major mode (i.e.
     // list all samples for first variant, all samples for second variant,
