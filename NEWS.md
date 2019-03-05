@@ -1,7 +1,9 @@
-# BEDMatrix 1.4.2
+# BEDMatrix 1.5.0
 
 * Add `simple_names` option to BEDMatrix initialization function (contributed
   by Alex Ochoa).
+* Fix single indexing for index values greater than `.Machine$integer.max`
+  (previously generated `NA`s).
 
 
 # BEDMatrix 1.4.1

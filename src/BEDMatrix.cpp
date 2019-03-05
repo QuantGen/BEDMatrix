@@ -20,6 +20,7 @@ class BEDMatrix {
     public:
         BEDMatrix(std::string path, std::size_t n, std::size_t p);
         Rcpp::IntegerVector extract_vector(Rcpp::IntegerVector i);
+        Rcpp::IntegerVector extract_vector(Rcpp::NumericVector i);
         Rcpp::IntegerMatrix extract_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j);
     private:
         BEDMatrix(const BEDMatrix&);
@@ -106,6 +107,26 @@ Rcpp::IntegerVector BEDMatrix::extract_vector(Rcpp::IntegerVector i) {
     return out;
 }
 
+Rcpp::IntegerVector BEDMatrix::extract_vector(Rcpp::NumericVector i) {
+    // Keep size of i
+    R_xlen_t size_i = i.size();
+    // Reserve output vector
+    Rcpp::IntegerVector out(size_i);
+    // Compute length
+    R_xlen_t length = this->num_samples * this->num_variants;
+    // Iterate over index
+    for (R_xlen_t idx_i = 0; idx_i < size_i; idx_i++) {
+        double di = i[idx_i];
+        R_xlen_t ii = static_cast<R_xlen_t>(di - 1);
+        if (R_FINITE(di) && 0 <= ii && ii < length) {
+            out(idx_i) = this->get_genotype(ii % this->num_samples, ii / this->num_samples);
+        } else {
+            out(idx_i) = NA_INTEGER;
+        }
+    }
+    return out;
+}
+
 /**
  * extract_matrix expects that i and j have been bound checked.
  */
@@ -153,10 +174,16 @@ RcppExport SEXP C_new(SEXP path_, SEXP n_, SEXP p_) {
 RcppExport SEXP C_extract_vector(SEXP xp_, SEXP i_) {
     // Convert inputs to appropriate C++ types
     Rcpp::XPtr<BEDMatrix> ptr(xp_);
-    Rcpp::IntegerVector i(i_);
     try {
         // Invoke the extract_vector function
-        Rcpp::IntegerVector res = ptr->extract_vector(i);
+        Rcpp::IntegerVector res;
+        // index can be either integer or double, depending on whether an index
+        // value is greater than the largest integer
+        if (TYPEOF(i_) == INTSXP) {
+            res = ptr->extract_vector(Rcpp::IntegerVector(i_));
+        } else {
+            res = ptr->extract_vector(Rcpp::NumericVector(i_));
+        }
         return res;
     } catch(std::exception &ex) {
         forward_exception_to_r(ex);
