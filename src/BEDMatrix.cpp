@@ -87,20 +87,20 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
 }
 
 Rcpp::IntegerVector BEDMatrix::extract_vector(Rcpp::IntegerVector i) {
-    // Convert from 1-index to 0-index
-    Rcpp::IntegerVector i0(i - 1);
     // Keep size of i
-    std::size_t size_i = i.size();
+    R_xlen_t size_i = i.size();
     // Reserve output vector
     Rcpp::IntegerVector out(size_i);
-    // Get bounds
-    std::size_t bounds = this->num_samples * this->num_variants;
-    // Iterate over indexes
-    for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
-        if (Rcpp::IntegerVector::is_na(i0[idx_i]) || static_cast<std::size_t>(i0[idx_i]) >= bounds) {
-            out(idx_i) = NA_INTEGER;
+    // Compute length
+    R_xlen_t length = this->num_samples * this->num_variants;
+    // Iterate over index
+    for (R_xlen_t idx_i = 0; idx_i < size_i; idx_i++) {
+        R_xlen_t ii = i[idx_i];
+        if (0 < ii && ii <= length) {
+            ii--;
+            out(idx_i) = this->get_genotype(ii % this->num_samples, ii / this->num_samples);
         } else {
-            out(idx_i) = this->get_genotype(i0[idx_i] % this->num_samples, i0[idx_i] / this->num_samples);
+            out(idx_i) = NA_INTEGER;
         }
     }
     return out;
@@ -110,22 +110,21 @@ Rcpp::IntegerVector BEDMatrix::extract_vector(Rcpp::IntegerVector i) {
  * extract_matrix expects that i and j have been bound checked.
  */
 Rcpp::IntegerMatrix BEDMatrix::extract_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
-    // Convert from 1-index to 0-index
-    Rcpp::IntegerVector i0(i - 1);
-    Rcpp::IntegerVector j0(j - 1);
     // Keep sizes of i and j
-    std::size_t size_i = i.size();
-    std::size_t size_j = j.size();
+    R_xlen_t size_i = i.size();
+    R_xlen_t size_j = j.size();
     // Reserve output matrix
     Rcpp::IntegerMatrix out(size_i, size_j);
-    // Iterate over column indexes
-    for (std::size_t idx_j = 0; idx_j < size_j; idx_j++) {
-        // Iterate over row indexes
-        for (std::size_t idx_i = 0; idx_i < size_i; idx_i++) {
-            if (Rcpp::IntegerVector::is_na(i0[idx_i]) || Rcpp::IntegerVector::is_na(j0[idx_j])) {
+    // Iterate over column index
+    for (R_xlen_t idx_j = 0; idx_j < size_j; idx_j++) {
+        R_xlen_t jj = j[idx_j];
+        // Iterate over row index
+        for (R_xlen_t idx_i = 0; idx_i < size_i; idx_i++) {
+            R_xlen_t ii = i[idx_i];
+            if (ii == NA_INTEGER || jj == NA_INTEGER) {
                 out(idx_i, idx_j) = NA_INTEGER;
             } else {
-                out(idx_i, idx_j) = this->get_genotype(i0[idx_i], j0[idx_j]);
+                out(idx_i, idx_j) = this->get_genotype(ii - 1, jj - 1);
             }
         }
     }
