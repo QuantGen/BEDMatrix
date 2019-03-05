@@ -106,11 +106,10 @@ Rcpp::IntegerVector BEDMatrix::extract_vector(Rcpp::IntegerVector i) {
     return out;
 }
 
+/**
+ * extract_matrix expects that i and j have been bound checked.
+ */
 Rcpp::IntegerMatrix BEDMatrix::extract_matrix(Rcpp::IntegerVector i, Rcpp::IntegerVector j) {
-    // Check if indexes are out of bounds
-    if (Rcpp::is_true(Rcpp::any(i > this->num_samples)) || Rcpp::is_true(Rcpp::any(j > this->num_variants))) {
-        throw std::runtime_error("subscript out of bounds");
-    }
     // Convert from 1-index to 0-index
     Rcpp::IntegerVector i0(i - 1);
     Rcpp::IntegerVector j0(j - 1);
