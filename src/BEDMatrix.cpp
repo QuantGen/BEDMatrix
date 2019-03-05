@@ -155,7 +155,7 @@ RcppExport SEXP C_new(SEXP path_, SEXP n_, SEXP p_) {
 RcppExport SEXP C_extract_vector(SEXP xp_, SEXP i_) {
     // Convert inputs to appropriate C++ types
     Rcpp::XPtr<BEDMatrix> ptr(xp_);
-    Rcpp::IntegerVector i = Rcpp::as<Rcpp::IntegerVector>(i_);
+    Rcpp::IntegerVector i(i_);
     try {
         // Invoke the extract_vector function
         Rcpp::IntegerVector res = ptr->extract_vector(i);
@@ -170,8 +170,8 @@ RcppExport SEXP C_extract_vector(SEXP xp_, SEXP i_) {
 RcppExport SEXP C_extract_matrix(SEXP xp_, SEXP i_, SEXP j_) {
     // Convert inputs to appropriate C++ types
     Rcpp::XPtr<BEDMatrix> ptr(xp_);
-    Rcpp::IntegerVector i = Rcpp::as<Rcpp::IntegerVector>(i_);
-    Rcpp::IntegerVector j = Rcpp::as<Rcpp::IntegerVector>(j_);
+    Rcpp::IntegerVector i(i_);
+    Rcpp::IntegerVector j(j_);
     try {
         // Invoke the extract_matrix function
         Rcpp::IntegerMatrix res = ptr->extract_matrix(i, j);
