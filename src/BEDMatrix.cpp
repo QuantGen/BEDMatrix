@@ -152,30 +152,30 @@ Rcpp::IntegerMatrix BEDMatrix::extract_matrix(Rcpp::IntegerVector i, Rcpp::Integ
     return out;
 }
 
-// Export BEDMatrix::BEDMatrix
+/**
+ * Export BEDMatrix::BEDMatrix
+ */
 RcppExport SEXP C_new(SEXP path_, SEXP n_, SEXP p_) {
-    // Convert inputs to appropriate C++ types
     std::string path = Rcpp::as<std::string>(path_);
     std::size_t n = Rcpp::as<std::size_t>(n_);
     std::size_t p = Rcpp::as<std::size_t>(p_);
     try {
-        // Create a pointer to a BEDMatrix object and wrap it as an external
-        // pointer
+        // Create a BEDMatrix object and return its pointer to the R side as an
+        // external pointer
         Rcpp::XPtr<BEDMatrix> ptr(new BEDMatrix(path, n, p), true);
-        // Return the external pointer to the R side
         return ptr;
     } catch(std::exception &ex) {
         forward_exception_to_r(ex);
         return 0;
     }
-};
+}
 
-// Export BEDMatrix::extract_vector
+/**
+ * Export BEDMatrix::extract_vector
+ */
 RcppExport SEXP C_extract_vector(SEXP xp_, SEXP i_) {
-    // Convert inputs to appropriate C++ types
     Rcpp::XPtr<BEDMatrix> ptr(xp_);
     try {
-        // Invoke the extract_vector function
         Rcpp::IntegerVector res;
         // index can be either integer or double, depending on whether an index
         // value is greater than the largest integer
@@ -189,20 +189,20 @@ RcppExport SEXP C_extract_vector(SEXP xp_, SEXP i_) {
         forward_exception_to_r(ex);
         return 0;
     }
-};
+}
 
-// Export BEDMatrix::extract_matrix
+/**
+ * Export BEDMatrix::extract_matrix
+ */
 RcppExport SEXP C_extract_matrix(SEXP xp_, SEXP i_, SEXP j_) {
-    // Convert inputs to appropriate C++ types
     Rcpp::XPtr<BEDMatrix> ptr(xp_);
     Rcpp::IntegerVector i(i_);
     Rcpp::IntegerVector j(j_);
     try {
-        // Invoke the extract_matrix function
         Rcpp::IntegerMatrix res = ptr->extract_matrix(i, j);
         return res;
     } catch(std::exception &ex) {
         forward_exception_to_r(ex);
         return 0;
     }
-};
+}
