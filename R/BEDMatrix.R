@@ -252,7 +252,7 @@ setMethod("initialize", signature(.Object = "BEDMatrix"), initialize)
 setMethod("show", signature(object = "BEDMatrix"), show)
 
 #' @export
-`[.BEDMatrix` <- crochet::extract(extract_vector = extract_vector, extract_matrix = extract_matrix)
+`[.BEDMatrix` <- crochet::extract(extract_vector = extract_vector, extract_matrix = extract_matrix, allowDoubles = TRUE)
 
 #' @export
 dim.BEDMatrix <- function(x) {

@@ -19,7 +19,7 @@ Depends:
 Imports:
     methods,
     Rcpp (>= 0.12.1),
-    crochet
+    crochet (>= 2.0.0)
 LinkingTo:
     Rcpp,
     BH
