@@ -1,8 +1,5 @@
 // [[Rcpp::depends(BH)]]
 
-#define PLINK_BED_HEADER_LENGTH 3
-#define PLINK_BED_GENOTYPES_PER_BYTE 4
-
 #include <boost/interprocess/file_mapping.hpp>
 #include <boost/interprocess/exceptions.hpp>
 #include <boost/interprocess/mapped_region.hpp>
@@ -11,6 +8,9 @@
 #include <iostream>
 #include <Rcpp.h>
 #include <string>
+
+static const int plink_bed_header_length = 3;
+static const int plink_bed_genotypes_per_byte = 4;
 
 static std::size_t int_ceil(std::size_t x, std::size_t y) {
     return x / y + (x % y != 0);
@@ -31,7 +31,7 @@ class BEDMatrix {
         uint8_t* file_data;
         std::size_t num_samples;
         std::size_t num_variants;
-        std::size_t num_bytes_per_variant; // ceil(num_samples / PLINK_BED_GENOTYPES_PER_BYTE)
+        std::size_t num_bytes_per_variant; // ceil(num_samples / plink_bed_genotypes_per_byte)
 };
 
 BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_samples(n), num_variants(p) {
@@ -57,18 +57,18 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_sampl
     // Get number of bytes
     const std::size_t num_bytes = this->file_region.get_size();
     // Check if given dimensions match the file
-    if ((this->num_variants * int_ceil(this->num_samples, PLINK_BED_GENOTYPES_PER_BYTE)) != (num_bytes - PLINK_BED_HEADER_LENGTH)) {
+    if ((this->num_variants * int_ceil(this->num_samples, plink_bed_genotypes_per_byte)) != (num_bytes - plink_bed_header_length)) {
         throw std::runtime_error("n or p does not match the dimensions of the file.");
     }
-    this->num_bytes_per_variant = int_ceil(this->num_samples, PLINK_BED_GENOTYPES_PER_BYTE);;
+    this->num_bytes_per_variant = int_ceil(this->num_samples, plink_bed_genotypes_per_byte);;
 }
 
 int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     // Each byte encodes 4 genotypes; adjust indices
-    std::size_t which_byte = i / PLINK_BED_GENOTYPES_PER_BYTE;
-    std::size_t which_genotype = 2 * (i - which_byte * PLINK_BED_GENOTYPES_PER_BYTE);
+    std::size_t which_byte = i / plink_bed_genotypes_per_byte;
+    std::size_t which_genotype = 2 * (i - which_byte * plink_bed_genotypes_per_byte);
     // Load byte from map
-    uint8_t genotypes = this->file_data[PLINK_BED_HEADER_LENGTH + (j * this->num_bytes_per_variant + which_byte)];
+    uint8_t genotypes = this->file_data[plink_bed_header_length + (j * this->num_bytes_per_variant + which_byte)];
     // Extract genotypes from byte by shifting the genotype of interest to the
     // end of the byte and masking with 00000011
     uint8_t genotype = genotypes >> which_genotype & 0x03;
