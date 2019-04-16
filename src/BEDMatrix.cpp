@@ -66,12 +66,12 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_sampl
 int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     // Each byte encodes 4 genotypes; adjust indices
     std::size_t which_byte = i / plink_bed_genotypes_per_byte;
-    std::size_t which_genotype = 2 * (i - which_byte * plink_bed_genotypes_per_byte);
+    std::size_t which_genotype = i % plink_bed_genotypes_per_byte;
     // Load byte from map
     uint8_t genotypes = this->file_data[plink_bed_header_length + (j * this->num_bytes_per_variant + which_byte)];
     // Extract genotypes from byte by shifting the genotype of interest to the
     // end of the byte and masking with 00000011
-    uint8_t genotype = genotypes >> which_genotype & 0x03;
+    uint8_t genotype = genotypes >> (2 * which_genotype) & 0x03;
     // Remap genotype value to resemble RAW file, i.e. 0 indicates homozygous
     // major allele, 1 indicates heterozygous, and 2 indicates homozygous minor
     // allele. In BED, the coding is different: homozygous minor allele is 0
