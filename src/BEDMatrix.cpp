@@ -12,10 +12,6 @@
 static const int plink_bed_header_length = 3;
 static const int plink_bed_genotypes_per_byte = 4;
 
-static std::size_t int_div_ceil(std::size_t x, std::size_t y) {
-    return x / y + (x % y != 0);
-}
-
 class BEDMatrix {
     public:
         BEDMatrix(std::string path, std::size_t n, std::size_t p);
@@ -57,7 +53,7 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_sampl
     // Get number of bytes
     const std::size_t num_bytes = this->file_region.get_size();
     // Determine the number of bytes per variant
-    this->num_bytes_per_variant = int_div_ceil(this->num_samples, plink_bed_genotypes_per_byte);
+    this->num_bytes_per_variant = ceil((this->num_samples + 0.0) / plink_bed_genotypes_per_byte);
     // Check if given dimensions match the file
     if ((this->num_variants * this->num_bytes_per_variant) != (num_bytes - plink_bed_header_length)) {
         throw std::runtime_error("n or p does not match the dimensions of the file.");
