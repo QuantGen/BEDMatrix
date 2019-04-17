@@ -4,6 +4,7 @@
   by Alex Ochoa).
 * Fix single indexing for index values greater than `.Machine$integer.max`
   (previously generated `NA`s).
+* Minor performance improvements.
 
 
 # BEDMatrix 1.4.1
