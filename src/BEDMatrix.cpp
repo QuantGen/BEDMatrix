@@ -56,11 +56,12 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_sampl
     }
     // Get number of bytes
     const std::size_t num_bytes = this->file_region.get_size();
+    // Determine the number of bytes per variant
+    this->num_bytes_per_variant = int_div_ceil(this->num_samples, plink_bed_genotypes_per_byte);
     // Check if given dimensions match the file
-    if ((this->num_variants * int_div_ceil(this->num_samples, plink_bed_genotypes_per_byte)) != (num_bytes - plink_bed_header_length)) {
+    if ((this->num_variants * this->num_bytes_per_variant) != (num_bytes - plink_bed_header_length)) {
         throw std::runtime_error("n or p does not match the dimensions of the file.");
     }
-    this->num_bytes_per_variant = int_div_ceil(this->num_samples, plink_bed_genotypes_per_byte);;
 }
 
 int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
