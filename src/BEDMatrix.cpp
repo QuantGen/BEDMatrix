@@ -61,12 +61,14 @@ BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_sampl
 }
 
 int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
-    // Each byte encodes 4 genotypes; adjust indices
+    // Each byte encodes 4 genotypes; determine which byte contains the
+    // genotype at index [i, j]
     std::size_t which_byte = i / plink_bed_genotypes_per_byte;
-    std::size_t which_genotype = i % plink_bed_genotypes_per_byte;
-    // Load byte from map
+    // Extract byte from memory-mapped region
     uint8_t genotypes = this->file_data[plink_bed_header_length + (j * this->num_bytes_per_variant + which_byte)];
-    // Extract genotypes from byte by shifting the genotype of interest to the
+    // Determine which genotype in the byte to extract
+    std::size_t which_genotype = i % plink_bed_genotypes_per_byte;
+    // Extract genotype from byte by shifting the genotype of interest to the
     // end of the byte and masking with 00000011
     uint8_t genotype = genotypes >> (2 * which_genotype) & 0x03;
     // Remap genotype value to resemble RAW file, i.e. 0 indicates homozygous
