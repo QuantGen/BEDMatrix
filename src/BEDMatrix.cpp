@@ -76,11 +76,11 @@ int BEDMatrix::get_genotype(std::size_t i, std::size_t j) {
     // allele. In BED, the coding is different: homozygous minor allele is 0
     // (00) and homozygous major allele is 3 (11). Each byte is read backwards.
     int mapping = NA_INTEGER; // missing
-    if (genotype == 0) {
+    if (genotype == 0x00) {
         mapping = 2; // homozygous AA
-    } else if (genotype == 3) {
+    } else if (genotype == 0x03) {
         mapping = 0; // homozygous BB
-    } else if (genotype == 2) {
+    } else if (genotype == 0x02) {
         mapping = 1; // heterozygous AB
     }
     return mapping;
