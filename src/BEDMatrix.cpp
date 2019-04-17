@@ -27,7 +27,7 @@ class BEDMatrix {
         uint8_t* file_data;
         std::size_t num_samples;
         std::size_t num_variants;
-        std::size_t num_bytes_per_variant; // ceil(num_samples / plink_bed_genotypes_per_byte)
+        std::size_t num_bytes_per_variant;
 };
 
 BEDMatrix::BEDMatrix(std::string path, std::size_t n, std::size_t p) : num_samples(n), num_variants(p) {
