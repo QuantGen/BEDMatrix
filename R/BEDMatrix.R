@@ -25,7 +25,7 @@ initialize <- function(.Object, path, n = NULL, p = NULL, simple_names = FALSE) 
                 } else {
                     famColumns <- c(1L, 2L)
                 }
-                fam <- data.table::fread(famPath, select = famColumns, data.table = FALSE, showProgress = FALSE)
+                fam <- data.table::fread(famPath, select = famColumns, colClasses = list(character = famColumns), data.table = FALSE, showProgress = FALSE)
                 # Determine n
                 n <- nrow(fam)
                 # Determine rownames
@@ -71,7 +71,7 @@ initialize <- function(.Object, path, n = NULL, p = NULL, simple_names = FALSE) 
                 } else {
                     bimColumns <- c(2L, 5L)
                 }
-                bim <- data.table::fread(bimPath, select = bimColumns, data.table = FALSE, showProgress = FALSE)
+                bim <- data.table::fread(bimPath, select = bimColumns, colClasses = list(character = bimColumns), data.table = FALSE, showProgress = FALSE)
                 # Determine p
                 p <- nrow(bim)
                 # Determine colnames
