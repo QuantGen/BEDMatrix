@@ -1,3 +1,5 @@
+# BEDMatrix 1.5.0.9000
+
 # BEDMatrix 1.5.0
 
 * Add `simple_names` option to BEDMatrix initialization function (contributed
