@@ -134,137 +134,22 @@ show <- function(object) {
     cat("BEDMatrix: ", n, " x ", p, " [", object@path, "]\n", sep = "")
 }
 
-#' A Class to Extract Genotypes from a PLINK .bed File.
-#'
-#' `BEDMatrix` is a class that maps a [PLINK
-#' .bed](https://www.cog-genomics.org/plink2/formats#bed) file into memory and
-#' behaves similarly to a regular `matrix` by implementing key methods such as
-#' `[`, `dim`, and `dimnames`. Subsets are extracted directly and on-demand
-#' from the .bed file without loading the entire file into memory.
-#'
-#' The subsets extracted from a `BEDMatrix` object are coded similarly to
-#' [.raw](https://www.cog-genomics.org/plink2/formats#raw) files (generated
-#' with the `--recodeA` argument in
-#' [PLINK](https://www.cog-genomics.org/plink2/)): `0` indicates homozygous
-#' major allele, `1` indicates heterozygous, and `2` indicates homozygous minor
-#' allele.
-#'
-#' Internally, this class is an S4 class with the following slots that should
-#' not be relied upon in actual code: `xptr`, `dims`, `dnames`, and `path`. The
-#' .bed file is mapped into memory using the [Rcpp][Rcpp::Rcpp-package] package
-#' and the `Boost.Interprocess` library provided by the [BH][BH::BH-package]
-#' package.
-#'
-#' @section Methods:
-#' - `[`
-#' - `dim`
-#' - `dimnames`
-#' - `dimnames<-`
-#' - `as.matrix`
-#' - `is.matrix`
-#' - `length`
-#' - `str`
-#' - `show`
-#' - `initialize`
-#'
-#' @slot xptr An external pointer to the underlying [Rcpp][Rcpp::Rcpp-package]
-#' code.
-#' @slot dims An integer vector specifying the number of samples and variants
-#' as determined by the the accompanying
-#' [.fam](https://www.cog-genomics.org/plink2/formats#fam) and
-#' [.bim](https://www.cog-genomics.org/plink2/formats#bim) files or by the `n`
-#' and `p` parameters of the [constructor
-#' function][initialize,BEDMatrix-method()].
-#' @slot dnames A list describing the row names and column names of the object
-#' as determined by the accompanying
-#' [.fam](https://www.cog-genomics.org/plink2/formats#fam) and
-#' [.bim](https://www.cog-genomics.org/plink2/formats#bim) files, or `NULL` if
-#' the `n` and `p` parameters of the [constructor
-#' function][initialize,BEDMatrix-method()] were provided.
-#' @slot path A character string containing the path to the .bed file.
-#' @seealso [initialize()][initialize,BEDMatrix-method()] to create a
-#' `BEDMatrix` object from a .bed file, [BEDMatrix-package] to learn more about
-#' .bed files, [LinkedMatrix][LinkedMatrix::LinkedMatrix-package] to link
-#' several `BEDMatrix` objects together.
-#' @example man/examples/BEDMatrix.R
-#' @aliases BEDMatrix-class
-#' @export BEDMatrix
-#' @exportClass BEDMatrix
 BEDMatrix <- setClass("BEDMatrix", slots = c(xptr = "externalptr", dims = "integer", dnames = "list", path = "character"))
 
-#' Create a BEDMatrix Object from a PLINK .bed File.
-#'
-#' This function constructs a new [BEDMatrix-class] object by mapping the
-#' specified [PLINK .bed](https://www.cog-genomics.org/plink2/formats#bed) file
-#' into memory.
-#'
-#' [.bed](https://www.cog-genomics.org/plink2/formats#bed) files must be
-#' accompanied by [.fam](https://www.cog-genomics.org/plink2/formats#fam) and
-#' [.bim](https://www.cog-genomics.org/plink2/formats#bim) files: .fam files
-#' contain sample information, and .bim files contain variant information. If
-#' the name of the .bed file is *plink*.bed then the names of the .fam and .bim
-#' files have to be *plink*.fam and *plink*.bim, respectively. The .fam and
-#' .bim files are used to extract the number and names of samples and variants.
-#'
-#' For very large .bed files, reading the .fam and .bim files can take a long
-#' time. If `n` and `p` are provided, these files are not read and `dimnames`
-#' have to be provided manually.
-#'
-#' Currently, only the variant-major mode of .bed files is supported.
-#' [PLINK2](https://www.cog-genomics.org/plink2/) "dropped" support for the
-#' sample-major mode by automatically converting files in this format to the
-#' variant-major mode. Therefore, it is recommended to run files in
-#' sample-major mode through PLINK2 first.
-#'
-#' @param .Object Internal, used by [methods::initialize()] generic.
-#' @param path Path to the
-#' [.bed](https://www.cog-genomics.org/plink2/formats#bed) file (with or
-#' without extension).
-#' @param n The number of samples. If `NULL` (the default), this number will be
-#' determined from the accompanying
-#' [.fam](https://www.cog-genomics.org/plink2/formats#fam) file (of the same
-#' name as the [.bed](https://www.cog-genomics.org/plink2/formats#bed) file).
-#' If a positive integer, the .fam file is not read and `rownames` will be set
-#' to `NULL` and have to be provided manually.
-#' @param p The number of variants. If `NULL` (the default) the number of
-#' variants will be determined from the accompanying
-#' [.bim](https://www.cog-genomics.org/plink2/formats#bim) file (of the same
-#' name as the [.bed](https://www.cog-genomics.org/plink2/formats#bed) file).
-#' If a positive integer, the .bim file is not read and `colnames` will be set
-#' to `NULL` and have to be provided manually.
-#' @param simple_names Whether to simplify the format of the dimension names.
-#' If `FALSE` (the default), row names are concatenations of family IDs, `_`,
-#' and within-family IDs, while column names are concatenations of variant
-#' names, `_`, and minor alleles. If `TRUE`, row names are within-family IDs
-#' only and column names are variant names only.
-#' @return A [BEDMatrix-class] object.
-#' @example man/examples/initialize.R
-#' @seealso [BEDMatrix-package] to learn more about .bed files.
-#' @export
 setMethod("initialize", signature(.Object = "BEDMatrix"), initialize)
 
-#' Show a BEDMatrix Object.
-#'
-#' Display the object, by printing, plotting or whatever suits its class.
-#'
-#' @param object A [BEDMatrix-class] object.
-#' @export
 setMethod("show", signature(object = "BEDMatrix"), show)
 
-#' @export
 `[.BEDMatrix` <- crochet::extract(extract_vector = extract_vector, extract_matrix = extract_matrix, allowDoubles = TRUE)
 
-#' @export
 dim.BEDMatrix <- function(x) {
     x@dims
 }
 
-#' @export
 dimnames.BEDMatrix <- function(x) {
     x@dnames
 }
 
-#' @export
 `dimnames<-.BEDMatrix` <- function(x, value) {
     d <- dim(x)
     v1 <- value[[1L]]
@@ -280,22 +165,18 @@ dimnames.BEDMatrix <- function(x) {
     return(x)
 }
 
-#' @export
 length.BEDMatrix <- function(x) {
     prod(dim(x))
 }
 
-#' @export
 str.BEDMatrix <- function(object, ...) {
     print(object)
 }
 
-#' @export
 as.matrix.BEDMatrix <- function(x, ...) {
     x[, , drop = FALSE]
 }
 
-#' @export
 is.matrix.BEDMatrix <- function(x) {
     TRUE
 }

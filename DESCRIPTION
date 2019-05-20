@@ -27,6 +27,4 @@ Suggests:
     data.table,
     testthat,
     covr
-RoxygenNote: 6.1.1
-Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
