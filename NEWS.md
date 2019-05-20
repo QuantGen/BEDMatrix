@@ -1,6 +1,7 @@
 # BEDMatrix 1.5.0.9000
 
 * Fix non-character rownames or colnames when data.table package is installed.
+* Update citation instructions.
 
 
 # BEDMatrix 1.5.0
