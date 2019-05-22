@@ -1,7 +1,6 @@
 \docType{class}
 \name{BEDMatrix-class}
 \alias{BEDMatrix-class}
-\alias{BEDMatrix}
 \title{A Class to Extract Genotypes from a PLINK .bed File.}
 \description{
 \code{BEDMatrix} is a class that maps a \href{https://www.cog-genomics.org/plink2/formats#bed}{PLINK .bed} file into memory and
@@ -33,13 +32,14 @@ code.}
 as determined by the the accompanying
 \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
 \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files or by the \code{n}
-and \code{p} parameters of the \link[=initialize,BEDMatrix-method]{constructor function}.}
+and \code{p} parameters of the \link[=BEDMatrix]{constructor function}.}
 
 \item{\code{dnames}}{A list describing the row names and column names of the object
 as determined by the accompanying
 \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
 \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files, or \code{NULL} if
-the \code{n} and \code{p} parameters of the \link[=initialize,BEDMatrix-method]{constructor function} were provided.}
+the \code{n} and \code{p} parameters of the \link[=BEDMatrix]{constructor function} were
+provided.}
 
 \item{\code{path}}{A character string containing the path to the .bed file.}
 }}
@@ -56,7 +56,6 @@ the \code{n} and \code{p} parameters of the \link[=initialize,BEDMatrix-method]{
 \item \code{length}
 \item \code{str}
 \item \code{show}
-\item \code{initialize}
 }
 }
 
@@ -93,8 +92,8 @@ m[
 ]
 }
 \seealso{
-\link[=initialize,BEDMatrix-method]{initialize()} to create a
-\code{BEDMatrix} object from a .bed file, \link{BEDMatrix-package} to learn more about
-.bed files, \link[LinkedMatrix:LinkedMatrix-package]{LinkedMatrix} to link
-several \code{BEDMatrix} objects together.
+\code{\link[=BEDMatrix]{BEDMatrix()}} to create a \code{BEDMatrix} object from a .bed file,
+\link{BEDMatrix-package} to learn more about .bed files,
+\link[LinkedMatrix:LinkedMatrix-package]{LinkedMatrix} to link several
+\code{BEDMatrix} objects together.
 }

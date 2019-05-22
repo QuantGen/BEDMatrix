@@ -14,7 +14,6 @@ loading the entire file into memory. This allows handling of very large
 files with limited use of memory.
 }
 \section{.bed Files}{
-
 \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} files (sometimes
 referred to as binary .ped files) are binary representations of genotype
 calls at biallelic variants. This very compact file format (2 bits per
@@ -27,7 +26,6 @@ A .bed file can be created from a
 \href{https://www.cog-genomics.org/plink2/formats#ped}{.ped} file with
 \href{https://www.cog-genomics.org/plink2}{PLINK} using \code{plink --file myfile --make-bed}.
 }
-
 \seealso{
 \linkS4class{BEDMatrix} to learn more about the \code{BEDMatrix} class.
 }

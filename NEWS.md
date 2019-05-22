@@ -1,5 +1,6 @@
 # BEDMatrix 1.5.0.9000
 
+* Follow [Bioconductor S4 practices](https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html).
 * Fix non-character rownames or colnames when data.table package is installed.
 * Update citation instructions.
 

@@ -1,7 +1,14 @@
 # Delimiters used in .fam and .bim files
 delims <- "[ \t]"
 
-initialize <- function(.Object, path, n = NULL, p = NULL, simple_names = FALSE) {
+BEDMatrix <- setClass("BEDMatrix", slots = c(
+    xptr = "externalptr",
+    dims = "integer",
+    dnames = "list",
+    path = "character"
+))
+
+BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
     path <- path.expand(path)
     if (!file.exists(path)) {
         # Try to add extension (common in PLINK)
@@ -104,13 +111,22 @@ initialize <- function(.Object, path, n = NULL, p = NULL, simple_names = FALSE) 
         p <- as.integer(p)
         colnames <- NULL
     }
-    # Create Rcpp object
-    .Object@xptr <- .Call(C_new, path, n, p)
-    .Object@path <- path
-    .Object@dims <- c(n, p)
-    .Object@dnames <- list(rownames, colnames)
-    return(.Object)
+    obj <- methods::new(
+        "BEDMatrix",
+        xptr = .Call(C_new, path, n, p), # Create Rcpp object
+        path = path,
+        dims = c(n, p),
+        dnames = list(rownames, colnames)
+    )
+    return(obj)
 }
+
+setMethod("show", "BEDMatrix", function(object) {
+    dims <- dim(object)
+    n <- dims[1L]
+    p <- dims[2L]
+    cat("BEDMatrix: ", n, " x ", p, " [", object@path, "]\n", sep = "")
+})
 
 extract_vector <- function(x, i) {
     .Call(C_extract_vector, x@xptr, i)
@@ -126,19 +142,6 @@ extract_matrix <- function(x, i, j) {
     )
     return(subset)
 }
-
-show <- function(object) {
-    dims <- dim(object)
-    n <- dims[1L]
-    p <- dims[2L]
-    cat("BEDMatrix: ", n, " x ", p, " [", object@path, "]\n", sep = "")
-}
-
-BEDMatrix <- setClass("BEDMatrix", slots = c(xptr = "externalptr", dims = "integer", dnames = "list", path = "character"))
-
-setMethod("initialize", signature(.Object = "BEDMatrix"), initialize)
-
-setMethod("show", signature(object = "BEDMatrix"), show)
 
 `[.BEDMatrix` <- crochet::extract(extract_vector = extract_vector, extract_matrix = extract_matrix, allowDoubles = TRUE)
 

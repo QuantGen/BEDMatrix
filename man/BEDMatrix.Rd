@@ -1,14 +1,10 @@
-\docType{methods}
-\name{initialize,BEDMatrix-method}
-\alias{initialize,BEDMatrix-method}
+\name{BEDMatrix}
+\alias{BEDMatrix}
 \title{Create a BEDMatrix Object from a PLINK .bed File.}
 \usage{
-\S4method{initialize}{BEDMatrix}(.Object, path, n = NULL, p = NULL,
-  simple_names = FALSE)
+BEDMatrix(path, n = NULL, p = NULL, simple_names = FALSE)
 }
 \arguments{
-\item{.Object}{Internal, used by \code{\link[methods:initialize]{methods::initialize()}} generic.}
-
 \item{path}{Path to the
 \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} file (with or
 without extension).}
