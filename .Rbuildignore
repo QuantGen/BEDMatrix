@@ -1,5 +1,4 @@
 ^\.travis\.yml$
 ^revdep$
-.pversion
 ^codecov\.yml$
 ^appveyor\.yml$
