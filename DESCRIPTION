@@ -9,7 +9,6 @@ Description: A matrix-like data structure that allows for efficient,
     memory.
 Authors@R: c(
     person("Alexander", "Grueneberg", email = "alexander.grueneberg@googlemail.com", role = c("aut", "cre")),
-    person("Lian", "Lian", email = "lianl0501@gmail.com", role = c("ctb")),
     person("Gustavo", "de los Campos", email = "gustavoc@msu.edu", role = c("ctb")))
 URL: https://github.com/QuantGen/BEDMatrix
 BugReports: https://github.com/QuantGen/BEDMatrix/issues
