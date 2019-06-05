@@ -12,7 +12,6 @@ Authors@R: c(
     person("Gustavo", "de los Campos", email = "gustavoc@msu.edu", role = c("ctb")))
 URL: https://github.com/QuantGen/BEDMatrix
 BugReports: https://github.com/QuantGen/BEDMatrix/issues
-SystemRequirements: C++11
 Depends:
     R (>= 3.0.0)
 Imports:
