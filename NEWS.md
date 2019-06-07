@@ -1,6 +1,7 @@
 # BEDMatrix 1.5.0.9000
 
-* Follow [Bioconductor S4 practices][2].
+* Follow [Bioconductor S4 practices][2]. If you have used `new()` to create
+  BEDMatrix instances, please use the constructor `BEDMatrix()` instead.
 * Fix non-character rownames or colnames when data.table package is installed.
 * Update citation instructions.
 
