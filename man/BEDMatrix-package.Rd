@@ -1,7 +1,7 @@
 \docType{package}
 \name{BEDMatrix-package}
 \alias{BEDMatrix-package}
-\title{A Package to Extract Genotypes from a PLINK .bed File.}
+\title{A Package to Extract Genotypes from a PLINK .bed File}
 \description{
 The \code{BEDMatrix} package provides a matrix-like wrapper around
 \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} files, one of the

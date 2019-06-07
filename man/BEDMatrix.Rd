@@ -1,6 +1,6 @@
 \name{BEDMatrix}
 \alias{BEDMatrix}
-\title{Create a BEDMatrix Object from a PLINK .bed File.}
+\title{Create a BEDMatrix Object from a PLINK .bed File}
 \description{
 This function constructs a new \linkS4class{BEDMatrix} object by mapping the
 specified \href{https://www.cog-genomics.org/plink2/formats#bed}{PLINK .bed} file

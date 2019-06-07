@@ -2,7 +2,7 @@
 \name{BEDMatrix-class}
 \alias{BEDMatrix-class}
 \alias{show,BEDMatrix-method}
-\title{A Class to Extract Genotypes from a PLINK .bed File.}
+\title{A Class to Extract Genotypes from a PLINK .bed File}
 \description{
 \code{BEDMatrix} is a class that maps a
 \href{https://www.cog-genomics.org/plink2/formats#bed}{PLINK .bed} file into
