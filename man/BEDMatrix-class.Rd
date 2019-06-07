@@ -65,7 +65,8 @@ a .bed file, \link{BEDMatrix-package} to learn more about .bed files,
 }
 \examples{
 # Get the path to the example .bed file
-path <- system.file("extdata", "example.bed", package = "BEDMatrix")
+path <- system.file("extdata", "example.bed",
+                    package = "BEDMatrix")
 
 # Create a BEDMatrix object the example .bed file
 m <- BEDMatrix(path)
