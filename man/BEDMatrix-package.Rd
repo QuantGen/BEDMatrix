@@ -28,6 +28,6 @@ A .bed file can be created from a
 myfile --make-bed}.
 }
 \seealso{
-\linkS4class{BEDMatrix} to learn more about the \code{BEDMatrix} class.
+\link{BEDMatrix-class} to learn more about the \code{BEDMatrix} class.
 }
 \keyword{package}
