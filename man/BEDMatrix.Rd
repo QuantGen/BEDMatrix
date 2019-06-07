@@ -64,7 +64,8 @@ mode through PLINK2 first.
 A \linkS4class{BEDMatrix} object.
 }
 \seealso{
-\link{BEDMatrix-package} to learn more about .bed files.
+\link{BEDMatrix-package} to learn more about the \code{BEDMatrix} package,
+\link{BEDMatrix-class} to learn more about the \code{BEDMatrix} class.
 }
 \examples{
 # Get the path to the example .bed file
