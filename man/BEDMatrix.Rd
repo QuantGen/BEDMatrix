@@ -64,8 +64,9 @@ mode through PLINK2 first.
 A \code{BEDMatrix} object.
 }
 \seealso{
-\link{BEDMatrix-package} to learn more about the \code{BEDMatrix} package,
-\link{BEDMatrix-class} to learn more about the \code{BEDMatrix} class.
+\code{\link{BEDMatrix-package}} to learn more about the \code{BEDMatrix}
+package, \code{\link{BEDMatrix-class}} to learn more about the \code{BEDMatrix}
+class.
 }
 \examples{
 # Get the path to the example .bed file

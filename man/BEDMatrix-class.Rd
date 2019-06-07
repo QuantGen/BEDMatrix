@@ -59,9 +59,9 @@ library provided by the \link[BH:BH-package]{BH} package.
 }
 \seealso{
 \code{\link{BEDMatrix}} to create a \code{BEDMatrix} object from a .bed file,
-\link{BEDMatrix-package} to learn more about the \code{BEDMatrix} package,
-\link[LinkedMatrix:LinkedMatrix-package]{LinkedMatrix} to link several
-\code{BEDMatrix} objects together.
+\code{\link{BEDMatrix-package}} to learn more about the \code{BEDMatrix}
+package, \code{\link[LinkedMatrix:LinkedMatrix-package]{LinkedMatrix}} to link
+several \code{BEDMatrix} objects together.
 }
 \examples{
 # Get the path to the example .bed file
