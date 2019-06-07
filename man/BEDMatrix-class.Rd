@@ -28,22 +28,23 @@ library provided by the \link[BH:BH-package]{BH} package.
 \section{Slots}{
   \describe{
     \item{\code{xptr}:}{An external pointer to the underlying
-        \link[Rcpp:Rcpp-package]{Rcpp} code.}
+      \link[Rcpp:Rcpp-package]{Rcpp} code.}
     \item{\code{dims}:}{An integer vector specifying the number of samples and
-        variants as determined by the the accompanying
-        \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
-        \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files or
-        by the \code{n} and \code{p} parameters of the
-        \link[=BEDMatrix]{constructor function}.}
+      variants as determined by the the accompanying
+      \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
+      \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files or by
+      the \code{n} and \code{p} parameters of the \link[=BEDMatrix]{constructor
+      function}.}
     \item{\code{dnames}:}{A list describing the row names and column names of
-        the object as determined by the accompanying
-        \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
-        \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files, or
-        \code{NULL} if the \code{n} and \code{p} parameters of the
-        \link[=BEDMatrix]{constructor function} were provided.}
+      the object as determined by the accompanying
+      \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} and
+      \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} files, or
+      \code{NULL} if the \code{n} and \code{p} parameters of the
+      \link[=BEDMatrix]{constructor function} were provided.}
     \item{\code{path}:}{A character string containing the path to the .bed
-        file.}
-}}
+      file.}
+  }
+}
 \section{Methods}{
   \describe{
     \item{\code{[}:}{Extract parts of an object}
