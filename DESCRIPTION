@@ -23,5 +23,6 @@ LinkingTo:
     BH
 Suggests:
     data.table,
+    LinkedMatrix,
     testthat,
     covr
