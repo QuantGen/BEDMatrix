@@ -1,6 +1,6 @@
 # BEDMatrix 1.5.0.9000
 
-* Follow [Bioconductor S4 practices](https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html).
+* Follow [Bioconductor S4 practices][2].
 * Fix non-character rownames or colnames when data.table package is installed.
 * Update citation instructions.
 
@@ -22,7 +22,7 @@
 # BEDMatrix 1.4.0
 
 * Support subsetting by `NA`.
-* Use [crochet package](https://CRAN.R-project.org/package=crochet) for subsetting
+* Use [crochet package][1] for subsetting
 * Fix minor subsetting bugs
 * Update example
 * Remove intermediate S3 `BEDMatrix` type
@@ -66,3 +66,6 @@
 # BEDMatrix 1.0.0
 
 Initial release.
+
+[1]: https://CRAN.R-project.org/package=crochet
+[2]: https://bioconductor.org/help/course-materials/2017/Zurich/S4-classes-and-methods.html
