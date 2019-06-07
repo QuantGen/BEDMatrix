@@ -7,11 +7,11 @@ The \code{BEDMatrix} package provides a matrix-like wrapper around
 \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} files, one of the
 genotype/phenotype file formats of
 \href{https://www.cog-genomics.org/plink2}{PLINK}, the whole genome association
-analysis toolset. \linkS4class{BEDMatrix} objects are created by simply
-providing the path to a .bed file and once created, they behave similarly to
-regular matrices with the advantage that genotypes are retrieved on demand
-without loading the entire file into memory. This allows handling of very large
-files with limited use of memory.
+analysis toolset. \code{BEDMatrix} objects are created by simply providing the
+path to a .bed file and once created, they behave similarly to regular matrices
+with the advantage that genotypes are retrieved on demand without loading the
+entire file into memory. This allows handling of very large files with limited
+use of memory.
 }
 \section{.bed Files}{
 \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} files (sometimes

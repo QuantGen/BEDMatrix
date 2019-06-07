@@ -2,9 +2,9 @@
 \alias{BEDMatrix}
 \title{Create a BEDMatrix Object from a PLINK .bed File}
 \description{
-This function constructs a new \linkS4class{BEDMatrix} object by mapping the
-specified \href{https://www.cog-genomics.org/plink2/formats#bed}{PLINK .bed} file
-into memory.
+This function constructs a new \code{BEDMatrix} object by mapping the specified
+\href{https://www.cog-genomics.org/plink2/formats#bed}{PLINK .bed} file into
+memory.
 }
 \usage{
 BEDMatrix(path, n = NULL, p = NULL, simple_names = FALSE)
@@ -61,7 +61,7 @@ variant-major mode. Therefore, it is recommended to run files in sample-major
 mode through PLINK2 first.
 }
 \value{
-A \linkS4class{BEDMatrix} object.
+A \code{BEDMatrix} object.
 }
 \seealso{
 \link{BEDMatrix-package} to learn more about the \code{BEDMatrix} package,
