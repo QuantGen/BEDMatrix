@@ -1,6 +1,5 @@
 language: r
 cache: packages
-warnings_are_errors: true
 r_packages:
   - covr
 after_success:
