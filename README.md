@@ -61,8 +61,8 @@ install.packages("BEDMatrix")
 Alternatively, install the development version from GitHub:
 
 ```R
-# install.packages("devtools")
-devtools::install_github("QuantGen/BEDMatrix")
+# install.packages("remotes")
+remotes::install_github("QuantGen/BEDMatrix")
 ```
 
 
