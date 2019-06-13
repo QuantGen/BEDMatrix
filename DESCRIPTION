@@ -24,5 +24,4 @@ LinkingTo:
 Suggests:
     data.table,
     LinkedMatrix,
-    testthat,
-    covr
+    testthat
