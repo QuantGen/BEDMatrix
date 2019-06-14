@@ -66,14 +66,14 @@ remotes::install_github("QuantGen/BEDMatrix")
 ```
 
 
-Contribute
-----------
-
-- Issue Tracker: https://github.com/QuantGen/BEDMatrix/issues
-- Source Code: https://github.com/QuantGen/BEDMatrix
-
-
 Documentation
 -------------
 
 Further documentation can be found on [RDocumentation](http://www.rdocumentation.org/packages/BEDMatrix).
+
+
+Contributing
+------------
+
+- Issue Tracker: https://github.com/QuantGen/BEDMatrix/issues
+- Source Code: https://github.com/QuantGen/BEDMatrix
