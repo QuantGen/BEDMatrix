@@ -1,6 +1,6 @@
 # BEDMatrix 1.6.0.9000
 
-
+* Re-add C++11 requirement to avoid warnings from Boost headers on Windows.
 
 
 # BEDMatrix 1.6.0
@@ -8,6 +8,7 @@
 * Follow [Bioconductor S4 practices][2]. If you have used `new()` to create
   BEDMatrix instances, please use the constructor `BEDMatrix()` instead.
 * Fix non-character rownames or colnames when data.table package is installed.
+* Drop C++11 requirement.
 * Update citation instructions.
 
 
