@@ -1,3 +1,8 @@
+# BEDMatrix 1.6.0.9000
+
+
+
+
 # BEDMatrix 1.6.0
 
 * Follow [Bioconductor S4 practices][2]. If you have used `new()` to create
