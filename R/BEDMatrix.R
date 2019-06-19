@@ -111,7 +111,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
         p <- as.integer(p)
         colnames <- NULL
     }
-    obj <- methods::new(
+    obj <- new(
         "BEDMatrix",
         xptr = .Call(C_new, path, n, p), # Create Rcpp object
         path = path,
@@ -143,7 +143,7 @@ extract_matrix <- function(x, i, j) {
     return(subset)
 }
 
-`[.BEDMatrix` <- crochet::extract(extract_vector = extract_vector, extract_matrix = extract_matrix, allowDoubles = TRUE)
+`[.BEDMatrix` <- extract(extract_vector = extract_vector, extract_matrix = extract_matrix, allowDoubles = TRUE)
 
 dim.BEDMatrix <- function(x) {
     x@dims
