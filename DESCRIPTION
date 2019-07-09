@@ -13,7 +13,7 @@ Authors@R: c(
 URL: https://github.com/QuantGen/BEDMatrix
 BugReports: https://github.com/QuantGen/BEDMatrix/issues
 Depends:
-    R (>= 3.0.0)
+    R (>= 3.0.2)
 Imports:
     methods,
     Rcpp (>= 0.12.1),
