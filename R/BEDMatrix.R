@@ -113,7 +113,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
     }
     obj <- new(
         "BEDMatrix",
-        xptr = .Call(C_new, path, n, p), # Create Rcpp object
+        xptr = .Call(C_BEDMatrix_new, path, n, p), # Create Rcpp object
         path = path,
         dims = c(n, p),
         dnames = list(rownames, colnames)
@@ -129,11 +129,11 @@ setMethod("show", "BEDMatrix", function(object) {
 })
 
 extract_vector <- function(x, i) {
-    .Call(C_extract_vector, x@xptr, i)
+    .Call(C_BEDMatrix_extract_vector, x@xptr, i)
 }
 
 extract_matrix <- function(x, i, j) {
-    subset <- .Call(C_extract_matrix, x@xptr, i, j)
+    subset <- .Call(C_BEDMatrix_extract_matrix, x@xptr, i, j)
     # Preserve dimnames
     names <- x@dnames
     dimnames(subset) <- list(

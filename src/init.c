@@ -3,14 +3,14 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
-extern SEXP C_extract_matrix(SEXP, SEXP, SEXP);
-extern SEXP C_extract_vector(SEXP, SEXP);
-extern SEXP C_new(SEXP, SEXP, SEXP);
+extern SEXP BEDMatrix_new(SEXP, SEXP, SEXP);
+extern SEXP BEDMatrix_extract_matrix(SEXP, SEXP, SEXP);
+extern SEXP BEDMatrix_extract_vector(SEXP, SEXP);
 
 static const R_CallMethodDef callEntries[] = {
-    {"C_extract_matrix", (DL_FUNC) &C_extract_matrix, 3},
-    {"C_extract_vector", (DL_FUNC) &C_extract_vector, 2},
-    {"C_new", (DL_FUNC) &C_new, 3},
+    {"BEDMatrix_new", (DL_FUNC) &BEDMatrix_new, 3},
+    {"BEDMatrix_extract_matrix", (DL_FUNC) &BEDMatrix_extract_matrix, 3},
+    {"BEDMatrix_extract_vector", (DL_FUNC) &BEDMatrix_extract_vector, 2},
     {NULL, NULL, 0}
 };
 

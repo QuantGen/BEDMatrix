@@ -151,10 +151,7 @@ Rcpp::IntegerMatrix BEDMatrix::extract_matrix(Rcpp::IntegerVector i, Rcpp::Integ
     return out;
 }
 
-/**
- * Export BEDMatrix::BEDMatrix
- */
-RcppExport SEXP C_new(SEXP path_, SEXP n_, SEXP p_) {
+RcppExport SEXP BEDMatrix_new(SEXP path_, SEXP n_, SEXP p_) {
     std::string path = Rcpp::as<std::string>(path_);
     std::size_t n = Rcpp::as<std::size_t>(n_);
     std::size_t p = Rcpp::as<std::size_t>(p_);
@@ -169,10 +166,7 @@ RcppExport SEXP C_new(SEXP path_, SEXP n_, SEXP p_) {
     }
 }
 
-/**
- * Export BEDMatrix::extract_vector
- */
-RcppExport SEXP C_extract_vector(SEXP xp_, SEXP i_) {
+RcppExport SEXP BEDMatrix_extract_vector(SEXP xp_, SEXP i_) {
     Rcpp::XPtr<BEDMatrix> ptr(xp_);
     try {
         Rcpp::IntegerVector res;
@@ -190,10 +184,7 @@ RcppExport SEXP C_extract_vector(SEXP xp_, SEXP i_) {
     }
 }
 
-/**
- * Export BEDMatrix::extract_matrix
- */
-RcppExport SEXP C_extract_matrix(SEXP xp_, SEXP i_, SEXP j_) {
+RcppExport SEXP BEDMatrix_extract_matrix(SEXP xp_, SEXP i_, SEXP j_) {
     Rcpp::XPtr<BEDMatrix> ptr(xp_);
     Rcpp::IntegerVector i(i_);
     Rcpp::IntegerVector j(j_);
