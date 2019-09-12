@@ -1,6 +1,5 @@
 #include <R.h>
 #include <Rinternals.h>
-#include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
 extern SEXP BEDMatrix_new(SEXP, SEXP, SEXP);
