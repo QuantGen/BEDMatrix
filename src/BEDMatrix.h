@@ -1,8 +1,4 @@
-#ifndef BEDMATRIX_H
-#define BEDMATRIX_H
-
-#include <Rinternals.h>
-#include <stdint.h>
+#include "../inst/include/BEDMatrix_defines.h"
 
 /* bed.c */
 
@@ -42,24 +38,12 @@ int recode_genotype(
 
 /* mapping.c */
 
-struct mapped_region {
-    void *addr;
-    size_t length;
-};
-
 int map_file(const char *pathname, struct mapped_region *mapped_region, char mode);
 
 int unmap_file(struct mapped_region *mapped_region);
 
 
 /* BEDMatrix.c */
-
-struct BEDMatrix {
-    int num_samples;
-    int num_variants;
-    uint8_t *data;
-    size_t length;
-};
 
 SEXP BEDMatrix_initialize(
     SEXP path,
@@ -77,5 +61,3 @@ SEXP BEDMatrix_extract_matrix(
     SEXP i,
     SEXP j
 );
-
-#endif
