@@ -21,14 +21,13 @@
 
     Internally, this class is an S4 class with the following slots that should
     not be relied upon in actual code: \code{xptr}, \code{dims}, \code{dnames},
-    and \code{path}. The .bed file is mapped into memory using the \code{Rcpp}
-    package and the \code{Boost.Interprocess} library provided by the \code{BH}
-    package.
+    and \code{path}. The .bed file is mapped into memory using \code{mmap} on
+    Unix and \code{MapViewOfFile} on Windows.
 }
 \section{Slots}{
     \describe{
         \item{\code{xptr}:}{
-            An external pointer to the underlying \code{Rcpp} code.
+            An external pointer to the underlying \code{C} code.
         }
         \item{\code{dims}:}{
             An integer vector specifying the number of samples and variants as
@@ -70,8 +69,6 @@
     \code{BEDMatrix} package,
     \code{\link[LinkedMatrix:LinkedMatrix-package]{LinkedMatrix}} to link
     several \code{BEDMatrix} objects together.
-    \code{\link[Rcpp]{Rcpp-package}} and \code{\link[BH]{BH-package}} for more
-    details on the \code{Rcpp} and \code{BH} packages.
 }
 \examples{
 # Get the path to the example .bed file

@@ -113,7 +113,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
     }
     obj <- new(
         "BEDMatrix",
-        xptr = .Call(C_BEDMatrix_new, path, n, p), # Create Rcpp object
+        xptr = .Call(C_BEDMatrix_new, path, n, p),
         path = path,
         dims = c(n, p),
         dnames = list(rownames, colnames)

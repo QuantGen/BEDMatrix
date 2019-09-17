@@ -1,4 +1,0 @@
-# Set standard to avoid the following warnings from Boost headers on Windows:
-# - ISO C++ prohibits anonymous structs [-Wpedantic]
-# - ISO C++ 1998 does not support 'long long' [-Wlong-long]
-CXX_STD = CXX11

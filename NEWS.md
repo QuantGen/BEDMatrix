@@ -1,5 +1,6 @@
 # BEDMatrix 1.6.1.9000
 
+- Reimplement package in C, drop Rcpp.
 
 
 

@@ -16,11 +16,7 @@ Depends:
     R (>= 3.0.2)
 Imports:
     methods,
-    Rcpp (>= 0.12.1),
     crochet (>= 2.2.0)
-LinkingTo:
-    Rcpp,
-    BH
 Suggests:
     data.table,
     LinkedMatrix,
