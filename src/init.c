@@ -3,7 +3,7 @@
 #include <R_ext/Rdynload.h>
 
 static const R_CallMethodDef callEntries[] = {
-    {"BEDMatrix_new", (DL_FUNC) &BEDMatrix_new, 3},
+    {"BEDMatrix_initialize", (DL_FUNC) &BEDMatrix_initialize, 3},
     {"BEDMatrix_extract_vector", (DL_FUNC) &BEDMatrix_extract_vector, 2},
     {"BEDMatrix_extract_matrix", (DL_FUNC) &BEDMatrix_extract_matrix, 3},
     {NULL, NULL, 0}

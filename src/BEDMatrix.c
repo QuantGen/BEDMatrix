@@ -17,7 +17,7 @@ static void BEDMatrix_finalize(SEXP xptr) {
     R_ClearExternalPtr(xptr);
 }
 
-SEXP BEDMatrix_new(SEXP path, SEXP n, SEXP p) {
+SEXP BEDMatrix_initialize(SEXP path, SEXP n, SEXP p) {
     const char *expanded_filename = R_ExpandFileName(CHAR(Rf_asChar(path)));
     int nrows = Rf_asInteger(n);
     int ncols = Rf_asInteger(p);

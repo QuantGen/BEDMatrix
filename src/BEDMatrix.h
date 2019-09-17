@@ -61,7 +61,7 @@ struct BEDMatrix {
     size_t length;
 };
 
-SEXP BEDMatrix_new(
+SEXP BEDMatrix_initialize(
     SEXP path,
     SEXP n,
     SEXP p
