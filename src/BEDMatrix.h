@@ -22,18 +22,20 @@ int has_valid_dimensions(
 
 int extract_genotype_linear(
     uint8_t *bed,
-    int num_samples,
-    int num_bytes_per_variant,
     ptrdiff_t k,
-    int na_value
+    int num_samples,
+    int num_bytes_per_variant
 );
 
 int extract_genotype_cartesian(
     uint8_t *bed,
-    int num_samples,
-    int num_bytes_per_variant,
     int i,
     int j,
+    int num_bytes_per_variant
+);
+
+int recode_genotype(
+    int genotype,
     int na_value
 );
 

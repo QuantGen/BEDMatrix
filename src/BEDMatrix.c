@@ -72,13 +72,12 @@ SEXP BEDMatrix_extract_vector(SEXP xptr, SEXP k) {
             int kk = pk[ck];
             if (0 < kk && kk <= nx) {
                 kk--;
-                pout[ck] = extract_genotype_linear(
+                pout[ck] = recode_genotype(extract_genotype_linear(
                     state->data,
-                    state->num_samples,
-                    num_bytes_per_variant,
                     kk,
-                    NA_INTEGER
-                );
+                    state->num_samples,
+                    num_bytes_per_variant
+                ), NA_INTEGER);
             } else {
                 pout[ck] = NA_INTEGER;
             }
@@ -89,13 +88,12 @@ SEXP BEDMatrix_extract_vector(SEXP xptr, SEXP k) {
             double dk = pk[ck];
             ptrdiff_t kk = (ptrdiff_t) (dk - 1);
             if (R_FINITE(dk) && 0 <= kk && kk < nx) {
-                pout[ck] = extract_genotype_linear(
+                pout[ck] = recode_genotype(extract_genotype_linear(
                     state->data,
-                    state->num_samples,
-                    num_bytes_per_variant,
                     kk,
-                    NA_INTEGER
-                );
+                    state->num_samples,
+                    num_bytes_per_variant
+                ), NA_INTEGER);
             } else {
                 pout[ck] = NA_INTEGER;
             }
@@ -124,14 +122,13 @@ SEXP BEDMatrix_extract_matrix(SEXP xptr, SEXP i, SEXP j) {
             if (ii == NA_INTEGER || jj == NA_INTEGER) {
                 pout[(ptrdiff_t) cj * ni + ci] = NA_INTEGER;
             } else {
-                pout[(ptrdiff_t) cj * ni + ci] = extract_genotype_cartesian(
+                int genotype = recode_genotype(extract_genotype_cartesian(
                     state->data,
-                    state->num_samples,
-                    num_bytes_per_variant,
                     ii - 1,
                     jj - 1,
-                    NA_INTEGER
-                );
+                    num_bytes_per_variant
+                ), NA_INTEGER);
+                pout[(ptrdiff_t) cj * ni + ci] = genotype;
             }
         }
     }
