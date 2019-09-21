@@ -1,6 +1,9 @@
 #include "BEDMatrix.h"
 
 #include <R_ext/RS.h>
+#include <R_ext/Utils.h>
+
+#define INTERRUPT_INTERVAL 100
 
 static void BEDMatrix_finalize(SEXP xptr) {
     struct BEDMatrix *state = R_ExternalPtrAddr(xptr);
@@ -81,6 +84,9 @@ SEXP BEDMatrix_extract_vector(SEXP xptr, SEXP k) {
             } else {
                 pout[ck] = NA_INTEGER;
             }
+            if (ck % INTERRUPT_INTERVAL == 0) {
+                R_CheckUserInterrupt();
+            }
         }
     } else {
         double *pk = REAL(k);
@@ -96,6 +102,9 @@ SEXP BEDMatrix_extract_vector(SEXP xptr, SEXP k) {
                 ), NA_INTEGER);
             } else {
                 pout[ck] = NA_INTEGER;
+            }
+            if (ck % INTERRUPT_INTERVAL == 0) {
+                R_CheckUserInterrupt();
             }
         }
     }
@@ -115,6 +124,7 @@ SEXP BEDMatrix_extract_matrix(SEXP xptr, SEXP i, SEXP j) {
     int *pj = INTEGER(j);
     SEXP out = PROTECT(Rf_allocMatrix(INTSXP, ni, nj));
     int *pout = INTEGER(out);
+    ptrdiff_t cint = 0;
     for (int cj = 0; cj < nj; cj++) {
         int jj = pj[cj];
         for (int ci = 0; ci < ni; ci++) {
@@ -130,6 +140,10 @@ SEXP BEDMatrix_extract_matrix(SEXP xptr, SEXP i, SEXP j) {
                 ), NA_INTEGER);
                 pout[(ptrdiff_t) cj * ni + ci] = genotype;
             }
+            if (cint % INTERRUPT_INTERVAL == 0) {
+                R_CheckUserInterrupt();
+            }
+            cint++;
         }
     }
     UNPROTECT(1); // out

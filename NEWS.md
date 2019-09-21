@@ -5,6 +5,7 @@
   with BEDMatrix on the C level: `compute_num_bytes_per_variant()`,
   `extract_genotype_linear()`, `extract_genotype_cartesian()`, and
   `recode_genotype()`.
+- Extractions can be canceled with `Control-c`.
 
 
 # BEDMatrix 1.6.1
