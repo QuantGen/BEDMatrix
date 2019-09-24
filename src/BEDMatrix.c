@@ -3,7 +3,7 @@
 #include <R_ext/RS.h>
 #include <R_ext/Utils.h>
 
-#define INTERRUPT_INTERVAL 100
+#define INTERRUPT_INTERVAL 10000000
 
 static void BEDMatrix_finalize(SEXP xptr) {
     struct BEDMatrix *state = R_ExternalPtrAddr(xptr);
