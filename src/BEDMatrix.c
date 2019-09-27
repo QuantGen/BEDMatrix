@@ -31,13 +31,13 @@ SEXP BEDMatrix_initialize(SEXP path, SEXP n, SEXP p) {
     }
  // Test if file is a valid .bed file
     if (is_bed_file(mapped_file.addr) == -1) {
-        Rf_error("File is not a PLINK .bed file.");
         unmap_file(&mapped_file); // ignore errors
+        Rf_error("File is not a PLINK .bed file.");
     }
  // Test if n and p correspond to length
     if (has_valid_dimensions(mapped_file.length, nrows, ncols) == -1) {
-        Rf_error("n or p does not match the dimensions of the file.");
         unmap_file(&mapped_file); // ignore errors
+        Rf_error("n or p does not match the dimensions of the file.");
     }
  // Create state
     struct BEDMatrix *state = Calloc(1, struct BEDMatrix);
