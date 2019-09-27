@@ -13,9 +13,7 @@ static void BEDMatrix_finalize(SEXP xptr) {
     struct mapped_region mapped_file;
     mapped_file.addr = state->data;
     mapped_file.length = state->length;
-    if (unmap_file(&mapped_file) == -1) {
-        Rf_error("Could not unmap region.");
-    }
+    unmap_file(&mapped_file); // ignore errors
     Free(state);
     R_ClearExternalPtr(xptr);
 }
