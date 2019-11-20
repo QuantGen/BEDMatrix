@@ -19,9 +19,22 @@ static int compute_num_bytes_per_variant(int num_samples) {
     return ceil((double) num_samples / PLINK_BED_GENOTYPES_PER_BYTE);
 };
 
+/**
+ * Extract the genotype of the ith sample and the jth variant from a
+ * variant-major .bed file
+ * (https://www.cog-genomics.org/plink/1.9/formats#bed).
+ *
+ * The genotype is coded as follows: 00 indicates homozygous minor allele, 10
+ * indicates heterozygous, 11 indicates homozygous major allele, and 01
+ * indicates missing.
+ *
+ * 'num_bytes_per_variant' needs to be precomputed using the
+ * 'compute_num_bytes_per_variant' function.
+ */
 static int extract_genotype_cartesian(uint8_t *bed, int i, int j, int num_bytes_per_variant) {
- // Each byte contains 4 genotypes; adjust indices
+ // Find corresponding byte
     int which_byte = i / PLINK_BED_GENOTYPES_PER_BYTE;
+ // Find corresponding genotype position within byte
     int which_genotype = i % PLINK_BED_GENOTYPES_PER_BYTE;
  // Get byte from mapping
     uint8_t genotypes = bed[PLINK_BED_HEADER_LENGTH + ((ptrdiff_t) j * num_bytes_per_variant + which_byte)];
@@ -39,11 +52,13 @@ static int extract_genotype_linear(uint8_t *bed, ptrdiff_t k, int num_samples, i
     );
 }
 
+/**
+ * Recode genotype value to count minor alleles, i.e., 0 indicates homozygous
+ * major allele, 1 indicates heterozygous, and 2 indicates homozygous minor
+ * allele. A coding for the missing value needs to be provided in 'na_value'.
+ * If used within R, 'NA_INTEGER' should be used.
+ */
 static int recode_genotype(int genotype, int na_value) {
- // Recode genotype value to resemble RAW file, i.e. 0 indicates homozygous
- // major allele, 1 indicates heterozygous, and 2 indicates homozygous minor
- // allele. In BED, the coding is different: homozygous minor allele is 0 (00)
- // and homozygous major allele is 3 (11). Each byte is read backwards.
     int coding = na_value; // missing
     if (genotype == 0) {
         coding = 2; // homozygous AA
