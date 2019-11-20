@@ -1,5 +1,10 @@
 #include "BEDMatrix.h"
 
+#include "bed.h"
+#include "mapping.h"
+
+#include "../inst/include/BEDMatrix.h"
+
 #include <R_ext/RS.h>
 #include <R_ext/Utils.h>
 

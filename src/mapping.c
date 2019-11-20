@@ -1,4 +1,4 @@
-#include "BEDMatrix.h"
+#include "mapping.h"
 
 #include <errno.h>
 #include <fcntl.h>
