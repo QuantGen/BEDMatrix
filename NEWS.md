@@ -1,4 +1,4 @@
-# BEDMatrix 1.6.1.9000
+# BEDMatrix 2.0.0
 
 - Extractions can be canceled with `Control-c`.
 - Reimplement package in C, drop Rcpp.
