@@ -1,3 +1,9 @@
+# BEDMatrix 2.0.1
+
+- Fix extra `;` outside of `compute_num_bytes_per_variant` function in exported
+  `BEDMatrix.h` header (found by CRAN incoming checks).
+
+
 # BEDMatrix 2.0.0
 
 - Extractions can be canceled with `Control-c`.

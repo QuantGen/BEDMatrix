@@ -17,7 +17,7 @@ struct BEDMatrix {
 
 static int compute_num_bytes_per_variant(int num_samples) {
     return ceil((double) num_samples / PLINK_BED_GENOTYPES_PER_BYTE);
-};
+}
 
 /**
  * Extract the genotype of the ith sample and the jth variant from a
