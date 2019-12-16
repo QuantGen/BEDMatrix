@@ -1,5 +1,6 @@
 # BEDMatrix 1.6.1.9000
 
+- Extractions can be canceled with `Control-c`.
 - Reimplement package in C, drop Rcpp.
 - Genotypes can be extracted on the C level in other packages by adding
   `BEDMatrix` to the `LinkingTo` field of the `DESCRIPTION` file and including
@@ -7,7 +8,6 @@
   struct and the following functions: `compute_num_bytes_per_variant()`,
   `extract_genotype_linear()`, `extract_genotype_cartesian()`, and
   `recode_genotype()`.
-- Extractions can be canceled with `Control-c`.
 
 
 # BEDMatrix 1.6.1
