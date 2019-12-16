@@ -1,8 +1,10 @@
 # BEDMatrix 1.6.1.9000
 
 - Reimplement package in C, drop Rcpp.
-- Export a `BEDMatrix` struct and functions so that other packages can work
-  with BEDMatrix on the C level: `compute_num_bytes_per_variant()`,
+- Genotypes can be extracted on the C level in other packages by adding
+  `BEDMatrix` to the `LinkingTo` field of the `DESCRIPTION` file and including
+  the `BEDMatrix.h` in your C code. The header file contains the `BEDMatrix`
+  struct and the following functions: `compute_num_bytes_per_variant()`,
   `extract_genotype_linear()`, `extract_genotype_cartesian()`, and
   `recode_genotype()`.
 - Extractions can be canceled with `Control-c`.
