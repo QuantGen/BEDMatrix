@@ -11,13 +11,8 @@
 #include <sys/mman.h>
 #endif
 
-int map_file(const char *pathname, struct mapped_region *mapped_region, char mode) {
+int map_file(const char *pathname, struct mapped_region *mapped_region) {
     int retval = 0;
- // Check mode
-    if (mode != 'r' && mode != 'w') {
-        errno = 8;
-        return -1;
-    }
  // Get file status
     struct stat sb;
     if (stat(pathname, &sb) == -1) {
@@ -35,8 +30,8 @@ int map_file(const char *pathname, struct mapped_region *mapped_region, char mod
 #ifdef _WIN32
     HANDLE hFile = CreateFileA(
         pathname,
-        mode == 'w' ? GENERIC_READ | GENERIC_WRITE : GENERIC_READ,
-        mode == 'w' ? 0 : FILE_SHARE_READ,
+        GENERIC_READ,
+        FILE_SHARE_READ,
         NULL,
         OPEN_EXISTING,
         FILE_ATTRIBUTE_NORMAL,
@@ -49,7 +44,7 @@ int map_file(const char *pathname, struct mapped_region *mapped_region, char mod
     HANDLE hMem = CreateFileMappingA(
         hFile,
         NULL,
-        mode == 'w' ? PAGE_READWRITE : PAGE_READONLY,
+        PAGE_READONLY,
         0,
         0,
         NULL
@@ -61,7 +56,7 @@ int map_file(const char *pathname, struct mapped_region *mapped_region, char mod
     }
     mapped_region->addr = MapViewOfFile(
         hMem,
-        mode == 'w' ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ,
+        FILE_MAP_READ,
         0,
         0,
         0
@@ -73,7 +68,7 @@ int map_file(const char *pathname, struct mapped_region *mapped_region, char mod
 #else
     int fd = open(
         pathname,
-        mode == 'w' ? O_RDWR : O_RDONLY
+        O_RDONLY
     );
     if (fd == -1) {
         errno = 2;
@@ -82,7 +77,7 @@ int map_file(const char *pathname, struct mapped_region *mapped_region, char mod
     mapped_region->addr = mmap(
         NULL,
         sb.st_size,
-        mode == 'w' ? PROT_READ | PROT_WRITE : PROT_READ,
+        PROT_READ,
         MAP_SHARED,
         fd,
         0

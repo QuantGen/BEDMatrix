@@ -29,7 +29,7 @@ SEXP BEDMatrix_initialize(SEXP path, SEXP n, SEXP p) {
     int ncols = Rf_asInteger(p);
  // Map file
     struct mapped_region mapped_file;
-    if (map_file(expanded_filename, &mapped_file, 'r') == -1) {
+    if (map_file(expanded_filename, &mapped_file) == -1) {
         Rf_error("Could not map file.");
     }
  // Test if file is a valid .bed file
