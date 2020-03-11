@@ -4,9 +4,15 @@
 #define PLINK_BED_HEADER_LENGTH 3
 #define PLINK_BED_GENOTYPES_PER_BYTE 4
 
-#include <math.h> // for ceil
-#include <stddef.h>
-#include <stdint.h>
+#include <math.h> // ceil
+#include <stddef.h> // size_t, ptrdiff_t
+#include <stdint.h> // uint8_t
+
+#if defined(__GNUC__)
+#define BEDMATRIX_EXPORT(declaration) __attribute__ ((unused)) static declaration
+#else
+#define BEDMATRIX_EXPORT(declaration) static declaration
+#endif
 
 struct BEDMatrix {
     int num_samples;
@@ -15,7 +21,7 @@ struct BEDMatrix {
     size_t length;
 };
 
-static int compute_num_bytes_per_variant(int num_samples) {
+BEDMATRIX_EXPORT(int compute_num_bytes_per_variant(int num_samples)) {
     return ceil((double) num_samples / PLINK_BED_GENOTYPES_PER_BYTE);
 }
 
@@ -31,7 +37,10 @@ static int compute_num_bytes_per_variant(int num_samples) {
  * 'num_bytes_per_variant' needs to be precomputed using the
  * 'compute_num_bytes_per_variant' function.
  */
-static int extract_genotype_cartesian(uint8_t *bed, int i, int j, int num_bytes_per_variant) {
+BEDMATRIX_EXPORT(int extract_genotype_cartesian(uint8_t *bed,
+                                                int i,
+                                                int j,
+                                                int num_bytes_per_variant)) {
  // Find corresponding byte
     int which_byte = i / PLINK_BED_GENOTYPES_PER_BYTE;
  // Find corresponding genotype position within byte
@@ -43,7 +52,10 @@ static int extract_genotype_cartesian(uint8_t *bed, int i, int j, int num_bytes_
     return genotypes >> (2 * which_genotype) & 0x03;
 }
 
-static int extract_genotype_linear(uint8_t *bed, ptrdiff_t k, int num_samples, int num_bytes_per_variant) {
+BEDMATRIX_EXPORT(int extract_genotype_linear(uint8_t *bed,
+                                             ptrdiff_t k,
+                                             int num_samples,
+                                             int num_bytes_per_variant)) {
     return extract_genotype_cartesian(
         bed,
         k % num_samples,
@@ -58,7 +70,7 @@ static int extract_genotype_linear(uint8_t *bed, ptrdiff_t k, int num_samples, i
  * allele. A coding for the missing value needs to be provided in 'na_value'.
  * If used within R, 'NA_INTEGER' should be used.
  */
-static int recode_genotype(int genotype, int na_value) {
+BEDMATRIX_EXPORT(int recode_genotype(int genotype, int na_value)) {
     int coding = na_value; // missing
     if (genotype == 0) {
         coding = 2; // homozygous AA

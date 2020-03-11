@@ -1,6 +1,7 @@
 # BEDMatrix 2.0.1.9000
 
 - Fix that BED files larger than 2GB cannot be loaded in Windows.
+- Do not produce `-Wunused-function` warnings in exported `BEDMatrix.h` header.
 
 
 # BEDMatrix 2.0.1
