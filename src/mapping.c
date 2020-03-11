@@ -1,6 +1,5 @@
 #include "mapping.h"
 
-#include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 
@@ -16,12 +15,10 @@ int map_file(const char *pathname, struct mapped_region *mapped_region) {
  // Get file status
     struct stat sb;
     if (stat(pathname, &sb) == -1) {
-        errno = 1;
         return -1;
     }
  // Test if file is a regular file
     if (!S_ISREG(sb.st_mode)) {
-        errno = 7;
         return -1;
     }
  // Get file length
@@ -38,7 +35,6 @@ int map_file(const char *pathname, struct mapped_region *mapped_region) {
         NULL
     );
     if (hFile == INVALID_HANDLE_VALUE) {
-        errno = 2;
         return -1;
     }
     HANDLE hMem = CreateFileMappingA(
@@ -50,7 +46,6 @@ int map_file(const char *pathname, struct mapped_region *mapped_region) {
         NULL
     );
     if (hMem == NULL) {
-        errno = 3;
         retval = -1;
         goto close_file;
     }
@@ -62,7 +57,6 @@ int map_file(const char *pathname, struct mapped_region *mapped_region) {
         0
     );
     if (mapped_region->addr == NULL) {
-        errno = 4;
         retval = -1;
     }
 #else
@@ -71,7 +65,6 @@ int map_file(const char *pathname, struct mapped_region *mapped_region) {
         O_RDONLY
     );
     if (fd == -1) {
-        errno = 2;
         return -1;
     }
     mapped_region->addr = mmap(
@@ -83,23 +76,19 @@ int map_file(const char *pathname, struct mapped_region *mapped_region) {
         0
     );
     if (mapped_region->addr == MAP_FAILED) {
-        errno = 4;
         retval = -1;
     }
 #endif
 #ifdef _WIN32
     if (CloseHandle(hMem) == 0) {
-        errno = 5;
         retval = -1;
     }
 close_file:
     if (CloseHandle(hFile) == 0) {
-        errno = 6;
         retval = -1;
     };
 #else
     if (close(fd) == -1) {
-        errno = 6;
         retval = -1;
     }
 #endif
@@ -110,17 +99,14 @@ int unmap_file(struct mapped_region *mapped_region) {
     int retval = 0;
  // Check if region is already unmapped
     if (!mapped_region->addr) {
-        errno = 1;
         return -1;
     }
 #ifdef _WIN32
     if (UnmapViewOfFile(mapped_region->addr) == 0) {
-        errno = 2;
         return -1;
     }
 #else
     if (munmap(mapped_region->addr, mapped_region->length) == -1) {
-        errno = 2;
         return -1;
     }
 #endif
