@@ -1,2 +1,4 @@
-Lian Lian		for initial testing and feedback
-Alex Ochoa		for adding "simple_names" parameter to BEDMatrix()
+Lian Lian             for initial testing and feedback
+Alex Ochoa            for adding "simple_names" parameter to BEDMatrix()
+Jürgen Degenfellner   for discovering that BED files larger than 2GB cannot be
+                      loaded in Windows
