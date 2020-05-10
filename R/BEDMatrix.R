@@ -49,15 +49,13 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
                 n <- length(fam)
                 # Determine rownames
                 if (simple_names) {
-                    rownames <- sapply(strsplit(fam, delims), function(line) {
-                        # Use within-family ID only
-                        line[2L]
-                    })
+                    # Use within-family ID only
+                    rownames <- vapply(strsplit(fam, delims), `[`, "", 2L)
                 } else {
-                    rownames <- sapply(strsplit(fam, delims), function(line) {
+                    rownames <- vapply(strsplit(fam, delims), function(line) {
                         # Concatenate family ID and within-family ID
                         paste0(line[1L], "_", line[2L])
-                    })
+                    }, "")
                 }
             }
         }
@@ -95,15 +93,13 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
                 p <- length(bim)
                 # Determine colnames
                 if (simple_names) {
-                    colnames <- sapply(strsplit(bim, delims), function(line) {
-                        # Use variant name only
-                        line[2L]
-                    })
+                    # Use variant name only
+                    colnames <- vapply(strsplit(bim, delims), `[`, "", 2L)
                 } else {
-                    colnames <- sapply(strsplit(bim, delims), function(line) {
+                    colnames <- vapply(strsplit(bim, delims), function(line) {
                         # Concatenate variant name and minor allele (like --recodeA)
                         paste0(line[2L], "_", line[5L])
-                    })
+                    }, "")
                 }
             }
         }
