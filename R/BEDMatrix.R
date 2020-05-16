@@ -14,7 +14,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
         # Try to add extension (common in PLINK)
         path <- paste0(path, ".bed")
         if (!file.exists(path)) {
-            stop("File not found.")
+            stop("File not found.", call. = FALSE)
         }
     }
     pathSansExt <- tools::file_path_sans_ext(path)
@@ -23,7 +23,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
         # Check if FAM file exists
         famPath <- paste0(pathSansExt, ".fam")
         if (!file.exists(famPath)) {
-            stop(filesetName, ".fam not found. Provide number of samples (n).")
+            stop(filesetName, ".fam not found. Provide number of samples (n).", call. = FALSE)
         } else {
             message("Extracting number of samples and rownames from ", filesetName, ".fam...")
             if (requireNamespace("data.table", quietly = TRUE)) {
@@ -67,7 +67,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
         # Check if BIM file exists
         bimPath <- paste0(pathSansExt, ".bim")
         if (!file.exists(bimPath)) {
-            stop(filesetName, ".bim not found. Provide number of variants (p).")
+            stop(filesetName, ".bim not found. Provide number of variants (p).", .call = FALSE)
         } else {
             message("Extracting number of variants and colnames from ", filesetName, ".bim...")
             if (requireNamespace("data.table", quietly = TRUE)) {
@@ -154,7 +154,7 @@ dimnames.BEDMatrix <- function(x) {
     v1 <- value[[1L]]
     v2 <- value[[2L]]
     if (!is.list(value) || length(value) != 2L || !(is.null(v1) || length(v1) == d[1L]) || !(is.null(v2) || length(v2) == d[2L])) {
-        stop("invalid dimnames")
+        stop("invalid dimnames", call. = FALSE)
     }
     x@dnames <- lapply(value, function(v) {
         if (!is.null(v)) {
