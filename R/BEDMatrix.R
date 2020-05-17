@@ -20,7 +20,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
     pathSansExt <- tools::file_path_sans_ext(path)
     filesetName <- basename(pathSansExt)
     if (is.null(n)) {
-        # Check if FAM file exists
+        # Check if .fam file exists
         famPath <- paste0(pathSansExt, ".fam")
         if (!file.exists(famPath)) {
             stop(filesetName, ".fam not found. Provide number of samples (n).", call. = FALSE)
@@ -64,7 +64,7 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
         rownames <- NULL
     }
     if (is.null(p)) {
-        # Check if BIM file exists
+        # Check if .bim file exists
         bimPath <- paste0(pathSansExt, ".bim")
         if (!file.exists(bimPath)) {
             stop(filesetName, ".bim not found. Provide number of variants (p).", .call = FALSE)
