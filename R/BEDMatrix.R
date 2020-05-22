@@ -121,17 +121,17 @@ setMethod("show", "BEDMatrix", function(object) {
     dims <- dim(object)
     n <- dims[1L]
     p <- dims[2L]
-    cat("BEDMatrix: ", n, " x ", p, " [", object@path, "]\n", sep = "")
+    cat("BEDMatrix: ", n, " x ", p, " [", slot(object, "path"), "]\n", sep = "")
 })
 
 extract_vector <- function(x, i) {
-    .Call(C_BEDMatrix_extract_vector, x@xptr, i)
+    .Call(C_BEDMatrix_extract_vector, slot(x, "xptr"), i)
 }
 
 extract_matrix <- function(x, i, j) {
-    subset <- .Call(C_BEDMatrix_extract_matrix, x@xptr, i, j)
+    subset <- .Call(C_BEDMatrix_extract_matrix, slot(x, "xptr"), i, j)
     # Preserve dimnames
-    names <- x@dnames
+    names <- slot(x, "dnames")
     dimnames(subset) <- list(
         names[[1L]][i],
         names[[2L]][j]
@@ -142,11 +142,11 @@ extract_matrix <- function(x, i, j) {
 `[.BEDMatrix` <- extract(extract_vector = extract_vector, extract_matrix = extract_matrix, allowDoubles = TRUE)
 
 dim.BEDMatrix <- function(x) {
-    x@dims
+    slot(x, "dims")
 }
 
 dimnames.BEDMatrix <- function(x) {
-    x@dnames
+    slot(x, "dnames")
 }
 
 `dimnames<-.BEDMatrix` <- function(x, value) {
@@ -156,7 +156,7 @@ dimnames.BEDMatrix <- function(x) {
     if (!is.list(value) || length(value) != 2L || !(is.null(v1) || length(v1) == d[1L]) || !(is.null(v2) || length(v2) == d[2L])) {
         stop("invalid dimnames", call. = FALSE)
     }
-    x@dnames <- lapply(value, function(v) {
+    slot(x, "dnames") <- lapply(value, function(v) {
         if (!is.null(v)) {
             as.character(v)
         }
