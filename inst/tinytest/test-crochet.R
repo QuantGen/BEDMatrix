@@ -1,3 +1,5 @@
+source("setup.R")
+
 # Source extraction tests
 extractionTests <- new.env()
 extractionTests$COMPARE_OBJECT <- raw

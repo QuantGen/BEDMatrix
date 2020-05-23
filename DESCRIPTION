@@ -20,4 +20,4 @@ Imports:
 Suggests:
     data.table,
     LinkedMatrix,
-    testthat
+    tinytest
