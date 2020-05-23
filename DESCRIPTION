@@ -8,7 +8,7 @@ Description: A matrix-like data structure that allows for efficient,
     genome association analysis toolset, without loading the entire file into
     memory.
 Authors@R: c(
-    person("Alexander", "Grueneberg", email = "alexander.grueneberg@googlemail.com", role = c("aut", "cre")),
+    person("Alexander", "Grueneberg", email = "cran@agrueneberg.info", role = c("aut", "cre")),
     person("Gustavo", "de los Campos", email = "gustavoc@msu.edu", role = c("ctb")))
 URL: https://github.com/QuantGen/BEDMatrix
 BugReports: https://github.com/QuantGen/BEDMatrix/issues
