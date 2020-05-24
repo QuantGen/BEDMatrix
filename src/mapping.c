@@ -61,7 +61,7 @@ int map_file(const char *pathname, struct mapped_region *mapped_region) {
 close_file:
     if (CloseHandle(hFile) == 0) {
         retval = -1;
-    };
+    }
 #else
  // Open file
     int fd = open(
