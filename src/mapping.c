@@ -55,13 +55,9 @@ int map_file(const char *pathname, struct mapped_region *mapped_region) {
     if (mapped_region->addr == NULL) {
         retval = -1;
     }
-    if (CloseHandle(hMem) == 0) {
-        retval = -1;
-    }
+    CloseHandle(hMem); // ignore errors
 close_file:
-    if (CloseHandle(hFile) == 0) {
-        retval = -1;
-    }
+    CloseHandle(hFile); // ignore errors
 #else
  // Open file
     int fd = open(
@@ -96,9 +92,7 @@ close_file:
         retval = -1;
     }
 close_file:
-    if (close(fd) == -1) {
-        retval = -1;
-    }
+    close(fd); // ignore errors
 #endif
     return retval;
 }
