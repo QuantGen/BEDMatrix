@@ -37,8 +37,10 @@ BEDMatrix(path, n = NULL, p = NULL, simple_names = FALSE)
         Whether to simplify the format of the dimension names.  If \code{FALSE}
         (the default), row names are concatenations of family IDs, \code{_},
         and within-family IDs, while column names are concatenations of variant
-        names, \code{_}, and minor alleles. If \code{TRUE}, row names are
-        within-family IDs only and column names are variant names only.
+        names, \code{_}, and allele codes for the first allele of the
+        \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} file
+        (\code{A1}). If \code{TRUE}, row names are within-family IDs only and
+        column names are variant names only.
     }
 }
 \details{

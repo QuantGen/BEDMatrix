@@ -1,6 +1,7 @@
 # BEDMatrix 2.0.2.9000
 
 - Replace testthat with tinytest.
+- Do not mix up minor/major and first/second alleles in documentation.
 
 
 # BEDMatrix 2.0.2

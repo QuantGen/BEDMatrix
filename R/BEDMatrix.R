@@ -84,7 +84,8 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
                     # Use variant name only
                     colnames <- bim[, 1L]
                 } else {
-                    # Concatenate variant name and minor allele (like --recodeA)
+                    # Concatenate variant name and A1 allele (like '--recode A'
+                    # in PLINK)
                     colnames <- paste0(bim[, 1L], "_", bim[, 2L])
                 }
             } else {
@@ -97,7 +98,8 @@ BEDMatrix <- function(path, n = NULL, p = NULL, simple_names = FALSE) {
                     colnames <- vapply(strsplit(bim, delims), `[`, "", 2L)
                 } else {
                     colnames <- vapply(strsplit(bim, delims), function(line) {
-                        # Concatenate variant name and minor allele (like --recodeA)
+                        # Concatenate variant name and A1 allele (like
+                        # '--recode A' in PLINK)
                         paste0(line[2L], "_", line[5L])
                     }, "")
                 }

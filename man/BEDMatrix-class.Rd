@@ -12,12 +12,11 @@
     loading the entire file into memory.
 }
 \details{
-    The subsets extracted from a \code{BEDMatrix} object are coded similarly to
+    The subsets extracted from a \code{BEDMatrix} object are coded as the
+    allelic dosages of the first allele in the .bim file (A1), similarly to
     \href{https://www.cog-genomics.org/plink2/formats#raw}{.raw} files
-    (generated with the \code{--recodeA} argument in
-    \href{https://www.cog-genomics.org/plink2/}{PLINK}): \code{0} indicates
-    homozygous major allele, \code{1} indicates heterozygous, and \code{2}
-    indicates homozygous minor allele.
+    generated with the \code{--recode A} argument in
+    \href{https://www.cog-genomics.org/plink2/}{PLINK}).
 
     Internally, this class is an S4 class with the following slots that should
     not be relied upon in actual code: \code{xptr}, \code{dims}, \code{dnames},

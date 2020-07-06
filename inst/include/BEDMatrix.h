@@ -30,9 +30,9 @@ BEDMATRIX_EXPORT(int compute_num_bytes_per_variant(int num_samples)) {
  * variant-major .bed file
  * (https://www.cog-genomics.org/plink/1.9/formats#bed).
  *
- * The genotype is coded as follows: 00 indicates homozygous minor allele, 10
- * indicates heterozygous, 11 indicates homozygous major allele, and 01
- * indicates missing.
+ * The genotype is coded as follows: '00' indicates homozygous for first allele
+ * in .bim file (A1), '10' indicates heterozygous, '11' indicates homozygous
+ * for second allele in .bim file (A2), and '01' indicates missing.
  *
  * 'num_bytes_per_variant' needs to be precomputed using the
  * 'compute_num_bytes_per_variant' function.
@@ -65,19 +65,19 @@ BEDMATRIX_EXPORT(int extract_genotype_linear(uint8_t *bed,
 }
 
 /**
- * Recode genotype value to count minor alleles, i.e., 0 indicates homozygous
- * major allele, 1 indicates heterozygous, and 2 indicates homozygous minor
- * allele. A coding for the missing value needs to be provided in 'na_value'.
- * If used within R, 'NA_INTEGER' should be used.
+ * Recode genotype codes to allelic dosages of first allele in .bim file (A1),
+ * similarly to .raw files generated with '--recode A' in PLINK. A coding for
+ * the missing value needs to be provided in 'na_value'. If used within R,
+ * 'NA_INTEGER' should be used.
  */
 BEDMATRIX_EXPORT(int recode_genotype(int genotype, int na_value)) {
     int coding = na_value; // missing
     if (genotype == 0) {
-        coding = 2; // homozygous AA
+        coding = 2; // two copies of A1
     } else if (genotype == 3) {
-        coding = 0; // homozygous BB
+        coding = 0; // zero copies of A1
     } else if (genotype == 2) {
-        coding = 1; // heterozygous AB
+        coding = 1; // one copy of A1
     }
     return coding;
 }
