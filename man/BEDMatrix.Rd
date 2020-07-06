@@ -20,7 +20,7 @@ BEDMatrix(path, n = NULL, p = NULL, simple_names = FALSE)
         be determined from the accompanying
         \href{https://www.cog-genomics.org/plink2/formats#fam}{.fam} file (of
         the same name as the
-        \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} file).  If
+        \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} file). If
         a positive integer, the .fam file is not read and \code{rownames} will
         be set to \code{NULL} and have to be provided manually.
     }
@@ -29,12 +29,12 @@ BEDMatrix(path, n = NULL, p = NULL, simple_names = FALSE)
         variants will be determined from the accompanying
         \href{https://www.cog-genomics.org/plink2/formats#bim}{.bim} file (of
         the same name as the
-        \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} file).  If
+        \href{https://www.cog-genomics.org/plink2/formats#bed}{.bed} file). If
         a positive integer, the .bim file is not read and \code{colnames} will
         be set to \code{NULL} and have to be provided manually.
     }
     \item{simple_names}{
-        Whether to simplify the format of the dimension names.  If \code{FALSE}
+        Whether to simplify the format of the dimension names. If \code{FALSE}
         (the default), row names are concatenations of family IDs, \code{_},
         and within-family IDs, while column names are concatenations of variant
         names, \code{_}, and allele codes for the first allele of the
