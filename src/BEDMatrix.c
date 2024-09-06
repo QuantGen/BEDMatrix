@@ -19,7 +19,7 @@ static void BEDMatrix_finalize(SEXP xptr) {
     mapped_file.addr = state->data;
     mapped_file.length = state->length;
     unmap_file(&mapped_file); // ignore errors
-    Free(state);
+    R_Free(state);
     R_ClearExternalPtr(xptr);
 }
 
@@ -43,7 +43,7 @@ SEXP BEDMatrix_initialize(SEXP path, SEXP n, SEXP p) {
         Rf_error("n or p does not match the dimensions of the file.");
     }
  // Create state
-    struct BEDMatrix *state = Calloc(1, struct BEDMatrix);
+    struct BEDMatrix *state = R_Calloc(1, struct BEDMatrix);
     state->num_samples = nrows;
     state->num_variants = ncols;
     state->data = mapped_file.addr;
