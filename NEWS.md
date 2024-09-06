@@ -1,3 +1,8 @@
+# BEDMatrix 2.0.4
+
+- Use prefixed `Calloc` and `Free` to comply with CRAN.
+
+
 # BEDMatrix 2.0.3
 
 - Replace testthat with tinytest.
