@@ -67,7 +67,7 @@ remotes::install_github("QuantGen/BEDMatrix")
 Documentation
 -------------
 
-Further documentation can be found on [RDocumentation](http://www.rdocumentation.org/packages/BEDMatrix).
+Further documentation can be found on [RDocumentation](https://www.rdocumentation.org/packages/BEDMatrix).
 
 
 Contributing
