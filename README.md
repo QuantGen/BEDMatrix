@@ -1,7 +1,9 @@
 BEDMatrix
 =========
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BEDMatrix)](https://CRAN.R-project.org/package=BEDMatrix)
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/BEDMatrix)](https://CRAN.R-project.org/package=BEDMatrix)
+<!-- badges: end -->
 
 BEDMatrix is an R package that provides a matrix-like wrapper around [.bed](https://www.cog-genomics.org/plink2/formats#bed), one of the genotype/phenotype file formats of [PLINK](https://www.cog-genomics.org/plink2), the whole genome association analysis toolset. BEDMatrix objects are created in R by simply providing the path to a .bed file and once created, they behave similarly to regular matrices with the advantage that genotypes are retrieved on demand without loading the entire file into memory. This allows handling of very large files with limited use of memory.
 
